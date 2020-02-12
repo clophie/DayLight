@@ -28,23 +28,21 @@ interface HabitsDataSource {
 
     fun getHabits(callback: LoadHabitsCallback)
 
-    fun getHabit(habitId: Int, callback: GetHabitCallback)
+    fun getHabit(habitId: String, callback: GetHabitCallback)
 
     fun saveHabit(habit: Habit)
 
     fun completeHabit(habit: Habit)
 
-    fun completeHabit(habtId: Int)
+    fun completeHabit(habitId: String)
 
     fun activateHabit(habit: Habit)
 
-    fun activateHabit(habitId: Int)
-
-    fun clearCompletedHabits()
+    fun activateHabit(habitId: String)
 
     fun refreshHabits()
 
     fun deleteAllHabits()
 
-    fun deleteHabit(habitId: Int)
+    fun deleteHabit(habitId: String)
 }

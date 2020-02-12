@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">DayLight</string>
+    <string name="app_name">HABIT-MVP</string>
+    <string name="add_habit">New HABIT</string>
+    <string name="edit_habit">Edit HABIT</string>
+    <string name="habit_marked_complete">Habit marked complete</string>
+    <string name="habit_marked_active">Habit marked active</string>
+    <string name="loading_habits_error">Error while loading habits</string>
+    <string name="completed_habits_cleared">Completed habits cleared</string>
+    <string name="menu_filter">Filter</string>
+    <string name="menu_clear">Clear completed</string>
+    <string name="menu_delete_habit">Delete habit</string>
+    <string name="navigation_view_header_title">HABITs</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Enter your HABIT here.</string>
+    <string name="empty_habit_message">TO DOs cannot be empty</string>
+    <string name="successfully_saved_habit_message">HABIT saved</string>
+    <string name="list_title">HABIT List</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_no_habits">You have no habits.</string>
+    <string name="statistics_active_habits">Active habits:</string>
+    <string name="statistics_completed_habits">Completed habits:</string>
+    <string name="statistics_error">Error loading statistics.</string>
+    <string name="no_data">No data</string>
+    <string name="loading">LOADING</string>
+
+    <string-array name="list_habits_array">
+        <item>@string/nav_all</item>
+        <item>@string/nav_active</item>
+        <item>@string/nav_completed</item>
+    </string-array>
+    <string name="nav_all">All</string>
+    <string name="nav_active">Active</string>
+    <string name="nav_completed">Completed</string>
+    <string name="label_all">All HABITs</string>
+    <string name="label_active">Active HABITs</string>
+    <string name="label_completed">Completed HABITs</string>
+    <string name="no_habits_all">You have no HABITs!</string>
+    <string name="no_habits_active">You have no active HABITs!</string>
+    <string name="no_habits_completed">You have no completed HABITs!</string>
+    <string name="no_habits_add">Add a HABIT item +</string>
+    <string name="refresh">Refresh</string>
 </resources>
