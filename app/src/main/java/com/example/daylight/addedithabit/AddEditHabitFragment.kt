@@ -52,7 +52,6 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
     }
 
     override fun showEmptyHabitError() {
-        title.showSnackBar(getString(R.string.empty_habit_message), Snackbar.LENGTH_LONG)
     }
 
     override fun showHabitsList() {

@@ -2,7 +2,7 @@ package com.example.daylight.habits
 
 import androidx.appcompat.app.AppCompatActivity
 
-class HabitActivity : AppCompatActivity() {
+class HabitsActivity : AppCompatActivity() {
 
-    private lateinit var HabitPresenter: HabitPresenter
+    private lateinit var HabitsPresenter: HabitsPresenter
 }

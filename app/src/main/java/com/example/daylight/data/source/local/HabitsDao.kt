@@ -18,7 +18,7 @@ interface HabitsDao {
      * @param taskId the task id.
      * @return the task with taskId.
      */
-    @Query("SELECT * FROM Habits WHERE entryid = :habitd") fun getHabitById(habitId: String): Habit?
+    @Query("SELECT * FROM Habits WHERE habitid = :habitId") fun getHabitById(habitId: String): Habit?
 
     /**
      * Insert a task in the database. If the task already exists, replace it.
@@ -42,7 +42,7 @@ interface HabitsDao {
      * @param taskId    id of the task
      * @param completed status to be updated
      */
-    @Query("UPDATE habits SET completed = :completed WHERE entryid = :habitId")
+    @Query("UPDATE habits SET completed = :completed WHERE habitid = :habitId")
     fun updateCompleted(habitId: String, completed: Boolean)
 
     /**
@@ -50,7 +50,7 @@ interface HabitsDao {
      *
      * @return the number of tasks deleted. This should always be 1.
      */
-    @Query("DELETE FROM Habits WHERE entryid = :habitId") fun deleteHabitById(habitId: String): Int
+    @Query("DELETE FROM Habits WHERE habitid = :habitId") fun deleteHabitById(habitId: String): Int
 
     /**
      * Delete all tasks.

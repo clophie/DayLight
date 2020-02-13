@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">DayLight</string>
-    <string name="app_name">HABIT-MVP</string>
     <string name="add_habit">New HABIT</string>
     <string name="edit_habit">Edit HABIT</string>
     <string name="habit_marked_complete">Habit marked complete</string>
