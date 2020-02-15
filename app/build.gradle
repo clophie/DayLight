@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -24,11 +26,44 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    // App dependencies
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.cardview:cardview:$cardVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation "androidx.annotation:annotation:$androidXAnnotations"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+    implementation "com.google.guava:guava:$guavaVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // Dependencies for local unit tests
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+
+    // Dependencies for Android unit tests
+    androidTestImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
+
+    // Android Testing Support Library - Instrumented testing
+    androidTestImplementation "androidx.test:runner:$androidXTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidXTestVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
+    // Resolve conflicts between main and test APK:
+    androidTestImplementation "androidx.annotation:annotation:$androidXAnnotations"
+    androidTestImplementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
+    androidTestImplementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    androidTestImplementation "androidx.appcompat:appcompat:$appCompatVersion"
+    androidTestImplementation "com.google.android.material:material:$materialVersion"
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 }
