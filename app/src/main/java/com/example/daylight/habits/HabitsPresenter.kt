@@ -21,8 +21,8 @@ import java.util.ArrayList
 class HabitsPresenter(
     private val habitId: Int?,
     val habitsRepository: HabitsDataSource,
-    val habitsView: HabitContract.View
-) : HabitContract.Presenter {
+    val habitsView: HabitsContract.View
+) : HabitsContract.Presenter {
 
     override var currentFiltering = HabitsFilterType.ALL_HABITS
 
