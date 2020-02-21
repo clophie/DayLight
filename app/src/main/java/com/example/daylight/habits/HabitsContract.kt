@@ -7,7 +7,7 @@ import com.example.daylight.data.source.Habit
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface  HabitContract {
+interface  HabitsContract {
 
     interface View : BaseView<Presenter> {
 
