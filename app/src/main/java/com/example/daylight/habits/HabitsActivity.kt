@@ -9,6 +9,10 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.test.espresso.IdlingResource
 import com.example.daylight.R
+import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.local.DaylightDatabase
+import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
 import com.google.android.material.navigation.NavigationView
@@ -42,8 +46,11 @@ class HabitsActivity : AppCompatActivity() {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
 
+        val database = DaylightDatabase.getInstance(applicationContext)
+        val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+
         // Create the presenter
-        habitsPresenter = HabitsPresenter(Injection.provideHabitsRepository(applicationContext),
+        habitsPresenter = HabitsPresenter(repo,
             habitsFragment).apply {
             // Load previously saved state, if available.
             if (savedInstanceState != null) {
@@ -71,8 +78,8 @@ class HabitsActivity : AppCompatActivity() {
     private fun setupDrawerContent(navigationView: NavigationView) {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             if (menuItem.itemId == R.id.statistics_navigation_menu_item) {
-                val intent = Intent(this@HabitsActivity, StatisticsActivity::class.java)
-                startActivity(intent)
+               // val intent = Intent(this@HabitsActivity, StatisticsActivity::class.java)
+               // startActivity(intent)
             }
             // Close the navigation drawer when an item is selected.
             menuItem.isChecked = true
@@ -80,8 +87,4 @@ class HabitsActivity : AppCompatActivity() {
             true
         }
     }
-
-    val countingIdlingResource: IdlingResource
-        @VisibleForTesting
-        get() = EspressoIdlingResource.countingIdlingResource
 }

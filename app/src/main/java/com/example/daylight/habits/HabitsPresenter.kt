@@ -19,7 +19,6 @@ import java.util.ArrayList
  */
 
 class HabitsPresenter(
-    private val habitId: Int?,
     val habitsRepository: HabitsDataSource,
     val habitsView: HabitsContract.View
 ) : HabitsContract.Presenter {
