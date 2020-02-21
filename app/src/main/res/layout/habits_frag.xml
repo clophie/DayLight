@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.example.android.architecture.blueprints.todoapp.habits.ScrollChildSwipeRefreshLayout
+<com.example.daylight.habits.ScrollChildSwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
@@ -69,5 +69,5 @@
 
         </LinearLayout>
     </RelativeLayout>
-</com.example.android.architecture.blueprints.todoapp.habits.ScrollChildSwipeRefreshLayout>
+</com.example.daylight.habits.ScrollChildSwipeRefreshLayout>
 

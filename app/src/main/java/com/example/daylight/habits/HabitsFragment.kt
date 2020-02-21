@@ -11,7 +11,6 @@ import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.data.source.Habit
 import com.example.daylight.habitdetail.HabitDetailActivity
-import com.example.daylight.util.ScrollChildSwipeRefreshLayout
 import com.example.daylight.util.showSnackBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
