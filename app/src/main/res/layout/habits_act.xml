@@ -26,6 +26,7 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/Toolbar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -36,7 +37,8 @@
             <FrameLayout
                 android:id="@+id/contentFrame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="visible" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_habit"
@@ -44,21 +46,27 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
                 android:src="@drawable/ic_add"
+                app:fabSize="normal"
                 app:layout_anchor="@id/contentFrame"
-                app:layout_anchorGravity="bottom|right|end"
-                app:fabSize="normal" />
+                app:layout_anchorGravity="bottom|right|end" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
 
-    <!-- Navigation Drawer -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_actions" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="#FFFFFF"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_menu" />
+
+    <!-- Bottom Navigation -->
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.example.daylight.habits
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,15 +8,18 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.test.espresso.IdlingResource
 import com.example.daylight.R
 import com.example.daylight.data.source.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
 import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.statistics.StatisticsFragment
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.habits_act.*
 
 class HabitsActivity : AppCompatActivity() {
 
@@ -35,21 +39,47 @@ class HabitsActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        // Set up the navigation drawer.
-        drawerLayout = (findViewById<DrawerLayout>(R.id.drawer_layout)).apply {
-            setStatusBarBackground(R.color.colorPrimaryDark)
+        // Set up the bottom navigation.
+        navigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.navigation_habits-> {
+                    title=resources.getString(R.string.habits)
+                    loadFragment(HabitsFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                //TODO Change this to the moods fragment
+                R.id.navigation_moods-> {
+                    title=resources.getString(R.string.moods)
+                    loadFragment(HabitsFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                R.id.navigation_analysis-> {
+                    title=resources.getString(R.string.analysis)
+                    loadFragment(StatisticsFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+
+                //TODO Change this to the settings fragment
+                R.id.navigation_settings-> {
+                    title=resources.getString(R.string.settings)
+                    loadFragment(HabitsFragment())
+                    return@setOnNavigationItemSelectedListener true
+                }
+            }
+            false
         }
-        setupDrawerContent(findViewById(R.id.nav_view))
 
         val habitsFragment = supportFragmentManager.findFragmentById(R.id.contentFrame)
                 as HabitsFragment? ?: HabitsFragment.newInstance().also {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
 
+        // Create the presenter
         val database = DaylightDatabase.getInstance(applicationContext)
         val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
 
-        // Create the presenter
         habitsPresenter = HabitsPresenter(repo,
             habitsFragment).apply {
             // Load previously saved state, if available.
@@ -75,16 +105,11 @@ class HabitsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupDrawerContent(navigationView: NavigationView) {
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            if (menuItem.itemId == R.id.statistics_navigation_menu_item) {
-               // val intent = Intent(this@HabitsActivity, StatisticsActivity::class.java)
-               // startActivity(intent)
-            }
-            // Close the navigation drawer when an item is selected.
-            menuItem.isChecked = true
-            drawerLayout.closeDrawers()
-            true
-        }
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.daylight">
 
     <application
@@ -17,5 +18,14 @@
         </activity>
         <activity android:name="com.example.daylight.habitdetail.HabitDetailActivity" />
         <activity android:name="com.example.daylight.addedithabit.AddEditHabitActivity" />
+        <activity
+            android:name="com.example.daylight.statistics.StatisticsActivity"
+            android:parentActivityName=".habits.HabitsActivity"
+            tools:ignore="UnusedAttribute">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".habits.HabitsActivity" />
+        </activity>
     </application>
 </manifest>
