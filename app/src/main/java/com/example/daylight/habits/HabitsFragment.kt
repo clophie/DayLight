@@ -92,6 +92,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             noHabitAddView = (findViewById<TextView>(R.id.noHabitsAdd)).also {
                 it.setOnClickListener { showAddHabit() }
             }
+
         }
 
         // Set up floating action button

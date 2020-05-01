@@ -44,27 +44,32 @@ class HabitsActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.navigation_habits-> {
                     title=resources.getString(R.string.habits)
-                    loadFragment(HabitsFragment())
+                    val fragment = HabitsFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                        .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
 
                 //TODO Change this to the moods fragment
                 R.id.navigation_moods-> {
-                    title=resources.getString(R.string.moods)
-                    loadFragment(HabitsFragment())
+                    val fragment = HabitsFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                        .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
 
                 R.id.navigation_analysis-> {
-                    title=resources.getString(R.string.analysis)
-                    loadFragment(StatisticsFragment())
+                    val fragment = StatisticsFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                        .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
 
                 //TODO Change this to the settings fragment
                 R.id.navigation_settings-> {
-                    title=resources.getString(R.string.settings)
-                    loadFragment(HabitsFragment())
+                    val fragment = HabitsFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                        .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
             }
@@ -76,10 +81,11 @@ class HabitsActivity : AppCompatActivity() {
             replaceFragmentInActivity(it, R.id.contentFrame)
         }
 
-        // Create the presenter
+        //Get the database and repo
         val database = DaylightDatabase.getInstance(applicationContext)
         val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
 
+        // Create the presenter
         habitsPresenter = HabitsPresenter(repo,
             habitsFragment).apply {
             // Load previously saved state, if available.
