@@ -39,8 +39,6 @@ class StatisticsActivity : AppCompatActivity() {
         drawerLayout = (findViewById<DrawerLayout>(R.id.drawer_layout)).apply {
             setStatusBarBackground(R.color.colorPrimaryDark)
         }
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        setupDrawerContent(navigationView)
 
         val statisticsFragment = supportFragmentManager
             .findFragmentById(R.id.contentFrame) as StatisticsFragment?
@@ -61,17 +59,5 @@ class StatisticsActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun setupDrawerContent(navigationView: NavigationView) {
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            if (menuItem.itemId == R.id.list_navigation_menu_item) {
-                NavUtils.navigateUpFromSameTask(this@StatisticsActivity)
-            }
-            // Close the navigation drawer when an item is selected.
-            menuItem.isChecked = true
-            drawerLayout.closeDrawers()
-            true
-        }
     }
 }

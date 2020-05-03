@@ -1,15 +1,8 @@
 package com.example.daylight.habits
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.test.espresso.IdlingResource
 import com.example.daylight.R
 import com.example.daylight.data.source.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
@@ -18,14 +11,11 @@ import com.example.daylight.statistics.StatisticsFragment
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.habits_act.*
 
 class HabitsActivity : AppCompatActivity() {
 
     private val CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY"
-
-    private lateinit var drawerLayout: DrawerLayout
 
     private lateinit var habitsPresenter: HabitsPresenter
 
@@ -35,8 +25,8 @@ class HabitsActivity : AppCompatActivity() {
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
-            setHomeAsUpIndicator(R.drawable.ic_menu)
-            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(true)
+            title = resources.getString(R.string.habits)
         }
 
         // Set up the bottom navigation.
@@ -52,6 +42,7 @@ class HabitsActivity : AppCompatActivity() {
 
                 //TODO Change this to the moods fragment
                 R.id.navigation_moods-> {
+                    title=resources.getString(R.string.moods)
                     val fragment = HabitsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
                         .commit()
@@ -59,6 +50,7 @@ class HabitsActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_analysis-> {
+                    title=resources.getString(R.string.analysis)
                     val fragment = StatisticsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
                         .commit()
@@ -67,6 +59,7 @@ class HabitsActivity : AppCompatActivity() {
 
                 //TODO Change this to the settings fragment
                 R.id.navigation_settings-> {
+                    title=resources.getString(R.string.settings)
                     val fragment = HabitsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
                         .commit()
@@ -100,15 +93,6 @@ class HabitsActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState.apply {
             putSerializable(CURRENT_FILTERING_KEY, habitsPresenter.currentFiltering)
         })
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            // Open the navigation drawer when the home icon is selected from the toolbar.
-            drawerLayout.openDrawer(GravityCompat.START)
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun loadFragment(fragment: Fragment) {
