@@ -10,7 +10,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.local.DaylightDatabase
+import com.example.daylight.data.source.local.HabitsLocalDataSource
 import com.example.daylight.habitdetail.HabitDetailActivity
+import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.showSnackBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -55,6 +59,15 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
     override fun onResume() {
         super.onResume()
+        if (!this::presenter.isInitialized) {
+            //Get the database and repo
+            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+
+            // Create the presenter
+            presenter = HabitsPresenter(repo, this)
+        }
+
         presenter.start()
     }
 

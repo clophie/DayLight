@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
+import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.local.DaylightDatabase
+import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.util.AppExecutors
 
 
 /**
@@ -23,13 +27,20 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.statistics_act, container, false)
+        val root = inflater.inflate(R.layout.statistics_frag, container, false)
         statisticsTV = root.findViewById(R.id.statistics)
         return root
     }
 
     override fun onResume() {
         super.onResume()
+        if (!this::presenter.isInitialized) {
+            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+
+            StatisticsPresenter(repo, this)
+        }
+
         presenter.start()
     }
 
