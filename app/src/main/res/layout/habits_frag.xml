@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="true">
 
         <LinearLayout
             android:id="@+id/habitsLL"
@@ -48,7 +49,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_assignment_turned_in_24dp" />
+                android:src="@drawable/ic_assignment_turned_in_24dp"
+                android:contentDescription="@string/nohabitsicon" />
 
             <TextView
                 android:id="@+id/noHabitsMain"
