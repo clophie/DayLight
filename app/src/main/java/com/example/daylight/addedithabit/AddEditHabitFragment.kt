@@ -75,7 +75,7 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
         fun newInstance(habitId: String?) =
             AddEditHabitFragment().apply {
                 arguments = Bundle().apply {
-                    putString(AddEditHabitFragment.ARGUMENT_EDIT_HABIT_ID, habitId)
+                    putString(ARGUMENT_EDIT_HABIT_ID, habitId)
                 }
             }
     }
