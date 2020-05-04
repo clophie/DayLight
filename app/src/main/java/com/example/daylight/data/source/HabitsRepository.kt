@@ -43,8 +43,6 @@ class HabitsRepository(
         }
 
         if (cacheIsDirty) {
-        } else {
-            // Query the local storage if available. If not, query the network.
             habitsLocalDataSource.getHabits(object : HabitsDataSource.LoadHabitsCallback {
                 override fun onHabitsLoaded(habits: List<Habit>) {
                     refreshCache(habits)

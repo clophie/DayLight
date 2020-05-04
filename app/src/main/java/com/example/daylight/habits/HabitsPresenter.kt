@@ -45,7 +45,6 @@ class HabitsPresenter(
     }
 
     override fun loadHabits(forceUpdate: Boolean) {
-        // Simplification for sample: a network reload will be forced on first load.
         loadHabits(forceUpdate || firstLoad, true)
         firstLoad = false
     }
