@@ -61,9 +61,9 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         return deletePressed
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         inflater.inflate(R.menu.habitdetail_fragment_menu, menu)
-    }
+    }*/
 
     override fun setLoadingIndicator(active: Boolean) {
         if (active) {

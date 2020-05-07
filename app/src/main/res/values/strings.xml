@@ -11,7 +11,8 @@
     <string name="menu_delete_habit">Delete habit</string>
     <string name="navigation_view_header_title">Habits</string>
     <string name="title_hint">Title</string>
-    <string name="description_hint">Enter your Habit here.</string>
+    <string name="description_hint">Habit description.</string>
+    <string name="time_hint">Target completion time.</string>
     <string name="empty_habit_message">TO DOs cannot be empty</string>
     <string name="successfully_saved_habit_message">Habit saved</string>
     <string name="list_title">Habit List</string>

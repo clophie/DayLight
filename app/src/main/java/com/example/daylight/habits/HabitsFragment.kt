@@ -126,9 +126,9 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         return true
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         inflater.inflate(R.menu.habits_fragment_menu, menu)
-    }
+    }*/
 
     override fun showFilteringPopUpMenu() {
         val activity = activity ?: return
