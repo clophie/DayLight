@@ -2,8 +2,10 @@ package com.example.daylight.data.source.local
 
 import androidx.room.*
 import com.example.daylight.data.source.Habit
+import com.example.daylight.util.Converters
 
 @Dao
+@TypeConverters(Converters::class)
 interface HabitsDao {
     /**
      * Select all tasks from the tasks table.
