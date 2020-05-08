@@ -33,7 +33,7 @@ class AddEditHabitPresenter(
         }
     }
 
-    override fun saveHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
+    override fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
         if (habitId == null) {
             createHabit(title, description, days, time)
         } else {
@@ -66,7 +66,7 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun createHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
+    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
         val newHabit = Habit(title, description, days, time)
         if (newHabit.isEmpty) {
             addHabitView.showEmptyHabitError()
@@ -76,7 +76,7 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun updateHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
+    private fun updateHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
         if (habitId == null) {
             throw RuntimeException("updateHabit() was called but habit is new.")
         }

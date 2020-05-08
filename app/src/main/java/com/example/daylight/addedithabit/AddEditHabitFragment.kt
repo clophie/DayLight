@@ -42,7 +42,7 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
                 var c = Calendar.getInstance()
                 c.set(Calendar.HOUR, time.hour)
                 c.set(Calendar.MINUTE, time.minute)
-                presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays, c)
+                presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays.toMutableList(), c)
             }
         }
     }

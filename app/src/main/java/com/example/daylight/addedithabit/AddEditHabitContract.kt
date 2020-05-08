@@ -27,7 +27,7 @@ interface AddEditHabitContract {
     interface Presenter : BasePresenter {
         var isDataMissing: Boolean
 
-        fun saveHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar)
+        fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar)
 
         fun populateHabit()
     }

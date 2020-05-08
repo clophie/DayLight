@@ -2,22 +2,26 @@ package com.example.daylight.util
 
 import androidx.room.TypeConverter
 import ca.antonious.materialdaypicker.MaterialDayPicker
-
-import java.util.Date
+import java.util.*
 
 
 class Converters {
     companion object {
+
         @TypeConverter
         @JvmStatic
-        fun fromTimestamp(value: Long?): Date? {
-            return if (value == null) null else Date(value)
+        fun fromTimestamp(value: Long?): Calendar? {
+            val cal = Calendar.getInstance()
+            if (value != null) {
+                cal.timeInMillis = value
+            }
+            return cal
         }
 
         @TypeConverter
         @JvmStatic
-        fun toTimestamp(date: Date?): Long? {
-            return date?.time
+        fun toTimestamp(date: Calendar?): Long? {
+            return date?.timeInMillis
         }
 
         @TypeConverter
