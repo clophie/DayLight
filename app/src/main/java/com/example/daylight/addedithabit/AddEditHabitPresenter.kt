@@ -1,7 +1,9 @@
 package com.example.daylight.addedithabit
 
+import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.data.source.Habit
 import com.example.daylight.data.source.HabitsDataSource
+import java.util.*
 
 /**
  * Listens to user actions from the UI ([AddEditHabitFragment]), retrieves the data and updates
@@ -31,11 +33,11 @@ class AddEditHabitPresenter(
         }
     }
 
-    override fun saveHabit(title: String, description: String) {
+    override fun saveHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
         if (habitId == null) {
-            createHabit(title, description)
+            createHabit(title, description, days, time)
         } else {
-            updateHabit(title, description)
+            updateHabit(title, description, days, time)
         }
     }
 
@@ -51,6 +53,8 @@ class AddEditHabitPresenter(
         if (addHabitView.isActive) {
             addHabitView.setTitle(habit.title)
             addHabitView.setDescription(habit.description)
+            addHabitView.setDays(habit.days)
+            addHabitView.setTime(habit.time)
         }
         isDataMissing = false
     }
@@ -62,8 +66,8 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun createHabit(title: String, description: String) {
-        val newHabit = Habit(title, description)
+    private fun createHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
+        val newHabit = Habit(title, description, days, time)
         if (newHabit.isEmpty) {
             addHabitView.showEmptyHabitError()
         } else {
@@ -72,11 +76,11 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun updateHabit(title: String, description: String) {
+    private fun updateHabit(title: String, description: String, days: List<MaterialDayPicker.Weekday>, time: Calendar) {
         if (habitId == null) {
             throw RuntimeException("updateHabit() was called but habit is new.")
         }
-        habitsRepository.saveHabit(Habit(title, description, habitId))
+        habitsRepository.saveHabit(Habit(title, description, days, time, habitId))
         addHabitView.showHabitsList() // After an edit, go back to the list.
     }
 }

@@ -42,7 +42,7 @@
         android:importantForAutofill="no" />
 
     <ca.antonious.materialdaypicker.MaterialDayPicker
-        android:id="@+id/habitDayPicker"
+        android:id="@+id/habit_day_picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -52,19 +52,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_habit_description" />
 
-    <EditText
-        android:id="@+id/habitTimePicker"
+    <TimePicker
+        android:id="@+id/habit_time_picker"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="389dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:hint="@string/time_hint"
-        android:ems="10"
-        android:inputType="time"
+        android:timePickerMode="clock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habitDayPicker"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_day_picker" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

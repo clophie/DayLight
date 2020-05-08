@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.fragment.app.Fragment
+import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 
 /**
- * Main UI for the add habit screen. Users can enter a habit title and description.
+ * Main UI for the add habit screen. Users can enter a habit title, description, target day and target time.
  */
 class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
 
@@ -23,6 +25,8 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
 
     private lateinit var title: TextView
     private lateinit var description: TextView
+    private lateinit var days: MaterialDayPicker
+    private lateinit var time: TimePicker
 
 
     override fun onResume() {
@@ -35,7 +39,10 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
-                presenter.saveHabit(title.text.toString(), description.text.toString())
+                var c = Calendar.getInstance()
+                c.set(Calendar.HOUR, time.hour)
+                c.set(Calendar.MINUTE, time.minute)
+                presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays, c)
             }
         }
     }
@@ -46,6 +53,8 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
         with(root) {
             title = findViewById(R.id.add_habit_title)
             description = findViewById(R.id.add_habit_description)
+            days =  findViewById(R.id.habit_day_picker)
+            time = findViewById(R.id.habit_time_picker)
         }
         setHasOptionsMenu(true)
         return root
@@ -67,6 +76,15 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
 
     override fun setDescription(description: String) {
         this.description.text = description
+    }
+
+    override fun setDays(days: List<MaterialDayPicker.Weekday>) {
+        this.days.setSelectedDays(days)
+    }
+
+    override fun setTime(time: Calendar) {
+        this.time.hour = time.get(Calendar.HOUR_OF_DAY)
+        this.time.minute = time.get(Calendar.MINUTE)
     }
 
     companion object {

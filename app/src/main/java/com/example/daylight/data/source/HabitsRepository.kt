@@ -148,7 +148,7 @@ class HabitsRepository(
     private fun getHabitWithId(id: String) = cachedHabits[id]
 
     private inline fun cacheAndPerform(habit: Habit, perform: (Habit) -> Unit) {
-        val cachedHabit = Habit(habit.title, habit.description, habit.id).apply {
+        val cachedHabit = Habit(habit.title, habit.description, habit.days, habit.time, habit.id).apply {
             isCompleted = habit.isCompleted
         }
         cachedHabits.put(cachedHabit.id, cachedHabit)
