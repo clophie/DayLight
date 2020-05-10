@@ -8,54 +8,54 @@ import com.example.daylight.util.Converters
 @TypeConverters(Converters::class)
 interface HabitsDao {
     /**
-     * Select all tasks from the tasks table.
+     * Select all habits from the habits table.
      *
-     * @return all tasks.
+     * @return all habits.
      */
     @Query("SELECT * FROM Habits") fun getHabits(): List<Habit>
 
     /**
-     * Select a task by id.
+     * Select a habit by id.
      *
-     * @param taskId the task id.
-     * @return the task with taskId.
+     * @param habitId the habit id.
+     * @return the habit with habitId.
      */
     @Query("SELECT * FROM Habits WHERE habitid = :habitId") fun getHabitById(habitId: String): Habit?
 
     /**
-     * Insert a task in the database. If the task already exists, replace it.
+     * Insert a habit in the database. If the habit already exists, replace it.
      *
-     * @param task the task to be inserted.
+     * @param habit the habit to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertHabit(habit: Habit)
 
     /**
-     * Update a task.
+     * Update a habit.
      *
-     * @param task task to be updated
-     * @return the number of tasks updated. This should always be 1.
+     * @param habit habit to be updated
+     * @return the number of habits updated. This should always be 1.
      */
     @Update
     fun updateHabit(habit: Habit): Int
 
     /**
-     * Update the complete status of a task
+     * Update the complete status of a habit
      *
-     * @param taskId    id of the task
+     * @param habitId    id of the habit
      * @param completed status to be updated
      */
     @Query("UPDATE habits SET completed = :completed WHERE habitid = :habitId")
     fun updateCompleted(habitId: String, completed: Boolean)
 
     /**
-     * Delete a task by id.
+     * Delete a habit by id.
      *
-     * @return the number of tasks deleted. This should always be 1.
+     * @return the number of habits deleted. This should always be 1.
      */
     @Query("DELETE FROM Habits WHERE habitid = :habitId") fun deleteHabitById(habitId: String): Int
 
     /**
-     * Delete all tasks.
+     * Delete all habits.
      */
     @Query("DELETE FROM Habits") fun deleteHabits()
 }

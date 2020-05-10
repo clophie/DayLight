@@ -1,7 +1,6 @@
 package com.example.daylight.data.source
 
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 
 /**
@@ -55,6 +54,10 @@ class HabitsRepository(
         }
     }
 
+    override fun refreshHabits() {
+        cacheIsDirty = true
+    }
+
     override fun saveHabit(habit: Habit) {
         // Do in memory cache update to keep the app UI up to date
         cacheAndPerform(habit) {
@@ -70,7 +73,7 @@ class HabitsRepository(
         }
     }
 
-    override fun completeHabit(habitId: String) {
+    fun completeHabit(habitId: String) {
         getHabitWithId(habitId)?.let {
             completeHabit(it)
         }
@@ -84,7 +87,7 @@ class HabitsRepository(
         }
     }
 
-    override fun activateHabit(habitId: String) {
+    fun activateHabit(habitId: String) {
         getHabitWithId(habitId)?.let {
             activateHabit(it)
         }
@@ -123,10 +126,6 @@ class HabitsRepository(
         })
     }
 
-    override fun refreshHabits() {
-        cacheIsDirty = true
-    }
-
     override fun deleteAllHabits() {
         habitsLocalDataSource.deleteAllHabits()
         cachedHabits.clear()
@@ -135,6 +134,41 @@ class HabitsRepository(
     override fun deleteHabit(habitId: String) {
         habitsLocalDataSource.deleteHabit(habitId)
         cachedHabits.remove(habitId)
+    }
+
+    override fun getHabitTracking() {
+        habitsLocalDataSource.getHabitTracking()
+    }
+
+    override fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback) {
+        habitsLocalDataSource.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+                callback.onHabitTrackingLoaded(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+            }
+        })
+    }
+
+    override fun insertHabitTracking(habitTracking: HabitTracking) {
+        habitsLocalDataSource.insertHabitTracking(habitTracking)
+    }
+
+    override fun updateHabitTracking(habitTracking: HabitTracking) {
+        habitsLocalDataSource.updateHabitTracking(habitTracking)
+    }
+
+    override fun deleteHabitTrackingByHabitId(habitId: String) {
+        habitsLocalDataSource.deleteHabitTrackingByHabitId(habitId)
+    }
+
+    override fun deleteHabitTrackingByTimestamp(timestamp: Calendar) {
+        habitsLocalDataSource.deleteHabitTrackingByTimestamp(timestamp)
+    }
+
+    override fun deleteAllHabitTracking() {
+        habitsLocalDataSource.deleteAllHabitTracking()
     }
 
     private fun refreshCache(habits: List<Habit>) {

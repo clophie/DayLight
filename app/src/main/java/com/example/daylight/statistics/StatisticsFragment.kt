@@ -36,7 +36,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         super.onResume()
         if (!this::presenter.isInitialized) {
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
-            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
             StatisticsPresenter(repo, this)
         }
@@ -52,14 +52,14 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         }
     }
 
-    override fun showStatistics(numberOfIncompleteHabits: Int, numberOfCompletedHabits: Int) {
-        if (numberOfCompletedHabits == 0 && numberOfIncompleteHabits == 0) {
+    override fun showStatistics(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int) {
+        if (numberOfCompletedTasks == 0 && numberOfIncompleteTasks == 0) {
             statisticsTV.text = resources.getString(R.string.statistics_no_habits)
         } else {
             val displayString = "${resources.getString(R.string.statistics_active_habits)} " +
-                    "$numberOfIncompleteHabits\n" +
+                    "$numberOfIncompleteTasks\n" +
                     "${resources.getString(R.string.statistics_completed_habits)} " +
-                    "$numberOfCompletedHabits"
+                    "$numberOfCompletedTasks"
             statisticsTV.text = displayString
         }
     }

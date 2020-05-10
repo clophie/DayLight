@@ -6,17 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitTracking
 import com.example.daylight.util.Converters
 
 
 /**
  * The Room Database that contains the Habit table.
  */
-@Database(entities = [Habit::class], version = 1)
+@Database(entities = [Habit::class, HabitTracking::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class DaylightDatabase : RoomDatabase() {
 
     abstract fun habitDao(): HabitsDao
+    abstract fun habitTrackingDao(): HabitTrackingDao
 
     companion object {
 

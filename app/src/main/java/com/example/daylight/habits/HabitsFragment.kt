@@ -62,7 +62,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         if (!this::presenter.isInitialized) {
             //Get the database and repo
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
-            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
             // Create the presenter
             presenter = HabitsPresenter(repo, this)

@@ -45,7 +45,7 @@ class AddEditHabitActivity : AppCompatActivity() {
         val database = DaylightDatabase.getInstance(applicationContext)
 
         addEditHabitPresenter = AddEditHabitPresenter(habitId,
-            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()), addEditHabitFragment,
+            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()), addEditHabitFragment,
             shouldLoadDataFromRepo)
     }
 

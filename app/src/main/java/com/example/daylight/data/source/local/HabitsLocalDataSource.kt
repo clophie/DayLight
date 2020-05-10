@@ -2,15 +2,18 @@ package com.example.daylight.data.source.local
 
 import androidx.annotation.VisibleForTesting
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitTracking
 import com.example.daylight.data.source.HabitsDataSource
 import com.example.daylight.util.AppExecutors
+import java.util.*
 
 /**
  * Concrete implementation of a data source as a db.
  */
 class HabitsLocalDataSource private constructor(
     val appExecutors: AppExecutors,
-    val habitsDao: HabitsDao
+    val habitsDao: HabitsDao,
+    val habitTrackingDao: HabitTrackingDao
 ) : HabitsDataSource {
 
     /**
@@ -56,23 +59,13 @@ class HabitsLocalDataSource private constructor(
         appExecutors.diskIO.execute { habitsDao.updateCompleted(habit.id, true) }
     }
 
-    override fun completeHabit(habitId: String) {
-        // Not required for the local data source because the {@link TasksRepository} handles
-        // converting from a {@code taskId} to a {@link task} using its cached data.
-    }
-
     override fun activateHabit(habit: Habit) {
         appExecutors.diskIO.execute { habitsDao.updateCompleted(habit.id, false) }
     }
 
-    override fun activateHabit(habitId: String) {
-        // Not required for the local data source because the {@link TasksRepository} handles
-        // converting from a {@code taskId} to a {@link task} using its cached data.
-    }
-
     override fun refreshHabits() {
-        // Not required because the {@link TasksRepository} handles the logic of refreshing the
-        // tasks from all the available data sources.
+        // Not required because the {@link HabitsRepository} handles the logic of refreshing the
+        // habits from all the available data sources.
     }
 
     override fun deleteAllHabits() {
@@ -83,14 +76,51 @@ class HabitsLocalDataSource private constructor(
         appExecutors.diskIO.execute { habitsDao.deleteHabitById(habitId) }
     }
 
+    override fun getHabitTracking() {
+        appExecutors.diskIO.execute { habitTrackingDao.getHabitTracking() }
+    }
+
+    override fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback) {
+        appExecutors.diskIO.execute {
+            val habitTracking = habitTrackingDao.getHabitTrackingByHabitId(habitId)
+            appExecutors.mainThread.execute {
+                if (habitTracking != null) {
+                    callback.onHabitTrackingLoaded(habitTracking)
+                } else {
+                    callback.onDataNotAvailable()
+                }
+            }
+        }
+    }
+
+    override fun insertHabitTracking(habitTracking: HabitTracking) {
+        appExecutors.diskIO.execute { habitTrackingDao.insertHabitTracking(habitTracking) }
+    }
+
+    override fun updateHabitTracking(habitTracking: HabitTracking) {
+        appExecutors.diskIO.execute { habitTrackingDao.updateHabitTracking(habitTracking) }
+    }
+
+    override fun deleteHabitTrackingByHabitId(habitId: String) {
+        appExecutors.diskIO.execute { habitTrackingDao.deleteHabitTrackingByHabitId(habitId) }
+    }
+
+    override fun deleteHabitTrackingByTimestamp(timestamp: Calendar) {
+        appExecutors.diskIO.execute { habitTrackingDao.deleteHabitTrackingByTimestamp(timestamp) }
+    }
+
+    override fun deleteAllHabitTracking() {
+        appExecutors.diskIO.execute { habitTrackingDao.deleteHabitTracking() }
+    }
+
     companion object {
         private var INSTANCE: HabitsLocalDataSource? = null
 
         @JvmStatic
-        fun getInstance(appExecutors: AppExecutors, habitsDao: HabitsDao): HabitsLocalDataSource {
+        fun getInstance(appExecutors: AppExecutors, habitsDao: HabitsDao, habitTrackingDao: HabitTrackingDao): HabitsLocalDataSource {
             if (INSTANCE == null) {
                 synchronized(HabitsLocalDataSource::javaClass) {
-                    INSTANCE = HabitsLocalDataSource(appExecutors, habitsDao)
+                    INSTANCE = HabitsLocalDataSource(appExecutors, habitsDao, habitTrackingDao)
                 }
             }
             return INSTANCE!!
