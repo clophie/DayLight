@@ -1,6 +1,9 @@
 package com.example.daylight.habits
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
@@ -11,13 +14,27 @@ import com.example.daylight.statistics.StatisticsFragment
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.habits_act.*
+
 
 class HabitsActivity : AppCompatActivity() {
 
     private val CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY"
 
     private lateinit var habitsPresenter: HabitsPresenter
+
+    // Boolean flag to know if main FAB is in open or closed state.
+    private var fabExpanded = false
+    private var mainFab: FloatingActionButton? = null
+
+    // Linear layout holding the Save submenu
+    private var layoutTrackHabitFab: LinearLayout? = null
+
+    // Linear layout holding the Edit submenu
+    private var layoutNewHabitFab: LinearLayout? = null
+    private var layoutFabPhoto: LinearLayout? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +45,31 @@ class HabitsActivity : AppCompatActivity() {
             setDisplayShowTitleEnabled(true)
             title = resources.getString(R.string.habits)
         }
+
+        mainFab = findViewById(R.id.fab_add_habit)
+
+        layoutTrackHabitFab = findViewById(R.id.fab_track_habit_layout)
+        layoutNewHabitFab = findViewById(R.id.fab_new_habit_layout)
+
+        //When main Fab (Settings) is clicked, it expands if not expanded already.
+        //Collapses if main FAB was open already.
+        //This gives FAB (Settings) open/close behavior
+
+        //When main Fab (Settings) is clicked, it expands if not expanded already.
+        //Collapses if main FAB was open already.
+        //This gives FAB (Settings) open/close behavior
+        mainFab!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                if (fabExpanded) {
+                    closeSubMenusFab()
+                } else {
+                    openSubMenusFab()
+                }
+            }
+        })
+
+        //Only main FAB is visible in the beginning
+        closeSubMenusFab()
 
         // Set up the bottom navigation.
         navigationView.setOnNavigationItemSelectedListener {
@@ -101,5 +143,23 @@ class HabitsActivity : AppCompatActivity() {
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    //closes FAB submenus
+    private fun closeSubMenusFab() {
+        layoutTrackHabitFab!!.visibility = View.INVISIBLE
+        layoutNewHabitFab!!.visibility = View.INVISIBLE
+        mainFab!!.setImageResource(R.drawable.ic_add)
+        fabExpanded = false
+    }
+
+    //Opens FAB submenus
+    private fun openSubMenusFab() {
+        layoutTrackHabitFab!!.visibility = View.VISIBLE
+        layoutNewHabitFab!!.visibility = View.VISIBLE
+
+        //Change settings icon to 'X' icon
+        mainFab!!.setImageResource(R.drawable.ic_close_white_24dp)
+        fabExpanded = true
     }
 }
