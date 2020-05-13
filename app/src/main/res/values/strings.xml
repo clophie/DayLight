@@ -22,7 +22,7 @@
     <string name="statistics_completed_habits">Completed habits:</string>
     <string name="statistics_error">Error loading statistics.</string>
     <string name="no_data">No data</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">Loading...</string>
 
     <string-array name="list_habits_array">
         <item>@string/nav_all</item>
@@ -45,8 +45,4 @@
     <string name="analysis">Analysis</string>
     <string name="settings">Settings</string>
     <string name="nohabitsicon">noHabitsIcon</string>
-    <string name="track_habit">Track Habit</string>
-    <string name="new_habit">New Habit</string>
-    <string name="track_mood">Track Mood</string>
-    <string name="new_mood">New Mood</string>
 </resources>
