@@ -38,16 +38,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     private lateinit var habitsView: LinearLayout
     private lateinit var filteringLabelView: TextView
 
-    // Boolean flag to know if main FAB is in open or closed state.
-    private var fabExpanded = false
-    private var mainFab: FloatingActionButton? = null
-
-    // Linear layout holding the Track Habit submenu
-    private var layoutTrackHabitFab: LinearLayout? = null
-
-    // Linear layout holding the New Habit submenu
-    private var layoutNewHabitFab: LinearLayout? = null
-
     /**
      * Listener for clicks on habits in the ListView.
      */
@@ -72,13 +62,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         if (!this::presenter.isInitialized) {
             //Get the database and repo
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
-            val repo = HabitsRepository.getInstance(
-                HabitsLocalDataSource.getInstance(
-                    AppExecutors(),
-                    database.habitDao(),
-                    database.habitTrackingDao()
-                )
-            )
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
             // Create the presenter
             presenter = HabitsPresenter(repo, this)
@@ -91,10 +75,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         presenter.result(requestCode, resultCode)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.habits_frag, container, false)
 
         // Set up habits view
@@ -104,18 +86,9 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             // Set up progress indicator
             findViewById<ScrollChildSwipeRefreshLayout>(R.id.refresh_layout).apply {
                 setColorSchemeColors(
-                    androidx.core.content.ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorPrimary
-                    ),
-                    androidx.core.content.ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorAccent
-                    ),
-                    androidx.core.content.ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorPrimaryDark
-                    )
+                    androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorPrimary),
+                    androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                    androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
                 )
                 // Set the scrolling view in the custom SwipeRefreshLayout.
                 scrollUpChild = listView
@@ -136,29 +109,10 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         }
 
         // Set up floating action button
-        layoutTrackHabitFab = requireActivity().findViewById(R.id.fab_track_habit_layout)
-        layoutNewHabitFab = requireActivity().findViewById(R.id.fab_new_habit_layout)
-
-        mainFab = requireActivity().findViewById(R.id.fab_add_habit)
-
-        //When main Fab is clicked, it expands if not expanded already.
-        //Collapses if main FAB was open already.
-        //This gives FAB (Settings) open/close behavior
-        requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit)
-            .setOnClickListener {
-                if (fabExpanded) {
-                    closeSubMenusFab()
-                } else {
-                    openSubMenusFab()
-                }
-            }
-
-        requireActivity().findViewById<FloatingActionButton>(R.id.fab_new_habit)
-            .setOnClickListener { presenter.addNewHabit() }
-
-        //Only main FAB is visible in the beginning
-        closeSubMenusFab()
-
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit).apply {
+            setImageResource(R.drawable.ic_add)
+            setOnClickListener { presenter.addNewHabit() }
+        }
         setHasOptionsMenu(true)
 
         return root
@@ -209,27 +163,15 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     }
 
     override fun showNoActiveHabits() {
-        showNoHabitsViews(
-            resources.getString(R.string.no_habits_active),
-            R.drawable.ic_check_circle_24dp,
-            false
-        )
+        showNoHabitsViews(resources.getString(R.string.no_habits_active), R.drawable.ic_check_circle_24dp, false)
     }
 
     override fun showNoHabits() {
-        showNoHabitsViews(
-            resources.getString(R.string.no_habits_all),
-            R.drawable.ic_assignment_turned_in_24dp,
-            false
-        )
+        showNoHabitsViews(resources.getString(R.string.no_habits_all), R.drawable.ic_assignment_turned_in_24dp, false)
     }
 
     override fun showNoCompletedHabits() {
-        showNoHabitsViews(
-            resources.getString(R.string.no_habits_completed),
-            R.drawable.ic_verified_user_24dp,
-            false
-        )
+        showNoHabitsViews(resources.getString(R.string.no_habits_completed), R.drawable.ic_verified_user_24dp, false)
     }
 
     override fun showSuccessfullySavedMessage() {
@@ -291,26 +233,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         view?.showSnackBar(message, Snackbar.LENGTH_LONG)
     }
 
-    //closes FAB submenus
-    private fun closeSubMenusFab() {
-        layoutTrackHabitFab!!.visibility = View.INVISIBLE
-        layoutNewHabitFab!!.visibility = View.INVISIBLE
-        mainFab!!.setImageResource(R.drawable.ic_add)
-        fabExpanded = false
-    }
-
-    //Opens FAB submenus
-    private fun openSubMenusFab() {
-        layoutTrackHabitFab!!.visibility = View.VISIBLE
-        layoutNewHabitFab!!.visibility = View.VISIBLE
-
-        //Change settings icon to 'X' icon
-        mainFab!!.setImageResource(R.drawable.ic_close_white_24dp)
-        fabExpanded = true
-    }
-
-    private class HabitsAdapter(habits: List<Habit>, private val itemListener: HabitItemListener) :
-        BaseAdapter() {
+    private class HabitsAdapter(habits: List<Habit>, private val itemListener: HabitItemListener)
+        : BaseAdapter() {
 
         var habits: List<Habit> = habits
             set(habits) {
