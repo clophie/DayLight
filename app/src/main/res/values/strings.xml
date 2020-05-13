@@ -44,5 +44,9 @@
     <string name="moods">Moods</string>
     <string name="analysis">Analysis</string>
     <string name="settings">Settings</string>
+    <string name="addNewHabitFab">Add a New Habit</string>
+    <string name="addNewMoodFab">Add a New Mood</string>
+    <string name="trackHabitFab">Track a Habit</string>
+    <string name="trackMoodFab">Track a Mood</string>
     <string name="nohabitsicon">noHabitsIcon</string>
 </resources>

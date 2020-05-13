@@ -16,7 +16,7 @@ import com.example.daylight.data.source.local.HabitsLocalDataSource
 import com.example.daylight.habitdetail.HabitDetailActivity
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.showSnackBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.util.ArrayList
 
@@ -110,7 +110,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
         // Set up floating action button
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit).apply {
-            setImageResource(R.drawable.ic_add)
             setOnClickListener { presenter.addNewHabit() }
         }
         setHasOptionsMenu(true)

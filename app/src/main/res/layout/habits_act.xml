@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -44,16 +45,91 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_add_habit"
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/main_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|end"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                app:menu_colorNormal="@color/colorAccent"
+                app:menu_colorPressed="@color/colorAccentDark"
+                fab:menu_animationDelayPerItem="50"
+                fab:menu_backgroundColor="@android:color/transparent"
+                fab:menu_buttonSpacing="0dp"
+                fab:menu_colorRipple="#99FFFFFF"
+                fab:menu_fab_size="normal"
+                fab:menu_icon="@drawable/fab_add"
+                fab:menu_labels_colorNormal="#333333"
+                fab:menu_labels_colorPressed="#444444"
+                fab:menu_labels_colorRipple="#66FFFFFF"
+                fab:menu_labels_cornerRadius="3dp"
+                fab:menu_labels_ellipsize="none"
+                fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                fab:menu_labels_margin="0dp"
+                fab:menu_labels_maxLines="-1"
+                fab:menu_labels_padding="8dp"
+                fab:menu_labels_paddingBottom="4dp"
+                fab:menu_labels_paddingLeft="8dp"
+                fab:menu_labels_paddingRight="8dp"
+                fab:menu_labels_paddingTop="4dp"
+                fab:menu_labels_position="left"
+                fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+                fab:menu_labels_showShadow="true"
+                fab:menu_labels_singleLine="false"
+                fab:menu_labels_textColor="#FFFFFF"
+                fab:menu_labels_textSize="14sp"
+                fab:menu_openDirection="up"
+                fab:menu_shadowColor="#66000000"
+                fab:menu_shadowRadius="4dp"
+                fab:menu_shadowXOffset="1dp"
+                fab:menu_shadowYOffset="3dp"
+                fab:menu_showShadow="true">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_add_habit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:fab_colorNormal="@color/colorAccent"
+                    app:fab_colorPressed="@color/colorAccentDark"
+                    fab:fab_label="@string/addNewHabitFab"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_add_mood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:fab_colorNormal="@color/colorAccent"
+                    app:fab_colorPressed="@color/colorAccentDark"
+                    fab:fab_label="@string/addNewMoodFab"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_track_mood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:fab_colorNormal="@color/colorAccent"
+                    app:fab_colorPressed="@color/colorAccentDark"
+                    fab:fab_label="@string/trackMoodFab"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab_track_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_add"
-                app:fabSize="normal"
-                app:layout_anchor="@id/contentFrame"
-                app:layout_anchorGravity="bottom|right|end" />
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccentDark"
+                fab:fab_label="@string/trackHabitFab"
+                fab:fab_size="mini" />
+
+            </com.github.clans.fab.FloatingActionMenu>
 
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
