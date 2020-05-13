@@ -14,6 +14,7 @@ import com.example.daylight.data.source.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
 import com.example.daylight.data.source.local.HabitsLocalDataSource
 import com.example.daylight.habitdetail.HabitDetailActivity
+import com.example.daylight.trackhabit.TrackHabitActivity
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
@@ -108,10 +109,15 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
         }
 
-        // Set up floating action button
+        // Set up floating action buttons
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit).apply {
             setOnClickListener { presenter.addNewHabit() }
         }
+
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_habit).apply {
+            setOnClickListener { presenter.trackHabit() }
+        }
+
         setHasOptionsMenu(true)
 
         return root
@@ -201,6 +207,11 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     override fun showAddHabit() {
         val intent = Intent(context, AddEditHabitActivity::class.java)
         startActivityForResult(intent, AddEditHabitActivity.REQUEST_ADD_HABIT)
+    }
+
+    override fun showTrackHabit() {
+        val intent = Intent(context, TrackHabitActivity::class.java)
+        startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
     }
 
     override fun showHabitDetailsUi(habitId: String) {

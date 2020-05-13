@@ -131,6 +131,10 @@ class HabitsPresenter(
         habitsView.showAddHabit()
     }
 
+    override fun trackHabit() {
+        habitsView.showTrackHabit()
+    }
+
     override fun openHabitDetails(requestedHabit: Habit) {
         habitsView.showHabitDetailsUi(requestedHabit.id)
     }

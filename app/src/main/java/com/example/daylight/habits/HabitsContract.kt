@@ -19,6 +19,8 @@ interface  HabitsContract {
 
         fun showAddHabit()
 
+        fun showTrackHabit()
+
         fun showHabitDetailsUi(habitId: String)
 
         fun showHabitMarkedComplete()
@@ -55,6 +57,8 @@ interface  HabitsContract {
         fun loadHabits(forceUpdate: Boolean)
 
         fun addNewHabit()
+
+        fun trackHabit()
 
         fun openHabitDetails(requestedHabit: Habit)
 
