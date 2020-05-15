@@ -50,22 +50,6 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             }
         }
 
-        val myCalendar = Calendar.getInstance()
-        val date =
-            OnDateSetListener { view, year, monthOfYear, dayOfMonth -> // TODO Auto-generated method stub
-                myCalendar[Calendar.YEAR] = year
-                myCalendar[Calendar.MONTH] = monthOfYear
-                myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
-                updateLabel(myCalendar)
-            }
-
-        dateField.setOnClickListener {
-            DatePickerDialog(
-                activity!!.applicationContext, date, myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
-                myCalendar[Calendar.DAY_OF_MONTH]
-            ).show()
-        }
-
         presenter.loadHabits()
 
         return root
@@ -84,12 +68,6 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         // Apply the adapter to the spinner
         habitSpinner.adapter = adapter
-    }
-
-    private fun updateLabel(date: Calendar) {
-        val myFormat = "dd/MM/yy" //In which you need put here
-        val sdf = SimpleDateFormat(myFormat, Locale.UK)
-        dateField.setText(sdf.format(date))
     }
 
     companion object {
