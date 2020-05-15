@@ -49,4 +49,10 @@
     <string name="trackHabitFab">Track a Habit</string>
     <string name="trackMoodFab">Track a Mood</string>
     <string name="nohabitsicon">noHabitsIcon</string>
+    <string name="habitcompletiontime">When was this habit completed?</string>
+    <string name="habit_selection_prompt">Which habit would you like to track?</string>
+    <string name="select_time">SELECT TIME</string>
+    <string name="select_date">SELECT DATE</string>
+    <string name="time">Habit Completion Time</string>
+    <string name="date">Habit Completion Date</string>
 </resources>

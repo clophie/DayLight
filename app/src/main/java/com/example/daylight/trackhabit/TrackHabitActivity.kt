@@ -8,6 +8,7 @@ import com.example.daylight.data.source.local.DaylightDatabase
 import com.example.daylight.data.source.local.HabitsLocalDataSource
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
+import com.example.daylight.util.setupActionBar
 
 class TrackHabitActivity : AppCompatActivity() {
 
@@ -15,6 +16,12 @@ class TrackHabitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.trackhabit_act)
+
+        // Set up the toolbar.
+        setupActionBar(R.id.toolbar) {
+            setDisplayShowTitleEnabled(true)
+            title = resources.getString(R.string.trackHabitFab)
+        }
 
         val trackHabitFragment = supportFragmentManager
             .findFragmentById(R.id.contentFrame) as TrackHabitFragment? ?:
