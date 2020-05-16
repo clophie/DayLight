@@ -3,21 +3,17 @@ package com.example.daylight.trackhabit
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
 import com.example.daylight.data.source.Habit
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 /**
@@ -57,12 +53,16 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             }
         }
 
+        // Set up date and time pop ups
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
 
         dateField.setText("$day/$month/$year")
+        timeField.setText(String.format("%02d:%02d", hour, minute))
 
         dateButton.setOnClickListener {
             val dpd = DatePickerDialog(activity!!, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -73,6 +73,18 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             }, year, month, day)
 
             dpd.show()
+        }
+
+        timeButton.setOnClickListener {
+            val tpd = TimePickerDialog(activity!!,
+                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+
+                    // Display Selected date in textbox
+                    timeField.setText(String.format("%02d:%02d", hour, minute))
+
+                }, hour, minute, false)
+
+            tpd.show()
         }
 
         presenter.loadHabits()
