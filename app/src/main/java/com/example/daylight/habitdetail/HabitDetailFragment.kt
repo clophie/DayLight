@@ -22,7 +22,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     private lateinit var detailTitle: TextView
     private lateinit var detailDescription: TextView
-    private lateinit var detailCompleteStatus: CheckBox
 
     override lateinit var presenter: HabitDetailContract.Presenter
 
@@ -44,7 +43,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         with(root) {
             detailTitle = findViewById(R.id.habit_detail_title)
             detailDescription = findViewById(R.id.habit_detail_description)
-            detailCompleteStatus = findViewById(R.id.habit_detail_complete)
         }
 
         // Set up floating action button
@@ -87,19 +85,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         }
     }
 
-    override fun showCompletionStatus(complete: Boolean) {
-        with(detailCompleteStatus) {
-            isChecked = complete
-            setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    presenter.completeHabit()
-                } else {
-                    presenter.activateHabit()
-                }
-            }
-        }
-    }
-
     override fun showEditHabit(habitId: String) {
         val intent = Intent(context, AddEditHabitActivity::class.java)
         intent.putExtra(AddEditHabitFragment.ARGUMENT_EDIT_HABIT_ID, habitId)
@@ -108,14 +93,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     override fun showHabitDeleted() {
         activity?.finish()
-    }
-
-    override fun showHabitMarkedComplete() {
-        view?.showSnackBar(getString(R.string.habit_marked_complete), Snackbar.LENGTH_LONG)
-    }
-
-    override fun showHabitMarkedActive() {
-        view?.showSnackBar(getString(R.string.habit_marked_active), Snackbar.LENGTH_LONG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

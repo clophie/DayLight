@@ -33,16 +33,6 @@ interface  HabitsContract {
 
         fun showNoHabits()
 
-        fun showActiveFilterLabel()
-
-        fun showCompletedFilterLabel()
-
-        fun showAllFilterLabel()
-
-        fun showNoActiveHabits()
-
-        fun showNoCompletedHabits()
-
         fun showSuccessfullySavedMessage()
 
         fun showFilteringPopUpMenu()
@@ -61,9 +51,5 @@ interface  HabitsContract {
         fun trackHabit()
 
         fun openHabitDetails(requestedHabit: Habit)
-
-        fun completeHabit(completedHabit: Habit)
-
-        fun activateHabit(activeHabit: Habit)
     }
 }

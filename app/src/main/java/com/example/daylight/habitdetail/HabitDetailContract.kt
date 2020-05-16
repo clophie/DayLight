@@ -25,15 +25,10 @@ interface HabitDetailContract {
 
         fun showDescription(description: String)
 
-        fun showCompletionStatus(complete: Boolean)
-
         fun showEditHabit(habitId: String)
 
         fun showHabitDeleted()
 
-        fun showHabitMarkedComplete()
-
-        fun showHabitMarkedActive()
     }
 
     interface Presenter : BasePresenter {
@@ -42,8 +37,5 @@ interface HabitDetailContract {
 
         fun deleteHabit()
 
-        fun completeHabit()
-
-        fun activateHabit()
     }
 }

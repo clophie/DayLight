@@ -55,4 +55,6 @@
     <string name="select_date">SELECT DATE</string>
     <string name="time">Habit Completion Time</string>
     <string name="date">Habit Completion Date</string>
+    <string name="target_completion_day">Target Completion Day</string>
+    <string name="target_completion_time">Target Completion Time</string>
 </resources>

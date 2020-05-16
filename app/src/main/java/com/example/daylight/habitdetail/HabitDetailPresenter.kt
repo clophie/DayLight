@@ -71,24 +71,6 @@ class HabitDetailPresenter(
         habitDetailView.showHabitDeleted()
     }
 
-    override fun completeHabit() {
-        if (habitId.isEmpty()) {
-            habitDetailView.showMissingHabit()
-            return
-        }
-        habitsRepository.completeHabit(habitId)
-        habitDetailView.showHabitMarkedComplete()
-    }
-
-    override fun activateHabit() {
-        if (habitId.isEmpty()) {
-            habitDetailView.showMissingHabit()
-            return
-        }
-        habitsRepository.activateHabit(habitId)
-        habitDetailView.showHabitMarkedActive()
-    }
-
     private fun showHabit(habit: Habit) {
         with(habitDetailView) {
             if (habitId.isEmpty()) {
@@ -98,7 +80,6 @@ class HabitDetailPresenter(
                 showTitle(habit.title)
                 showDescription(habit.description)
             }
-            showCompletionStatus(habit.isCompleted)
         }
     }
 }

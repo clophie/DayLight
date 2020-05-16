@@ -102,28 +102,10 @@ class HabitsPresenter(
     private fun processHabits(habits: List<Habit>) {
         if (habits.isEmpty()) {
             // Show a message indicating there are no habits for that filter type.
-            processEmptyHabits()
+            habitsView.showNoHabits()
         } else {
             // Show the list of habits
             habitsView.showHabits(habits)
-            // Set the filter label's text.
-            showFilterLabel()
-        }
-    }
-
-    private fun showFilterLabel() {
-        when (currentFiltering) {
-            HabitsFilterType.ACTIVE_HABITS -> habitsView.showActiveFilterLabel()
-            HabitsFilterType.COMPLETED_HABITS -> habitsView.showCompletedFilterLabel()
-            else -> habitsView.showAllFilterLabel()
-        }
-    }
-
-    private fun processEmptyHabits() {
-        when (currentFiltering) {
-            HabitsFilterType.ACTIVE_HABITS -> habitsView.showNoActiveHabits()
-            HabitsFilterType.COMPLETED_HABITS -> habitsView.showNoCompletedHabits()
-            else -> habitsView.showNoHabits()
         }
     }
 
@@ -138,17 +120,4 @@ class HabitsPresenter(
     override fun openHabitDetails(requestedHabit: Habit) {
         habitsView.showHabitDetailsUi(requestedHabit.id)
     }
-
-    override fun completeHabit(completedHabit: Habit) {
-        habitsRepository.completeHabit(completedHabit)
-        habitsView.showHabitMarkedComplete()
-        loadHabits(false, false)
-    }
-
-    override fun activateHabit(activeHabit: Habit) {
-        habitsRepository.activateHabit(activeHabit)
-        habitsView.showHabitMarkedActive()
-        loadHabits(false, false)
-    }
-
 }

@@ -37,7 +37,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     private lateinit var noHabitMainView: TextView
     private lateinit var noHabitAddView: TextView
     private lateinit var habitsView: LinearLayout
-    private lateinit var filteringLabelView: TextView
 
     /**
      * Listener for clicks on habits in the ListView.
@@ -45,14 +44,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     internal var itemListener: HabitItemListener = object : HabitItemListener {
         override fun onHabitClick(clickedHabit: Habit) {
             presenter.openHabitDetails(clickedHabit)
-        }
-
-        override fun onCompleteHabitClick(completedHabit: Habit) {
-            presenter.completeHabit(completedHabit)
-        }
-
-        override fun onActivateHabitClick(activatedHabit: Habit) {
-            presenter.activateHabit(activatedHabit)
         }
     }
 
@@ -93,10 +84,9 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 )
                 // Set the scrolling view in the custom SwipeRefreshLayout.
                 scrollUpChild = listView
-                setOnRefreshListener { presenter.loadHabits(false) }
+                setOnRefreshListener { presenter.loadHabits(true) }
             }
 
-            filteringLabelView = findViewById(R.id.filteringLabel)
             habitsView = findViewById(R.id.habitsLL)
 
             // Set up  no habits view
@@ -167,16 +157,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         noHabitsView.visibility = View.GONE
     }
 
-    override fun showNoActiveHabits() {
-        showNoHabitsViews(resources.getString(R.string.no_habits_active), R.drawable.ic_check_circle_24dp, false)
-    }
-
     override fun showNoHabits() {
         showNoHabitsViews(resources.getString(R.string.no_habits_all), R.drawable.ic_assignment_turned_in_24dp, false)
-    }
-
-    override fun showNoCompletedHabits() {
-        showNoHabitsViews(resources.getString(R.string.no_habits_completed), R.drawable.ic_verified_user_24dp, false)
     }
 
     override fun showSuccessfullySavedMessage() {
@@ -190,18 +172,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         noHabitMainView.text = mainText
         noHabitIcon.setImageResource(iconRes)
         noHabitAddView.visibility = if (showAddView) View.VISIBLE else View.GONE
-    }
-
-    override fun showActiveFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_active)
-    }
-
-    override fun showCompletedFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_completed)
-    }
-
-    override fun showAllFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_all)
     }
 
     override fun showAddHabit() {
@@ -267,21 +237,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 text = habit.titleForList
             }
 
-            with(rowView.findViewById<CheckBox>(R.id.complete)) {
-                // Active/completed habit UI
-                isChecked = habit.isCompleted
-                val rowViewBackground =
-                    if (habit.isCompleted) R.drawable.list_completed_touch_feedback
-                    else R.drawable.touch_feedback
-                rowView.setBackgroundResource(rowViewBackground)
-                setOnClickListener {
-                    if (!habit.isCompleted) {
-                        itemListener.onCompleteHabitClick(habit)
-                    } else {
-                        itemListener.onActivateHabitClick(habit)
-                    }
-                }
-            }
             rowView.setOnClickListener { itemListener.onHabitClick(habit) }
             return rowView
         }
@@ -290,10 +245,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     interface HabitItemListener {
 
         fun onHabitClick(clickedHabit: Habit)
-
-        fun onCompleteHabitClick(completedHabit: Habit)
-
-        fun onActivateHabitClick(activatedHabit: Habit)
     }
 
     companion object {
