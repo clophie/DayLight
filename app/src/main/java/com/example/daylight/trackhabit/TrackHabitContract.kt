@@ -3,6 +3,7 @@ package com.example.daylight.trackhabit
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
 import com.example.daylight.data.source.Habit
+import java.util.*
 
 interface TrackHabitContract {
 
@@ -12,7 +13,7 @@ interface TrackHabitContract {
 
     interface Presenter : BasePresenter {
 
-        fun submitTracking()
+        fun submitTracking(habitid: String, completionDateTime: Calendar)
 
         fun loadHabits()
     }

@@ -21,7 +21,7 @@ import java.util.Optional.empty
 data class Habit @JvmOverloads constructor(
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "description") var description: String = "",
-    @ColumnInfo(name = "days") var days: MutableList<MaterialDayPicker.Weekday> = mutableListOf<MaterialDayPicker.Weekday>(),
+    @ColumnInfo(name = "days") var days: MutableList<MaterialDayPicker.Weekday> = mutableListOf(),
     @ColumnInfo(name = "time") var time: Calendar = Calendar.getInstance(),
     @PrimaryKey @ColumnInfo(name = "habitid") var id: String = UUID.randomUUID().toString()
 ) {

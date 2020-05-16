@@ -4,15 +4,21 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
 import com.example.daylight.data.source.Habit
+import com.example.daylight.habits.HabitsActivity
+import com.example.daylight.util.showSnackBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 import java.util.*
 
 
@@ -26,6 +32,8 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
     private lateinit var dateButton: Button
     private lateinit var timeField: EditText
     private lateinit var timeButton: Button
+
+    private lateinit var selectedHabitId: String
 
     override lateinit var presenter: TrackHabitContract.Presenter
 
@@ -45,14 +53,6 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             timeButton = findViewById(R.id.timeButton)
         }
 
-        // Set up floating action button
-        activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit_done)?.apply {
-            setImageResource(R.drawable.ic_done)
-            setOnClickListener {
-                presenter.submitTracking()
-            }
-        }
-
         // Set up date and time pop ups
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -65,26 +65,48 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
         timeField.setText(String.format("%02d:%02d", hour, minute))
 
         dateButton.setOnClickListener {
-            val dpd = DatePickerDialog(activity!!, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            val dpd =
+                DatePickerDialog(activity!!, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
-                // Display Selected date in textbox
-                dateField.setText("$dayOfMonth/$monthOfYear/$year")
+                    // Display Selected date in textbox
+                    dateField.setText("$dayOfMonth/$monthOfYear/$year")
 
-            }, year, month, day)
+                    c.set(Calendar.YEAR, year)
+                    c.set(Calendar.MONTH, monthOfYear)
+                    c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                }, year, month, day)
 
             dpd.show()
         }
 
         timeButton.setOnClickListener {
             val tpd = TimePickerDialog(activity!!,
-                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                TimePickerDialog.OnTimeSetListener { _, hour, minute ->
 
                     // Display Selected date in textbox
                     timeField.setText(String.format("%02d:%02d", hour, minute))
 
-                }, hour, minute, false)
+                    c.set(Calendar.HOUR_OF_DAY, hour)
+                    c.set(Calendar.MINUTE, minute)
+
+                }, hour, minute, false
+            )
 
             tpd.show()
+        }
+
+        // Set up floating action button
+        activity!!.findViewById<FloatingActionButton>(R.id.fab_confirm_track_habit)?.apply {
+            setImageResource(R.drawable.ic_done)
+            setOnClickListener {
+                presenter.submitTracking(selectedHabitId, c)
+
+                // Redirect back to the habits screen
+                val intent = Intent(context, HabitsActivity::class.java)
+                intent.putExtra("SNACKBAR_CONTENT", "Habit Tracked!")
+                startActivity(intent)
+            }
         }
 
         presenter.loadHabits()
@@ -99,10 +121,26 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
         val adapter = ArrayAdapter(
             requireContext().applicationContext,
             android.R.layout.simple_spinner_item,
-            habitTitles)
+            habitTitles
+        )
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Add on selected listener to store the habitid of the currently selected habit
+        habitSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                pos: Int,
+                id: Long
+            ) {
+                selectedHabitId = habits[pos].id
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
         // Apply the adapter to the spinner
         habitSpinner.adapter = adapter
     }

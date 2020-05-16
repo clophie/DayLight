@@ -1,10 +1,11 @@
 package com.example.daylight.trackhabit
 
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitTracking
 import com.example.daylight.data.source.HabitsDataSource
 import com.example.daylight.data.source.HabitsRepository
 import com.example.daylight.habits.HabitsFilterType
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Listens to user actions from the UI ([TrackHabitFragment]), retrieves the data and updates
@@ -19,8 +20,9 @@ class TrackHabitPresenter(
         trackHabitView.presenter = this
     }
 
-    override fun submitTracking() {
-        TODO("Not yet implemented")
+    override fun submitTracking(habitid: String, completionDateTime: Calendar) {
+        val habitTracking = HabitTracking(completionDateTime, habitid, Calendar.getInstance())
+        habitsRepository.insertHabitTracking(habitTracking)
     }
 
     override fun start() {

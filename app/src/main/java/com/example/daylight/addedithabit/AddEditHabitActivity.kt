@@ -23,6 +23,7 @@ class AddEditHabitActivity : AppCompatActivity() {
         setContentView(R.layout.addhabit_act)
         val habitId = intent.getStringExtra(AddEditHabitFragment.ARGUMENT_EDIT_HABIT_ID)
 
+
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
             setDisplayHomeAsUpEnabled(true)

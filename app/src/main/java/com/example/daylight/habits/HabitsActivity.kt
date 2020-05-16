@@ -1,6 +1,7 @@
 package com.example.daylight.habits
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
@@ -11,7 +12,9 @@ import com.example.daylight.statistics.StatisticsFragment
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.habits_act.*
+
 
 class HabitsActivity : AppCompatActivity() {
 
@@ -22,6 +25,12 @@ class HabitsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.habits_act)
+
+        if (intent.extras !== null) {
+            val rootView: View = window.decorView.rootView
+            val snackBar = Snackbar.make(rootView.findViewById(R.id.contentFrame), intent.extras!!["SNACKBAR_CONTENT"].toString(), Snackbar.LENGTH_LONG)
+            snackBar.show()
+        }
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
