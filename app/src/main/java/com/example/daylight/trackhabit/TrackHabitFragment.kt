@@ -1,5 +1,6 @@
 package com.example.daylight.trackhabit
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.example.daylight.data.source.Habit
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 /**
@@ -25,10 +27,13 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
 
     private lateinit var habitSpinner: Spinner
     private lateinit var dateField: EditText
+    private lateinit var dateButton: Button
     private lateinit var timeField: EditText
+    private lateinit var timeButton: Button
 
     override lateinit var presenter: TrackHabitContract.Presenter
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +44,9 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
         with(root) {
             habitSpinner = findViewById(R.id.habit_spinner)
             dateField = findViewById(R.id.dateField)
+            dateButton = findViewById(R.id.dateButton)
             timeField = findViewById(R.id.timeField)
+            timeButton = findViewById(R.id.timeButton)
         }
 
         // Set up floating action button
@@ -48,6 +55,24 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             setOnClickListener {
                 presenter.submitTracking()
             }
+        }
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH) + 1
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        dateField.setText("$day/$month/$year")
+
+        dateButton.setOnClickListener {
+            val dpd = DatePickerDialog(activity!!, OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+
+                // Display Selected date in textbox
+                dateField.setText("$dayOfMonth/$monthOfYear/$year")
+
+            }, year, month, day)
+
+            dpd.show()
         }
 
         presenter.loadHabits()
