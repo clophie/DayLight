@@ -57,4 +57,5 @@
     <string name="date">Habit Completion Date</string>
     <string name="target_completion_day">Target Completion Day</string>
     <string name="target_completion_time">Target Completion Time</string>
+    <string name="habit_tracking_history">Habit Tracking History</string>
 </resources>

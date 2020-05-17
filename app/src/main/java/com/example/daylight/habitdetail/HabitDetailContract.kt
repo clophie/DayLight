@@ -2,6 +2,7 @@ package com.example.daylight.habitdetail
 
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
+import com.example.daylight.data.source.HabitTracking
 
 
 /**
@@ -28,6 +29,8 @@ interface HabitDetailContract {
         fun showEditHabit(habitId: String)
 
         fun showHabitDeleted()
+
+        fun showHabitTracking(habitTracking: List<HabitTracking>)
 
     }
 

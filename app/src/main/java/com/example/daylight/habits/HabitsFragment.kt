@@ -115,7 +115,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_filter -> showFilteringPopUpMenu()
             R.id.menu_refresh -> presenter.loadHabits(true)
         }
         return true
@@ -124,24 +123,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 /*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         inflater.inflate(R.menu.habits_fragment_menu, menu)
     }*/
-
-    override fun showFilteringPopUpMenu() {
-        val activity = activity ?: return
-        val context = context ?: return
-        PopupMenu(context, activity.findViewById(R.id.menu_filter)).apply {
-            menuInflater.inflate(R.menu.filter_habits, menu)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.active -> presenter.currentFiltering = HabitsFilterType.ACTIVE_HABITS
-                    R.id.completed -> presenter.currentFiltering = HabitsFilterType.COMPLETED_HABITS
-                    else -> presenter.currentFiltering = HabitsFilterType.ALL_HABITS
-                }
-                presenter.loadHabits(false)
-                true
-            }
-            show()
-        }
-    }
 
     override fun setLoadingIndicator(active: Boolean) {
         val root = view ?: return

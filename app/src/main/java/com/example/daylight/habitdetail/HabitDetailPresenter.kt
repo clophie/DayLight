@@ -1,6 +1,7 @@
 package com.example.daylight.habitdetail
 
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitTracking
 import com.example.daylight.data.source.HabitsDataSource
 import com.example.daylight.data.source.HabitsRepository
 
@@ -52,6 +53,25 @@ class HabitDetailPresenter(
                 }
             }
         })
+
+        habitsRepository.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+                with(habitDetailView) {
+                    setLoadingIndicator(false)
+                }
+                showHabitTracking(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+                with(habitDetailView) {
+                    // The view may not be able to handle UI updates anymore
+                    if (!isActive) {
+                        return@onDataNotAvailable
+                    }
+                }
+            }
+
+        })
     }
 
     override fun editHabit() {
@@ -80,6 +100,12 @@ class HabitDetailPresenter(
                 showTitle(habit.title)
                 showDescription(habit.description)
             }
+        }
+    }
+
+    private fun showHabitTracking(habitTracking: List<HabitTracking>) {
+        with(habitDetailView) {
+            showHabitTracking(habitTracking)
         }
     }
 }

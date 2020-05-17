@@ -3,16 +3,21 @@ package com.example.daylight.habitdetail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.CheckBox
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.addedithabit.AddEditHabitFragment
-import com.example.daylight.util.showSnackBar
+import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitTracking
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 
 /**
@@ -22,6 +27,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     private lateinit var detailTitle: TextView
     private lateinit var detailDescription: TextView
+    private lateinit var habitTrackingList: ListView
 
     override lateinit var presenter: HabitDetailContract.Presenter
 
@@ -43,6 +49,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         with(root) {
             detailTitle = findViewById(R.id.habit_detail_title)
             detailDescription = findViewById(R.id.habit_detail_description)
+            habitTrackingList = findViewById(R.id.habit_tracking_list)
         }
 
         // Set up floating action button
@@ -114,6 +121,19 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
     override fun showMissingHabit() {
         detailTitle.text = ""
         detailDescription.text = getString(R.string.no_data)
+    }
+
+    override fun showHabitTracking(habitTracking: List<HabitTracking>) {
+        val habitTrackingTimes = habitTracking.map { "${
+        it.completionDateTime.get(Calendar.DAY_OF_MONTH)}/${
+        it.completionDateTime.get(Calendar.MONTH) + 1}/${
+        it.completionDateTime.get(Calendar.YEAR)} ${
+        String.format("%02d:%02d", it.completionDateTime.get(Calendar.HOUR), it.completionDateTime.get(Calendar.MINUTE))}" }
+
+        val itemsAdapter: ArrayAdapter<String> =
+            ArrayAdapter<String>(activity!!, android.R.layout.simple_list_item_1, habitTrackingTimes.toMutableList())
+
+        habitTrackingList.adapter = itemsAdapter
     }
 
     companion object {

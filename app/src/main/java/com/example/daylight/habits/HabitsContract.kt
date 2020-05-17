@@ -34,8 +34,6 @@ interface  HabitsContract {
         fun showNoHabits()
 
         fun showSuccessfullySavedMessage()
-
-        fun showFilteringPopUpMenu()
     }
 
     interface Presenter : BasePresenter {
