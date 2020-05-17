@@ -4,6 +4,7 @@ import com.example.daylight.data.source.Habit
 import com.example.daylight.data.source.HabitTracking
 import com.example.daylight.data.source.HabitsDataSource
 import com.example.daylight.data.source.HabitsRepository
+import java.util.*
 
 
 /**
@@ -24,7 +25,7 @@ class HabitDetailPresenter(
         openHabit()
     }
 
-    private fun openHabit() {
+    public fun openHabit() {
         if (habitId.isEmpty()) {
             habitDetailView.showMissingHabit()
             return
@@ -54,24 +55,7 @@ class HabitDetailPresenter(
             }
         })
 
-        habitsRepository.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
-            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
-                with(habitDetailView) {
-                    setLoadingIndicator(false)
-                }
-                showHabitTracking(habitTracking)
-            }
-
-            override fun onDataNotAvailable() {
-                with(habitDetailView) {
-                    // The view may not be able to handle UI updates anymore
-                    if (!isActive) {
-                        return@onDataNotAvailable
-                    }
-                }
-            }
-
-        })
+        loadHabitTracking()
     }
 
     override fun editHabit() {
@@ -91,6 +75,10 @@ class HabitDetailPresenter(
         habitDetailView.showHabitDeleted()
     }
 
+    override fun deleteHabitTracking(date: Calendar) {
+        habitsRepository.deleteHabitTrackingByTimestamp(date)
+    }
+
     private fun showHabit(habit: Habit) {
         with(habitDetailView) {
             if (habitId.isEmpty()) {
@@ -101,6 +89,27 @@ class HabitDetailPresenter(
                 showDescription(habit.description)
             }
         }
+    }
+
+    override fun loadHabitTracking() {
+        habitsRepository.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+                with(habitDetailView) {
+                    setLoadingIndicator(false)
+                }
+                showHabitTracking(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+                with(habitDetailView) {
+                    // The view may not be able to handle UI updates anymore
+                    if (!isActive) {
+                        return@onDataNotAvailable
+                    }
+                }
+            }
+
+        })
     }
 
     private fun showHabitTracking(habitTracking: List<HabitTracking>) {

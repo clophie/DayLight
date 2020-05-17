@@ -7,16 +7,18 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.addedithabit.AddEditHabitFragment
-import com.example.daylight.data.source.Habit
 import com.example.daylight.data.source.HabitTracking
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -56,6 +58,25 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit)?.setOnClickListener {
             presenter.editHabit()
         }
+
+        habitTrackingList.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener { adapter, v, position, p3 ->
+                val trackingDate = adapter!!.getItemAtPosition(position)
+
+                val cal = Calendar.getInstance()
+                val sdf =
+                    SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+                cal.time = sdf.parse(trackingDate as String)
+                cal.set(Calendar.AM_PM, 1)
+
+                presenter.deleteHabitTracking(cal)
+
+                fragmentManager?.beginTransaction()?.detach(this@HabitDetailFragment)?.attach(this@HabitDetailFragment)?.commit()
+
+                presenter.loadHabitTracking()
+
+                true
+            }
 
         return root
     }
@@ -124,11 +145,17 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
     }
 
     override fun showHabitTracking(habitTracking: List<HabitTracking>) {
-        val habitTrackingTimes = habitTracking.map { "${
+
+        var habitTrackingTimes = habitTracking.map { "${
         it.completionDateTime.get(Calendar.DAY_OF_MONTH)}/${
         it.completionDateTime.get(Calendar.MONTH) + 1}/${
         it.completionDateTime.get(Calendar.YEAR)} ${
         String.format("%02d:%02d", it.completionDateTime.get(Calendar.HOUR), it.completionDateTime.get(Calendar.MINUTE))}" }
+
+        // Display a message if the habit hasn't been tracked
+        if (habitTracking.isEmpty()) {
+            habitTrackingTimes = listOf("No tracking recorded for this habit!")
+        }
 
         val itemsAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(activity!!, android.R.layout.simple_list_item_1, habitTrackingTimes.toMutableList())

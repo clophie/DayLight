@@ -73,23 +73,11 @@ class HabitsRepository(
         }
     }
 
-    fun completeHabit(habitId: String) {
-        getHabitWithId(habitId)?.let {
-            completeHabit(it)
-        }
-    }
-
     override fun activateHabit(habit: Habit) {
         // Do in memory cache update to keep the app UI up to date
         cacheAndPerform(habit) {
             it.isCompleted = false
             habitsLocalDataSource.activateHabit(it)
-        }
-    }
-
-    fun activateHabit(habitId: String) {
-        getHabitWithId(habitId)?.let {
-            activateHabit(it)
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.daylight.habitdetail
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
 import com.example.daylight.data.source.HabitTracking
+import java.util.*
 
 
 /**
@@ -40,5 +41,8 @@ interface HabitDetailContract {
 
         fun deleteHabit()
 
+        fun deleteHabitTracking(date: Calendar)
+
+        fun loadHabitTracking()
     }
 }

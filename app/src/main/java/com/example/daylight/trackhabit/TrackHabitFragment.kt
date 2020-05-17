@@ -100,6 +100,8 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
         activity!!.findViewById<FloatingActionButton>(R.id.fab_confirm_track_habit)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
+                c.set(Calendar.SECOND, 0)
+                c.set(Calendar.MILLISECOND, 0)
                 presenter.submitTracking(selectedHabitId, c)
 
                 // Redirect back to the habits screen

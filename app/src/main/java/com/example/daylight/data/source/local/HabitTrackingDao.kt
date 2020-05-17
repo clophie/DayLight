@@ -51,7 +51,7 @@ interface HabitTrackingDao {
      *
      * @return the number of habits deleted. This should always be 1.
      */
-    @Query("DELETE FROM HabitTracking WHERE timeStampOfEntry = :timeStampOfEntry") fun deleteHabitTrackingByTimestamp(timeStampOfEntry: Calendar): Int
+    @Query("DELETE FROM HabitTracking WHERE completionDateTime = :completionDateTime") fun deleteHabitTrackingByTimestamp(completionDateTime: Calendar): Int
 
     /**
      * Delete all habits.
