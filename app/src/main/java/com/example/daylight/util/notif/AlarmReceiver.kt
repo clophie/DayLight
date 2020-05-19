@@ -6,20 +6,47 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.example.daylight.R
+import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitsDataSource
+import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.local.DaylightDatabase
+import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.util.AppExecutors
 
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action != null) {
+            // TODO Add more actions as ifs in line with this
+            if (intent.action!!.equals(context.getString(R.string.action_notify_habit_reminder), ignoreCase = true)) {
+                if (intent.extras != null) {
+                    val database = DaylightDatabase.getInstance(context)
+                    val habitsRepository = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
-        val notificationManager = ContextCompat.getSystemService(
-            context,
-            NotificationManager::class.java
-        ) as NotificationManager
+                    intent.extras!!.getString("habitId")?.let {
+                        habitsRepository.getHabit(it, object : HabitsDataSource.GetHabitCallback {
+                            override fun onHabitLoaded(habit: Habit) {
+                                val notificationManager = ContextCompat.getSystemService(
+                                    context,
+                                    NotificationManager::class.java
+                                ) as NotificationManager
 
-        notificationManager.sendNotification(
-            context.getText(R.string.notification_text).toString(),
-            context
-        )
+                                notificationManager.sendNotification(
+                                    "Remember to complete your habit to ${habit.title}!",
+                                    context
+                                )
+                            }
+
+                            override fun onDataNotAvailable() {
+
+                            }
+
+                        })
+                    }
+                }
+            }
+        }
+
 
     }
 

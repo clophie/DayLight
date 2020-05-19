@@ -1,5 +1,6 @@
 package com.example.daylight.addedithabit
 
+import android.content.Context
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
@@ -27,7 +28,7 @@ interface AddEditHabitContract {
     interface Presenter : BasePresenter {
         var isDataMissing: Boolean
 
-        fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar)
+        fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context)
 
         fun populateHabit()
     }

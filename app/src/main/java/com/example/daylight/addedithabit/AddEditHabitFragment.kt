@@ -43,9 +43,13 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
                 var c = Calendar.getInstance()
+
+                time.setIs24HourView(true) //set Timer to 24 hours Format
+
                 c.set(Calendar.HOUR, time.hour)
+                c.set(Calendar.HOUR_OF_DAY, time.hour)
                 c.set(Calendar.MINUTE, time.minute)
-                presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays.toMutableList(), c)
+                presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays.toMutableList(), c, context)
 
                 val notificationManager = ContextCompat.getSystemService(
                     context,

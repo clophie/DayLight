@@ -1,9 +1,12 @@
 package com.example.daylight.addedithabit
 
+import android.app.NotificationManager
+import android.content.Context
 import androidx.core.content.ContextCompat
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.data.source.Habit
 import com.example.daylight.data.source.HabitsDataSource
+import com.example.daylight.util.notif.AlarmScheduler
 import java.util.*
 
 /**
@@ -34,11 +37,11 @@ class AddEditHabitPresenter(
         }
     }
 
-    override fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
+    override fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
         if (habitId == null) {
-            createHabit(title, description, days, time)
+            createHabit(title, description, days, time, context)
         } else {
-            updateHabit(title, description, days, time)
+            updateHabit(title, description, days, time, context)
         }
     }
 
@@ -67,21 +70,24 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
+    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
         val newHabit = Habit(title, description, days, time)
         if (newHabit.isEmpty) {
             addHabitView.showEmptyHabitError()
         } else {
             habitsRepository.saveHabit(newHabit)
             addHabitView.showHabitsList()
+            AlarmScheduler.scheduleAlarmsForHabit(context, newHabit)
         }
     }
 
-    private fun updateHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar) {
+    private fun updateHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
         if (habitId == null) {
             throw RuntimeException("updateHabit() was called but habit is new.")
         }
-        habitsRepository.saveHabit(Habit(title, description, days, time, habitId))
+        val habit = Habit(title, description, days, time, habitId)
+        habitsRepository.saveHabit(habit)
         addHabitView.showHabitsList() // After an edit, go back to the list.
+        AlarmScheduler.updateAlarmsForHabit(context, habit)
     }
 }

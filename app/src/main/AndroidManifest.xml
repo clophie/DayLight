@@ -9,10 +9,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".util.NotifyService"
+
+        <receiver android:name="util.notif.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="false"/>
 
         <activity
             android:name=".habits.HabitsActivity"

@@ -26,13 +26,14 @@ object AlarmScheduler {
         // get the AlarmManager reference
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // TODO do a for each here on the habit days and schedule an alarm for each
-        // Schedule the alarms based on the days to administer the medicine
-        // get the PendingIntent for the alarm
-        //val alarmIntent = createPendingIntent(context, reminderData, day)
+        // Schedule the alarms based on the days to complete the habit
+        habit.days.forEach {
+            // Get the PendingIntent for the alarm
+            val alarmIntent = createPendingIntent(context, habit, it.toString())
 
-        // schedule the alarm
-        //scheduleAlarm(reminderData, dayOfWeek, alarmIntent, alarmMgr)
+            // Schedule the alarm
+            scheduleAlarm(habit, getDayOfWeek(it), alarmIntent, alarmMgr)
+        }
     }
 
     /**
@@ -43,7 +44,7 @@ object AlarmScheduler {
         // Set up the time to schedule the alarm
         val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
         datetimeToAlarm.timeInMillis = System.currentTimeMillis()
-        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, habit.time.get(Calendar.HOUR))
+        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, habit.time.get(Calendar.HOUR_OF_DAY))
         datetimeToAlarm.set(Calendar.MINUTE, habit.time.get(Calendar.MINUTE))
         datetimeToAlarm.set(Calendar.SECOND, 0)
         datetimeToAlarm.set(Calendar.MILLISECOND, 0)
@@ -79,6 +80,7 @@ object AlarmScheduler {
         val intent = Intent(context.applicationContext, AlarmReceiver::class.java).apply {
             action = context.getString(R.string.action_notify_habit_reminder)
             type = "$day-${habit.title}-${habit.description}"
+            putExtra("habitId", habit.id)
         }
 
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -108,9 +110,9 @@ object AlarmScheduler {
      */
     fun updateAlarmsForHabit(context: Context, habit: Habit) {
         if (habit.days != emptyArray<MaterialDayPicker.Weekday>()) {
-            AlarmScheduler.scheduleAlarmsForHabit(context, habit)
+            scheduleAlarmsForHabit(context, habit)
         } else {
-            AlarmScheduler.removeAlarmsForHabit(context, habit)
+            removeAlarmsForHabit(context, habit)
         }
     }
 
@@ -151,14 +153,14 @@ object AlarmScheduler {
      * @param dayOfWeek String representation of the day e.g "Sunday"
      * @return [Calendar.DAY_OF_WEEK] for given dayOfWeek
      */
-    private fun getDayOfWeek(days: Array<String>, dayOfWeek: String): Int {
-        return when {
-            dayOfWeek.equals(days[0], ignoreCase = true) -> Calendar.SUNDAY
-            dayOfWeek.equals(days[1], ignoreCase = true) -> Calendar.MONDAY
-            dayOfWeek.equals(days[2], ignoreCase = true) -> Calendar.TUESDAY
-            dayOfWeek.equals(days[3], ignoreCase = true) -> Calendar.WEDNESDAY
-            dayOfWeek.equals(days[4], ignoreCase = true) -> Calendar.THURSDAY
-            dayOfWeek.equals(days[5], ignoreCase = true) -> Calendar.FRIDAY
+    private fun getDayOfWeek(dayOfWeek: MaterialDayPicker.Weekday): Int {
+        return when (dayOfWeek) {
+            MaterialDayPicker.Weekday.SUNDAY -> Calendar.SUNDAY
+            MaterialDayPicker.Weekday.MONDAY -> Calendar.MONDAY
+            MaterialDayPicker.Weekday.TUESDAY -> Calendar.TUESDAY
+            MaterialDayPicker.Weekday.WEDNESDAY -> Calendar.WEDNESDAY
+            MaterialDayPicker.Weekday.THURSDAY -> Calendar.THURSDAY
+            MaterialDayPicker.Weekday.FRIDAY -> Calendar.FRIDAY
             else -> Calendar.SATURDAY
         }
     }
