@@ -59,9 +59,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
 
-        .setStyle(bigPicStyle)
-        .setLargeIcon(eggImage)
-
         .addAction(
             R.drawable.ic_add_icon,
             applicationContext.getString(R.string.snooze),
