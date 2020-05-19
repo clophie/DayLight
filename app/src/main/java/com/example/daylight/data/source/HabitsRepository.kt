@@ -1,7 +1,6 @@
 package com.example.daylight.data.source
 
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 
 /**
@@ -43,8 +42,6 @@ class HabitsRepository(
         }
 
         if (cacheIsDirty) {
-        } else {
-            // Query the local storage if available. If not, query the network.
             habitsLocalDataSource.getHabits(object : HabitsDataSource.LoadHabitsCallback {
                 override fun onHabitsLoaded(habits: List<Habit>) {
                     refreshCache(habits)
@@ -55,6 +52,10 @@ class HabitsRepository(
                 }
             })
         }
+    }
+
+    override fun refreshHabits() {
+        cacheIsDirty = true
     }
 
     override fun saveHabit(habit: Habit) {
@@ -72,23 +73,11 @@ class HabitsRepository(
         }
     }
 
-    override fun completeHabit(habitId: String) {
-        getHabitWithId(habitId)?.let {
-            completeHabit(it)
-        }
-    }
-
     override fun activateHabit(habit: Habit) {
         // Do in memory cache update to keep the app UI up to date
         cacheAndPerform(habit) {
             it.isCompleted = false
             habitsLocalDataSource.activateHabit(it)
-        }
-    }
-
-    override fun activateHabit(habitId: String) {
-        getHabitWithId(habitId)?.let {
-            activateHabit(it)
         }
     }
 
@@ -125,10 +114,6 @@ class HabitsRepository(
         })
     }
 
-    override fun refreshHabits() {
-        cacheIsDirty = true
-    }
-
     override fun deleteAllHabits() {
         habitsLocalDataSource.deleteAllHabits()
         cachedHabits.clear()
@@ -137,6 +122,41 @@ class HabitsRepository(
     override fun deleteHabit(habitId: String) {
         habitsLocalDataSource.deleteHabit(habitId)
         cachedHabits.remove(habitId)
+    }
+
+    override fun getHabitTracking() {
+        habitsLocalDataSource.getHabitTracking()
+    }
+
+    override fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback) {
+        habitsLocalDataSource.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+                callback.onHabitTrackingLoaded(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+            }
+        })
+    }
+
+    override fun insertHabitTracking(habitTracking: HabitTracking) {
+        habitsLocalDataSource.insertHabitTracking(habitTracking)
+    }
+
+    override fun updateHabitTracking(habitTracking: HabitTracking) {
+        habitsLocalDataSource.updateHabitTracking(habitTracking)
+    }
+
+    override fun deleteHabitTrackingByHabitId(habitId: String) {
+        habitsLocalDataSource.deleteHabitTrackingByHabitId(habitId)
+    }
+
+    override fun deleteHabitTrackingByTimestamp(timestamp: Calendar) {
+        habitsLocalDataSource.deleteHabitTrackingByTimestamp(timestamp)
+    }
+
+    override fun deleteAllHabitTracking() {
+        habitsLocalDataSource.deleteAllHabitTracking()
     }
 
     private fun refreshCache(habits: List<Habit>) {
@@ -150,7 +170,7 @@ class HabitsRepository(
     private fun getHabitWithId(id: String) = cachedHabits[id]
 
     private inline fun cacheAndPerform(habit: Habit, perform: (Habit) -> Unit) {
-        val cachedHabit = Habit(habit.title, habit.description, habit.id).apply {
+        val cachedHabit = Habit(habit.title, habit.description, habit.days, habit.time, habit.id).apply {
             isCompleted = habit.isCompleted
         }
         cachedHabits.put(cachedHabit.id, cachedHabit)

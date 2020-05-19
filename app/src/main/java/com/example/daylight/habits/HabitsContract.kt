@@ -19,6 +19,8 @@ interface  HabitsContract {
 
         fun showAddHabit()
 
+        fun showTrackHabit()
+
         fun showHabitDetailsUi(habitId: String)
 
         fun showHabitMarkedComplete()
@@ -31,19 +33,7 @@ interface  HabitsContract {
 
         fun showNoHabits()
 
-        fun showActiveFilterLabel()
-
-        fun showCompletedFilterLabel()
-
-        fun showAllFilterLabel()
-
-        fun showNoActiveHabits()
-
-        fun showNoCompletedHabits()
-
         fun showSuccessfullySavedMessage()
-
-        fun showFilteringPopUpMenu()
     }
 
     interface Presenter : BasePresenter {
@@ -56,10 +46,8 @@ interface  HabitsContract {
 
         fun addNewHabit()
 
+        fun trackHabit()
+
         fun openHabitDetails(requestedHabit: Habit)
-
-        fun completeHabit(completedHabit: Habit)
-
-        fun activateHabit(activeHabit: Habit)
     }
 }

@@ -1,23 +1,13 @@
 package com.example.daylight.addedithabit
 
+import android.app.NotificationManager
+import android.content.Context
+import androidx.core.content.ContextCompat
+import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.data.source.Habit
 import com.example.daylight.data.source.HabitsDataSource
-
-/*
- * Copyright 2017, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import com.example.daylight.util.notif.AlarmScheduler
+import java.util.*
 
 /**
  * Listens to user actions from the UI ([AddEditHabitFragment]), retrieves the data and updates
@@ -47,11 +37,11 @@ class AddEditHabitPresenter(
         }
     }
 
-    override fun saveHabit(title: String, description: String) {
+    override fun saveHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
         if (habitId == null) {
-            createHabit(title, description)
+            createHabit(title, description, days, time, context)
         } else {
-            updateHabit(title, description)
+            updateHabit(title, description, days, time, context)
         }
     }
 
@@ -67,6 +57,8 @@ class AddEditHabitPresenter(
         if (addHabitView.isActive) {
             addHabitView.setTitle(habit.title)
             addHabitView.setDescription(habit.description)
+            addHabitView.setDays(habit.days)
+            addHabitView.setTime(habit.time)
         }
         isDataMissing = false
     }
@@ -78,21 +70,24 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun createHabit(title: String, description: String) {
-        val newHabit = Habit(title, description)
+    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
+        val newHabit = Habit(title, description, days, time)
         if (newHabit.isEmpty) {
             addHabitView.showEmptyHabitError()
         } else {
             habitsRepository.saveHabit(newHabit)
             addHabitView.showHabitsList()
+            AlarmScheduler.scheduleAlarmsForHabit(context, newHabit)
         }
     }
 
-    private fun updateHabit(title: String, description: String) {
+    private fun updateHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
         if (habitId == null) {
             throw RuntimeException("updateHabit() was called but habit is new.")
         }
-        habitsRepository.saveHabit(Habit(title, description, habitId))
+        val habit = Habit(title, description, days, time, habitId)
+        habitsRepository.saveHabit(habit)
         addHabitView.showHabitsList() // After an edit, go back to the list.
+        AlarmScheduler.updateAlarmsForHabit(context, habit)
     }
 }

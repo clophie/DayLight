@@ -23,6 +23,7 @@ class AddEditHabitActivity : AppCompatActivity() {
         setContentView(R.layout.addhabit_act)
         val habitId = intent.getStringExtra(AddEditHabitFragment.ARGUMENT_EDIT_HABIT_ID)
 
+
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
             setDisplayHomeAsUpEnabled(true)
@@ -45,7 +46,7 @@ class AddEditHabitActivity : AppCompatActivity() {
         val database = DaylightDatabase.getInstance(applicationContext)
 
         addEditHabitPresenter = AddEditHabitPresenter(habitId,
-            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()), addEditHabitFragment,
+            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()), addEditHabitFragment,
             shouldLoadDataFromRepo)
     }
 

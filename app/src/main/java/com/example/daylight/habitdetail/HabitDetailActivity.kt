@@ -37,7 +37,7 @@ class HabitDetailActivity : AppCompatActivity() {
         }
 
         val database = DaylightDatabase.getInstance(applicationContext)
-        val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao()))
+        val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
         // Create the presenter
         HabitDetailPresenter(habitId, repo,

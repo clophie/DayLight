@@ -1,6 +1,10 @@
 package com.example.daylight.habits
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -10,9 +14,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.local.DaylightDatabase
+import com.example.daylight.data.source.local.HabitsLocalDataSource
 import com.example.daylight.habitdetail.HabitDetailActivity
+import com.example.daylight.trackhabit.TrackHabitActivity
+import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.showSnackBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import java.util.ArrayList
 
@@ -32,7 +41,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     private lateinit var noHabitMainView: TextView
     private lateinit var noHabitAddView: TextView
     private lateinit var habitsView: LinearLayout
-    private lateinit var filteringLabelView: TextView
 
     /**
      * Listener for clicks on habits in the ListView.
@@ -41,20 +49,21 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         override fun onHabitClick(clickedHabit: Habit) {
             presenter.openHabitDetails(clickedHabit)
         }
-
-        override fun onCompleteHabitClick(completedHabit: Habit) {
-            presenter.completeHabit(completedHabit)
-        }
-
-        override fun onActivateHabitClick(activatedHabit: Habit) {
-            presenter.activateHabit(activatedHabit)
-        }
     }
 
     private val listAdapter = HabitsAdapter(ArrayList(0), itemListener)
 
     override fun onResume() {
         super.onResume()
+        if (!this::presenter.isInitialized) {
+            //Get the database and repo
+            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+
+            // Create the presenter
+            presenter = HabitsPresenter(repo, this)
+        }
+
         presenter.start()
     }
 
@@ -79,10 +88,9 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 )
                 // Set the scrolling view in the custom SwipeRefreshLayout.
                 scrollUpChild = listView
-                setOnRefreshListener { presenter.loadHabits(false) }
+                setOnRefreshListener { presenter.loadHabits(true) }
             }
 
-            filteringLabelView = findViewById(R.id.filteringLabel)
             habitsView = findViewById(R.id.habitsLL)
 
             // Set up  no habits view
@@ -92,47 +100,38 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             noHabitAddView = (findViewById<TextView>(R.id.noHabitsAdd)).also {
                 it.setOnClickListener { showAddHabit() }
             }
+
         }
 
-        // Set up floating action button
+        // Set up floating action buttons
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit).apply {
-            setImageResource(R.drawable.ic_add)
             setOnClickListener { presenter.addNewHabit() }
         }
+
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_habit).apply {
+            setOnClickListener { presenter.trackHabit() }
+        }
+
         setHasOptionsMenu(true)
+
+        createChannel(
+            getString(R.string.habit_notification_channel_id),
+            getString(R.string.habit_notification_channel_name)
+        )
 
         return root
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_filter -> showFilteringPopUpMenu()
             R.id.menu_refresh -> presenter.loadHabits(true)
         }
         return true
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         inflater.inflate(R.menu.habits_fragment_menu, menu)
-    }
-
-    override fun showFilteringPopUpMenu() {
-        val activity = activity ?: return
-        val context = context ?: return
-        PopupMenu(context, activity.findViewById(R.id.menu_filter)).apply {
-            menuInflater.inflate(R.menu.filter_habits, menu)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.active -> presenter.currentFiltering = HabitsFilterType.ACTIVE_HABITS
-                    R.id.completed -> presenter.currentFiltering = HabitsFilterType.COMPLETED_HABITS
-                    else -> presenter.currentFiltering = HabitsFilterType.ALL_HABITS
-                }
-                presenter.loadHabits(false)
-                true
-            }
-            show()
-        }
-    }
+    }*/
 
     override fun setLoadingIndicator(active: Boolean) {
         val root = view ?: return
@@ -148,16 +147,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         noHabitsView.visibility = View.GONE
     }
 
-    override fun showNoActiveHabits() {
-        showNoHabitsViews(resources.getString(R.string.no_habits_active), R.drawable.ic_check_circle_24dp, false)
-    }
-
     override fun showNoHabits() {
         showNoHabitsViews(resources.getString(R.string.no_habits_all), R.drawable.ic_assignment_turned_in_24dp, false)
-    }
-
-    override fun showNoCompletedHabits() {
-        showNoHabitsViews(resources.getString(R.string.no_habits_completed), R.drawable.ic_verified_user_24dp, false)
     }
 
     override fun showSuccessfullySavedMessage() {
@@ -173,21 +164,14 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         noHabitAddView.visibility = if (showAddView) View.VISIBLE else View.GONE
     }
 
-    override fun showActiveFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_active)
-    }
-
-    override fun showCompletedFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_completed)
-    }
-
-    override fun showAllFilterLabel() {
-        filteringLabelView.text = resources.getString(R.string.label_all)
-    }
-
     override fun showAddHabit() {
         val intent = Intent(context, AddEditHabitActivity::class.java)
         startActivityForResult(intent, AddEditHabitActivity.REQUEST_ADD_HABIT)
+    }
+
+    override fun showTrackHabit() {
+        val intent = Intent(context, TrackHabitActivity::class.java)
+        startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
     }
 
     override fun showHabitDetailsUi(habitId: String) {
@@ -243,33 +227,38 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 text = habit.titleForList
             }
 
-            with(rowView.findViewById<CheckBox>(R.id.complete)) {
-                // Active/completed habit UI
-                isChecked = habit.isCompleted
-                val rowViewBackground =
-                    if (habit.isCompleted) R.drawable.list_completed_touch_feedback
-                    else R.drawable.touch_feedback
-                rowView.setBackgroundResource(rowViewBackground)
-                setOnClickListener {
-                    if (!habit.isCompleted) {
-                        itemListener.onCompleteHabitClick(habit)
-                    } else {
-                        itemListener.onActivateHabitClick(habit)
-                    }
-                }
-            }
             rowView.setOnClickListener { itemListener.onHabitClick(habit) }
             return rowView
+        }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.habit_notification_channel_description)
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
         }
     }
 
     interface HabitItemListener {
 
         fun onHabitClick(clickedHabit: Habit)
-
-        fun onCompleteHabitClick(completedHabit: Habit)
-
-        fun onActivateHabitClick(activatedHabit: Habit)
     }
 
     companion object {

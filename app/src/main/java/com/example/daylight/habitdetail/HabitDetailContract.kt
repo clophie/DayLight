@@ -2,6 +2,8 @@ package com.example.daylight.habitdetail
 
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
+import com.example.daylight.data.source.HabitTracking
+import java.util.*
 
 
 /**
@@ -25,15 +27,12 @@ interface HabitDetailContract {
 
         fun showDescription(description: String)
 
-        fun showCompletionStatus(complete: Boolean)
-
         fun showEditHabit(habitId: String)
 
         fun showHabitDeleted()
 
-        fun showHabitMarkedComplete()
+        fun showHabitTracking(habitTracking: List<HabitTracking>)
 
-        fun showHabitMarkedActive()
     }
 
     interface Presenter : BasePresenter {
@@ -42,8 +41,8 @@ interface HabitDetailContract {
 
         fun deleteHabit()
 
-        fun completeHabit()
+        fun deleteHabitTracking(date: Calendar)
 
-        fun activateHabit()
+        fun loadHabitTracking()
     }
 }

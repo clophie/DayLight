@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_habits"
+        android:icon="@drawable/ic_habits_icon"
+        android:title="@string/habits"/>
+
+    <item
+        android:id="@+id/navigation_moods"
+        android:icon="@drawable/ic_moods_icon"
+        android:title="@string/moods"/>
+
+    <item
+        android:id="@+id/navigation_analysis"
+        android:icon="@drawable/ic_analysis_icon"
+        android:title="@string/analysis"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings_icon"
+        android:title="@string/settings"/>
+
+</menu>

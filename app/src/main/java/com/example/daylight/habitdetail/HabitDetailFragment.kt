@@ -3,16 +3,23 @@ package com.example.daylight.habitdetail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.CheckBox
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.daylight.R
 import com.example.daylight.addedithabit.AddEditHabitActivity
 import com.example.daylight.addedithabit.AddEditHabitFragment
-import com.example.daylight.util.showSnackBar
+import com.example.daylight.data.source.HabitTracking
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -22,7 +29,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     private lateinit var detailTitle: TextView
     private lateinit var detailDescription: TextView
-    private lateinit var detailCompleteStatus: CheckBox
+    private lateinit var habitTrackingList: ListView
 
     override lateinit var presenter: HabitDetailContract.Presenter
 
@@ -44,13 +51,32 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         with(root) {
             detailTitle = findViewById(R.id.habit_detail_title)
             detailDescription = findViewById(R.id.habit_detail_description)
-            detailCompleteStatus = findViewById(R.id.habit_detail_complete)
+            habitTrackingList = findViewById(R.id.habit_tracking_list)
         }
 
         // Set up floating action button
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit)?.setOnClickListener {
             presenter.editHabit()
         }
+
+        habitTrackingList.onItemLongClickListener =
+            AdapterView.OnItemLongClickListener { adapter, v, position, p3 ->
+                val trackingDate = adapter!!.getItemAtPosition(position)
+
+                val cal = Calendar.getInstance()
+                val sdf =
+                    SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+                cal.time = sdf.parse(trackingDate as String)
+                cal.set(Calendar.AM_PM, 1)
+
+                presenter.deleteHabitTracking(cal)
+
+                fragmentManager?.beginTransaction()?.detach(this@HabitDetailFragment)?.attach(this@HabitDetailFragment)?.commit()
+
+                presenter.loadHabitTracking()
+
+                true
+            }
 
         return root
     }
@@ -61,9 +87,9 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         return deletePressed
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
         inflater.inflate(R.menu.habitdetail_fragment_menu, menu)
-    }
+    }*/
 
     override fun setLoadingIndicator(active: Boolean) {
         if (active) {
@@ -87,19 +113,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         }
     }
 
-    override fun showCompletionStatus(complete: Boolean) {
-        with(detailCompleteStatus) {
-            isChecked = complete
-            setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    presenter.completeHabit()
-                } else {
-                    presenter.activateHabit()
-                }
-            }
-        }
-    }
-
     override fun showEditHabit(habitId: String) {
         val intent = Intent(context, AddEditHabitActivity::class.java)
         intent.putExtra(AddEditHabitFragment.ARGUMENT_EDIT_HABIT_ID, habitId)
@@ -108,14 +121,6 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     override fun showHabitDeleted() {
         activity?.finish()
-    }
-
-    override fun showHabitMarkedComplete() {
-        view?.showSnackBar(getString(R.string.habit_marked_complete), Snackbar.LENGTH_LONG)
-    }
-
-    override fun showHabitMarkedActive() {
-        view?.showSnackBar(getString(R.string.habit_marked_active), Snackbar.LENGTH_LONG)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -137,6 +142,25 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
     override fun showMissingHabit() {
         detailTitle.text = ""
         detailDescription.text = getString(R.string.no_data)
+    }
+
+    override fun showHabitTracking(habitTracking: List<HabitTracking>) {
+
+        var habitTrackingTimes = habitTracking.map { "${
+        it.completionDateTime.get(Calendar.DAY_OF_MONTH)}/${
+        it.completionDateTime.get(Calendar.MONTH) + 1}/${
+        it.completionDateTime.get(Calendar.YEAR)} ${
+        String.format("%02d:%02d", it.completionDateTime.get(Calendar.HOUR), it.completionDateTime.get(Calendar.MINUTE))}" }
+
+        // Display a message if the habit hasn't been tracked
+        if (habitTracking.isEmpty()) {
+            habitTrackingTimes = listOf("No tracking recorded for this habit!")
+        }
+
+        val itemsAdapter: ArrayAdapter<String> =
+            ArrayAdapter<String>(activity!!, android.R.layout.simple_list_item_1, habitTrackingTimes.toMutableList())
+
+        habitTrackingList.adapter = itemsAdapter
     }
 
     companion object {

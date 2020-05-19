@@ -1,5 +1,7 @@
 package com.example.daylight.data.source
 
+import java.util.*
+
 /**
  * Main entry point for accessing tasks data.
  *
@@ -26,6 +28,13 @@ interface HabitsDataSource {
         fun onDataNotAvailable()
     }
 
+    interface GetHabitTrackingCallback {
+
+        fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>)
+
+        fun onDataNotAvailable()
+    }
+
     fun getHabits(callback: LoadHabitsCallback)
 
     fun getHabit(habitId: String, callback: GetHabitCallback)
@@ -34,15 +43,25 @@ interface HabitsDataSource {
 
     fun completeHabit(habit: Habit)
 
-    fun completeHabit(habitId: String)
-
     fun activateHabit(habit: Habit)
-
-    fun activateHabit(habitId: String)
 
     fun refreshHabits()
 
     fun deleteAllHabits()
 
     fun deleteHabit(habitId: String)
+
+    fun getHabitTracking()
+
+    fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback)
+
+    fun insertHabitTracking(habitTracking: HabitTracking)
+
+    fun updateHabitTracking(habitTracking: HabitTracking)
+
+    fun deleteHabitTrackingByHabitId(habitId: String)
+
+    fun deleteHabitTrackingByTimestamp(timestamp: Calendar)
+
+    fun deleteAllHabitTracking()
 }

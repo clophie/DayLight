@@ -10,27 +10,34 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <CheckBox
-        android:id="@+id/habit_detail_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
     <TextView
         android:id="@+id/habit_detail_title"
-        android:layout_toRightOf="@id/habit_detail_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <TextView
         android:id="@+id/habit_detail_description"
-        android:layout_toRightOf="@id/habit_detail_complete"
-        android:layout_below="@id/habit_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/habit_detail_title"
         android:text="Medium Text"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/history_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/habit_detail_description"
+        android:layout_marginTop="24dp"
+        android:text="@string/habit_tracking_history"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <ListView
+        android:id="@+id/habit_tracking_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/history_title"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
