@@ -58,4 +58,10 @@
     <string name="target_completion_day">Target Completion Day</string>
     <string name="target_completion_time">Target Completion Time</string>
     <string name="habit_tracking_history">Habit Tracking History</string>
+    <string name="habit_notification_channel_id">1001</string>
+    <string name="notification_title">Notification Title</string>
+    <string name="notification_text">Notification text</string>
+    <string name="habit_notification_channel_description">Habit reminder</string>
+    <string name="habit_notification_channel_name">Habit</string>
+    <string name="snooze">Snooze</string>
 </resources>

@@ -1,15 +1,18 @@
 package com.example.daylight.addedithabit
 
 import android.app.Activity
+import android.app.NotificationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.R
+import com.example.daylight.util.notif.sendNotification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -43,6 +46,12 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
                 c.set(Calendar.HOUR, time.hour)
                 c.set(Calendar.MINUTE, time.minute)
                 presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays.toMutableList(), c)
+
+                val notificationManager = ContextCompat.getSystemService(
+                    context,
+                    NotificationManager::class.java
+                ) as NotificationManager
+                notificationManager.sendNotification(context.getString(R.string.app_name), context)
             }
         }
     }

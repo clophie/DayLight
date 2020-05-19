@@ -1,6 +1,10 @@
 package com.example.daylight.habits
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -109,6 +113,11 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         }
 
         setHasOptionsMenu(true)
+
+        createChannel(
+            getString(R.string.habit_notification_channel_id),
+            getString(R.string.habit_notification_channel_name)
+        )
 
         return root
     }
@@ -220,6 +229,30 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
             rowView.setOnClickListener { itemListener.onHabitClick(habit) }
             return rowView
+        }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.habit_notification_channel_description)
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
         }
     }
 

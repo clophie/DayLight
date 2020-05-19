@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.daylight">
@@ -8,25 +9,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".util.NotifyService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
-            android:name="com.example.daylight.habits.HabitsActivity"
+            android:name=".habits.HabitsActivity"
             android:theme="@style/AppTheme.OverlapSystemBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.daylight.habitdetail.HabitDetailActivity" />
-        <activity android:name="com.example.daylight.addedithabit.AddEditHabitActivity" />
-        <activity android:name="com.example.daylight.trackhabit.TrackHabitActivity" />
+        <activity android:name=".habitdetail.HabitDetailActivity" />
+        <activity android:name=".addedithabit.AddEditHabitActivity" />
+        <activity android:name=".trackhabit.TrackHabitActivity" />
         <activity
-            android:name="com.example.daylight.statistics.StatisticsActivity"
+            android:name=".statistics.StatisticsActivity"
             android:parentActivityName=".habits.HabitsActivity"
             tools:ignore="UnusedAttribute">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".habits.HabitsActivity" />
         </activity>
     </application>
+
 </manifest>
