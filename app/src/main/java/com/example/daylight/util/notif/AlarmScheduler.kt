@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.R
 import com.example.daylight.data.source.Habit
@@ -77,11 +78,13 @@ object AlarmScheduler {
      */
     private fun createPendingIntent(context: Context, habit: Habit, day: String?): PendingIntent? {
         // create the intent using a unique type
-        val intent = Intent(context.applicationContext, AlarmReceiver::class.java).apply {
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
             action = context.getString(R.string.action_notify_habit_reminder)
             type = "$day-${habit.title}-${habit.description}"
             putExtra("habitId", habit.id)
         }
+
+        Log.d("", "createPendingIntent() called with: context = [$context], intent = [$intent]")
 
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }

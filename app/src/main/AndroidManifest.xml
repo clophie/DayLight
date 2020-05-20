@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <receiver android:name="util.notif.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false"/>
+        <receiver
+            android:name="com.example.daylight.util.notif.AlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.example.daylight.action.HABIT_REMINDER" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".habits.HabitsActivity"
