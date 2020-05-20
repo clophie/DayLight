@@ -11,15 +11,13 @@ import com.example.daylight.habits.HabitsActivity
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
 
 /**
  * Builds and delivers the notification.
  *
  * @param context, activity context.
  */
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+fun NotificationManager.sendNotification(title: String, messageBody: String, applicationContext: Context, actionIntents: List<Pair<String, PendingIntent>>) {
     // Create the content intent for the notification, which launches
     // this activity
     val contentIntent = Intent(applicationContext, HabitsActivity::class.java)
@@ -30,42 +28,27 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
-    val eggImage = BitmapFactory.decodeResource(
-        applicationContext.resources,
-        R.drawable.ic_habits_icon
-    )
-    val bigPicStyle = NotificationCompat.BigPictureStyle()
-        .bigPicture(eggImage)
-        .bigLargeIcon(null)
-
-    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
-    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
-        applicationContext,
-        REQUEST_CODE,
-        snoozeIntent,
-        FLAGS)
-
     // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.habit_notification_channel_id)
     )
-
         .setSmallIcon(R.drawable.ic_habits_icon)
-        .setContentTitle(applicationContext
-            .getString(R.string.notification_title))
+        .setContentTitle(title)
         .setContentText(messageBody)
 
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
-
-        .addAction(
-            R.drawable.ic_add_icon,
-            applicationContext.getString(R.string.snooze),
-            snoozePendingIntent
-        )
-
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    actionIntents.forEach {
+        builder.addAction(
+            R.drawable.ic_add_icon,
+            it.first,
+            it.second
+        )
+    }
+
     notify(NOTIFICATION_ID, builder.build())
 }
 

@@ -12,9 +12,19 @@
 
         <receiver
             android:name="com.example.daylight.util.notif.AlarmReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.example.daylight.action.HABIT_REMINDER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.example.daylight.util.notif.TrackReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.daylight.action.TRACK_HABIT" />
             </intent-filter>
         </receiver>
 

@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.R
 import com.example.daylight.data.source.Habit
@@ -29,18 +28,26 @@ object AlarmScheduler {
 
         // Schedule the alarms based on the days to complete the habit
         habit.days.forEach {
+            // Create reminder alarm
             // Get the PendingIntent for the alarm
-            val alarmIntent = createPendingIntent(context, habit, it.toString())
+            val alarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_notify_habit_reminder), 0)
 
             // Schedule the alarm
-            scheduleAlarm(habit, getDayOfWeek(it), alarmIntent, alarmMgr)
+            scheduleAlarm(habit, getDayOfWeek(it), alarmIntent, alarmMgr, -15)
+
+            // Create tracking alarm
+            // Get the PendingIntent for the alarm
+            val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_track_habit), 1)
+
+            // Schedule the alarm
+            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 1)
         }
     }
 
     /**
-     * Schedules a single alarm
+     * Schedules a single alarm, with a delay in minutes. Negative delay = that many minutes behind chosen time
      */
-    private fun scheduleAlarm(habit: Habit, dayOfWeek: Int, alarmIntent: PendingIntent?, alarmMgr: AlarmManager) {
+    private fun scheduleAlarm(habit: Habit, dayOfWeek: Int, alarmIntent: PendingIntent?, alarmMgr: AlarmManager, delay: Int) {
 
         // Set up the time to schedule the alarm
         val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
@@ -55,18 +62,20 @@ object AlarmScheduler {
         val today = Calendar.getInstance(Locale.getDefault())
         if (shouldNotifyToday(dayOfWeek, today, datetimeToAlarm)) {
 
-            // schedule for today
+            // Schedule for today
             alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7).toLong(), alarmIntent)
+                // Alarm is scheduled for 15 minutes before chosen time
+                datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
             return
         }
 
-        // schedule 1 week out from the day
+        // Schedule 1 week out from the day
         datetimeToAlarm.roll(Calendar.WEEK_OF_YEAR, 1)
         alarmMgr.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7).toLong(), alarmIntent)
+            // Alarm is scheduled for 15 minutes before chosen time
+            datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
     }
 
     /**
@@ -76,17 +85,15 @@ object AlarmScheduler {
      * @param reminderData ReminderData for the notification
      * @param day          String representation of the day
      */
-    private fun createPendingIntent(context: Context, habit: Habit, day: String?): PendingIntent? {
+    private fun createPendingIntent(context: Context, habit: Habit, day: String?, intentAction: String, requestCode: Int): PendingIntent? {
         // create the intent using a unique type
         val intent = Intent(context, AlarmReceiver::class.java).apply {
-            action = context.getString(R.string.action_notify_habit_reminder)
-            type = "$day-${habit.title}-${habit.description}"
+            action = intentAction
+            type = "$day-${habit.title}-${habit.description}-${intentAction}"
             putExtra("habitId", habit.id)
         }
 
-        Log.d("", "createPendingIntent() called with: context = [$context], intent = [$intent]")
-
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     /**
