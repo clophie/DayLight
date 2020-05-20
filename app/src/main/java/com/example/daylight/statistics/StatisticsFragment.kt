@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.util.AppExecutors
 
 
@@ -36,7 +36,8 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
         super.onResume()
         if (!this::presenter.isInitialized) {
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
-            val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+            val repo = HabitsRepository.getInstance(
+                HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
             StatisticsPresenter(repo, this)
         }

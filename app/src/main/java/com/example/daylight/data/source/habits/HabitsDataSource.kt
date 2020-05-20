@@ -1,4 +1,4 @@
-package com.example.daylight.data.source
+package com.example.daylight.data.source.habits
 
 import java.util.*
 
@@ -6,7 +6,7 @@ import java.util.*
  * Main entry point for accessing tasks data.
  *
  *
- * For simplicity, only getTasks() and getTask() have callbacks. Consider adding callbacks to other
+ * For simplicity, only getHabits() and getHabit() have callbacks. Consider adding callbacks to other
  * methods to inform the user of network/database errors or successful operations.
  * For example, when a new task is created, it's synchronously stored in cache but usually every
  * operation on database or network should be executed in a different thread.
@@ -41,10 +41,6 @@ interface HabitsDataSource {
 
     fun saveHabit(habit: Habit)
 
-    fun completeHabit(habit: Habit)
-
-    fun activateHabit(habit: Habit)
-
     fun refreshHabits()
 
     fun deleteAllHabits()
@@ -53,7 +49,7 @@ interface HabitsDataSource {
 
     fun getHabitTracking()
 
-    fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback)
+    fun getHabitTrackingByHabitId(habitId: String, callback: GetHabitTrackingCallback)
 
     fun insertHabitTracking(habitTracking: HabitTracking)
 

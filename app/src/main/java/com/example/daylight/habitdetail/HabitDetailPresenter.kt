@@ -1,9 +1,9 @@
 package com.example.daylight.habitdetail
 
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitTracking
-import com.example.daylight.data.source.HabitsDataSource
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitTracking
+import com.example.daylight.data.source.habits.HabitsDataSource
+import com.example.daylight.data.source.habits.HabitsRepository
 import java.util.*
 
 

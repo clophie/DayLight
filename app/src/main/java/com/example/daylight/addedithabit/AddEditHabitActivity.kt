@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.daylight.R
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsDao
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar

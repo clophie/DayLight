@@ -3,9 +3,9 @@ package com.example.daylight.habitdetail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.daylight.R
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
 import com.example.daylight.util.setupActionBar
@@ -37,7 +37,8 @@ class HabitDetailActivity : AppCompatActivity() {
         }
 
         val database = DaylightDatabase.getInstance(applicationContext)
-        val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+        val repo = HabitsRepository.getInstance(
+            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
         // Create the presenter
         HabitDetailPresenter(habitId, repo,

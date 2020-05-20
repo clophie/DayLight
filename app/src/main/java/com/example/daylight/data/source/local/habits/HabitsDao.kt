@@ -1,7 +1,7 @@
-package com.example.daylight.data.source.local
+package com.example.daylight.data.source.local.habits
 
 import androidx.room.*
-import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.habits.Habit
 import com.example.daylight.util.Converters
 
 @Dao
@@ -37,15 +37,6 @@ interface HabitsDao {
      */
     @Update
     fun updateHabit(habit: Habit): Int
-
-    /**
-     * Update the complete status of a habit
-     *
-     * @param habitId    id of the habit
-     * @param completed status to be updated
-     */
-    @Query("UPDATE habits SET completed = :completed WHERE habitid = :habitId")
-    fun updateCompleted(habitId: String, completed: Boolean)
 
     /**
      * Delete a habit by id.

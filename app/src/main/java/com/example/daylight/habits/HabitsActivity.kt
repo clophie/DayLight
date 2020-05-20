@@ -5,9 +5,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.statistics.StatisticsFragment
 import com.example.daylight.util.AppExecutors
 import com.example.daylight.util.replaceFragmentInActivity
@@ -85,7 +85,8 @@ class HabitsActivity : AppCompatActivity() {
 
         //Get the database and repo
         val database = DaylightDatabase.getInstance(applicationContext)
-        val repo = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+        val repo = HabitsRepository.getInstance(
+            HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
         // Create the presenter
         habitsPresenter = HabitsPresenter(repo,

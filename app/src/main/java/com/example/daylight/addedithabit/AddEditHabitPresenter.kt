@@ -1,11 +1,9 @@
 package com.example.daylight.addedithabit
 
-import android.app.NotificationManager
 import android.content.Context
-import androidx.core.content.ContextCompat
 import ca.antonious.materialdaypicker.MaterialDayPicker
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitsDataSource
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitsDataSource
 import com.example.daylight.util.notif.AlarmScheduler
 import java.util.*
 
@@ -71,7 +69,12 @@ class AddEditHabitPresenter(
     }
 
     private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
-        val newHabit = Habit(title, description, days, time)
+        val newHabit = Habit(
+            title,
+            description,
+            days,
+            time
+        )
         if (newHabit.isEmpty) {
             addHabitView.showEmptyHabitError()
         } else {
@@ -85,7 +88,13 @@ class AddEditHabitPresenter(
         if (habitId == null) {
             throw RuntimeException("updateHabit() was called but habit is new.")
         }
-        val habit = Habit(title, description, days, time, habitId)
+        val habit = Habit(
+            title,
+            description,
+            days,
+            time,
+            habitId
+        )
         habitsRepository.saveHabit(habit)
         addHabitView.showHabitsList() // After an edit, go back to the list.
         AlarmScheduler.updateAlarmsForHabit(context, habit)

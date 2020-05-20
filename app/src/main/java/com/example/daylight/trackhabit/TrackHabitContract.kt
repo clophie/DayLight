@@ -2,7 +2,7 @@ package com.example.daylight.trackhabit
 
 import com.example.daylight.BasePresenter
 import com.example.daylight.BaseView
-import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.habits.Habit
 import java.util.*
 
 interface TrackHabitContract {

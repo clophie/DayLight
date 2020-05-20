@@ -2,7 +2,7 @@ package com.example.daylight.habits
 
 import com.example.daylight.BaseView
 import com.example.daylight.BasePresenter
-import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.habits.Habit
 
 /**
  * This specifies the contract between the view and the presenter.

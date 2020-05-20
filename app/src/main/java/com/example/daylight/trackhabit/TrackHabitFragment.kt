@@ -13,12 +13,9 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import com.example.daylight.R
-import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.habits.Habit
 import com.example.daylight.habits.HabitsActivity
-import com.example.daylight.util.showSnackBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 import java.util.*
 
 

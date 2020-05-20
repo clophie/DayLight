@@ -1,4 +1,4 @@
-package com.example.daylight.data.source
+package com.example.daylight.data.source.habits
 
 import java.util.*
 
@@ -62,22 +62,6 @@ class HabitsRepository(
         // Do in memory cache update to keep the app UI up to date
         cacheAndPerform(habit) {
             habitsLocalDataSource.saveHabit(it)
-        }
-    }
-
-    override fun completeHabit(habit: Habit) {
-        // Do in memory cache update to keep the app UI up to date
-        cacheAndPerform(habit) {
-            it.isCompleted = true
-            habitsLocalDataSource.completeHabit(it)
-        }
-    }
-
-    override fun activateHabit(habit: Habit) {
-        // Do in memory cache update to keep the app UI up to date
-        cacheAndPerform(habit) {
-            it.isCompleted = false
-            habitsLocalDataSource.activateHabit(it)
         }
     }
 
@@ -170,9 +154,13 @@ class HabitsRepository(
     private fun getHabitWithId(id: String) = cachedHabits[id]
 
     private inline fun cacheAndPerform(habit: Habit, perform: (Habit) -> Unit) {
-        val cachedHabit = Habit(habit.title, habit.description, habit.days, habit.time, habit.id).apply {
-            isCompleted = habit.isCompleted
-        }
+        val cachedHabit = Habit(
+            habit.title,
+            habit.description,
+            habit.days,
+            habit.time,
+            habit.id
+        )
         cachedHabits.put(cachedHabit.id, cachedHabit)
         perform(cachedHabit)
     }
@@ -191,7 +179,10 @@ class HabitsRepository(
          * @return the [HabitsRepository] instance
          */
         @JvmStatic fun getInstance(habitsLocalDataSource: HabitsDataSource): HabitsRepository {
-            return INSTANCE ?: HabitsRepository(habitsLocalDataSource)
+            return INSTANCE
+                ?: HabitsRepository(
+                    habitsLocalDataSource
+                )
                 .apply { INSTANCE = this }
         }
 

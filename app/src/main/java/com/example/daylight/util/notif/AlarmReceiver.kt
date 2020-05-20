@@ -7,13 +7,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.example.daylight.R
-import com.example.daylight.addedithabit.AddEditHabitActivity
-import com.example.daylight.addedithabit.AddEditHabitFragment
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitsDataSource
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitsDataSource
+import com.example.daylight.data.source.habits.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.trackhabit.TrackHabitActivity
 import com.example.daylight.util.AppExecutors
 

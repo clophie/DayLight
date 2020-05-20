@@ -2,8 +2,8 @@ package com.example.daylight.habits
 
 import android.app.Activity
 import com.example.daylight.addedithabit.AddEditHabitActivity
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitsDataSource
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitsDataSource
 import java.util.ArrayList
 
 /**
@@ -68,15 +68,7 @@ class HabitsPresenter(
 
                 // We filter the habits based on the requestType
                 for (habit in habits) {
-                    when (currentFiltering) {
-                        HabitsFilterType.ALL_HABITS -> habitsToShow.add(habit)
-                        HabitsFilterType.ACTIVE_HABITS -> if (habit.isActive) {
-                            habitsToShow.add(habit)
-                        }
-                        HabitsFilterType.COMPLETED_HABITS -> if (habit.isCompleted) {
-                            habitsToShow.add(habit)
-                        }
-                    }
+                    habitsToShow.add(habit)
                 }
                 // The view may not be able to handle UI updates anymore
                 if (!habitsView.isActive) {

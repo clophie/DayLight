@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.example.daylight.R
-import com.example.daylight.data.source.Habit
+import com.example.daylight.data.source.habits.Habit
 import java.util.*
 
 

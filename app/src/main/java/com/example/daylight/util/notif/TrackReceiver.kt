@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.example.daylight.R
-import com.example.daylight.data.source.HabitTracking
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.HabitTracking
+import com.example.daylight.data.source.habits.HabitsRepository
 import com.example.daylight.data.source.local.DaylightDatabase
-import com.example.daylight.data.source.local.HabitsLocalDataSource
+import com.example.daylight.data.source.local.habits.HabitsLocalDataSource
 import com.example.daylight.util.AppExecutors
 import java.util.*
 
@@ -24,8 +24,10 @@ class TrackReceiver: BroadcastReceiver() {
                     AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
             val habitTracking = intent.extras!!.getString("habitId")?.let {
-                HabitTracking(triggerTime,
-                    it, triggerTime)
+                HabitTracking(
+                    triggerTime,
+                    it, triggerTime
+                )
             }
             if (habitTracking != null) {
                 habitsRepository.insertHabitTracking(habitTracking)

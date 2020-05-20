@@ -1,8 +1,8 @@
 package com.example.daylight.statistics
 
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitsDataSource
-import com.example.daylight.data.source.HabitsRepository
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitsDataSource
+import com.example.daylight.data.source.habits.HabitsRepository
 
 
 /**
@@ -28,15 +28,13 @@ class StatisticsPresenter(
         habitsRepository.getHabits(object : HabitsDataSource.LoadHabitsCallback {
             override fun onHabitsLoaded(habits: List<Habit>) {
                 // We calculate number of active and completed habits
-                val completedHabits = habits.filter { it.isCompleted }.size
-                val activeHabits = habits.size - completedHabits
 
                 // The view may not be able to handle UI updates anymore
                 if (!statisticsView.isActive) {
                     return
                 }
                 statisticsView.setProgressIndicator(false)
-                statisticsView.showStatistics(activeHabits, completedHabits)
+                //statisticsView.showStatistics(activeHabits, completedHabits)
             }
 
             override fun onDataNotAvailable() {

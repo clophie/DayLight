@@ -1,10 +1,9 @@
 package com.example.daylight.trackhabit
 
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitTracking
-import com.example.daylight.data.source.HabitsDataSource
-import com.example.daylight.data.source.HabitsRepository
-import com.example.daylight.habits.HabitsFilterType
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitTracking
+import com.example.daylight.data.source.habits.HabitsDataSource
+import com.example.daylight.data.source.habits.HabitsRepository
 import java.util.*
 
 /**
@@ -21,7 +20,12 @@ class TrackHabitPresenter(
     }
 
     override fun submitTracking(habitid: String, completionDateTime: Calendar) {
-        val habitTracking = HabitTracking(completionDateTime, habitid, Calendar.getInstance())
+        val habitTracking =
+            HabitTracking(
+                completionDateTime,
+                habitid,
+                Calendar.getInstance()
+            )
         habitsRepository.insertHabitTracking(habitTracking)
     }
 

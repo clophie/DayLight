@@ -1,9 +1,9 @@
-package com.example.daylight.data.source.local
+package com.example.daylight.data.source.local.habits
 
 import androidx.annotation.VisibleForTesting
-import com.example.daylight.data.source.Habit
-import com.example.daylight.data.source.HabitTracking
-import com.example.daylight.data.source.HabitsDataSource
+import com.example.daylight.data.source.habits.Habit
+import com.example.daylight.data.source.habits.HabitTracking
+import com.example.daylight.data.source.habits.HabitsDataSource
 import com.example.daylight.util.AppExecutors
 import java.util.*
 
@@ -53,14 +53,6 @@ class HabitsLocalDataSource private constructor(
 
     override fun saveHabit(habit: Habit) {
         appExecutors.diskIO.execute { habitsDao.insertHabit(habit) }
-    }
-
-    override fun completeHabit(habit: Habit) {
-        appExecutors.diskIO.execute { habitsDao.updateCompleted(habit.id, true) }
-    }
-
-    override fun activateHabit(habit: Habit) {
-        appExecutors.diskIO.execute { habitsDao.updateCompleted(habit.id, false) }
     }
 
     override fun refreshHabits() {
@@ -120,7 +112,12 @@ class HabitsLocalDataSource private constructor(
         fun getInstance(appExecutors: AppExecutors, habitsDao: HabitsDao, habitTrackingDao: HabitTrackingDao): HabitsLocalDataSource {
             if (INSTANCE == null) {
                 synchronized(HabitsLocalDataSource::javaClass) {
-                    INSTANCE = HabitsLocalDataSource(appExecutors, habitsDao, habitTrackingDao)
+                    INSTANCE =
+                        HabitsLocalDataSource(
+                            appExecutors,
+                            habitsDao,
+                            habitTrackingDao
+                        )
                 }
             }
             return INSTANCE!!

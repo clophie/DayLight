@@ -1,10 +1,10 @@
-package com.example.daylight.data.source
+package com.example.daylight.data.source.habits
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import com.example.daylight.data.source.habits.Habit
 import com.example.daylight.util.Converters
 import java.util.*
-
 
 /**
  * Model class for habit tracking.

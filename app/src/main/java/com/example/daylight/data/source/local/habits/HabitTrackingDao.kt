@@ -1,7 +1,7 @@
-package com.example.daylight.data.source.local
+package com.example.daylight.data.source.local.habits
 
 import androidx.room.*
-import com.example.daylight.data.source.HabitTracking
+import com.example.daylight.data.source.habits.HabitTracking
 import com.example.daylight.util.Converters
 import java.util.*
 
