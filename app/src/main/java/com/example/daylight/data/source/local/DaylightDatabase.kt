@@ -10,20 +10,23 @@ import com.example.daylight.data.source.habits.HabitTracking
 import com.example.daylight.data.source.moods.Mood
 import com.example.daylight.data.source.local.habits.HabitTrackingDao
 import com.example.daylight.data.source.local.habits.HabitsDao
+import com.example.daylight.data.source.local.moods.MoodTrackingDao
 import com.example.daylight.data.source.local.moods.MoodsDao
+import com.example.daylight.data.source.moods.MoodTracking
 import com.example.daylight.util.Converters
 
 
 /**
  * The Room Database that contains the Habit table.
  */
-@Database(entities = [Habit::class, HabitTracking::class, Mood::class], version = 1)
+@Database(entities = [Habit::class, HabitTracking::class, Mood::class, MoodTracking::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class DaylightDatabase : RoomDatabase() {
 
     abstract fun habitDao(): HabitsDao
     abstract fun habitTrackingDao(): HabitTrackingDao
     abstract fun moodDao() : MoodsDao
+    abstract fun moodTrackingDao(): MoodTrackingDao
 
     companion object {
 

@@ -1,4 +1,4 @@
-package com.example.daylight.habits
+package com.example.daylight.util
 
 import android.content.Context
 import android.util.AttributeSet
