@@ -64,6 +64,8 @@
     <string name="habit_notification_channel_description">Habit reminder</string>
     <string name="habit_notification_channel_name">Habit</string>
     <string name="snooze">Snooze</string>
+    <!--Make sure the actions don't have the same length otherwise notifications will override each other-->
     <string name="action_notify_habit_reminder">com.example.daylight.action.HABIT_REMINDER</string>
     <string name="action_notify_remove_notification">com.example.daylight.action.REMOVE_NOTIFICATION</string>
+    <string name="action_track_habit">com.example.daylight.action.TRACK_HABIT</string>
 </resources>

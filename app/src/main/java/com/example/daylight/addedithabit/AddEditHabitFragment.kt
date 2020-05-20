@@ -50,12 +50,6 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
                 c.set(Calendar.HOUR_OF_DAY, time.hour)
                 c.set(Calendar.MINUTE, time.minute)
                 presenter.saveHabit(title.text.toString(), description.text.toString(), days.selectedDays.toMutableList(), c, context)
-
-                val notificationManager = ContextCompat.getSystemService(
-                    context,
-                    NotificationManager::class.java
-                ) as NotificationManager
-                notificationManager.sendNotification(context.getString(R.string.app_name), context)
             }
         }
     }
