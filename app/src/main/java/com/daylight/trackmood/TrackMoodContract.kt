@@ -13,7 +13,7 @@ interface TrackMoodContract {
 
     interface Presenter : BasePresenter {
 
-        fun submitTracking(moodid: String, completionDateTime: Calendar)
+        fun submitTracking(moodId: String, completionDateTime: Calendar)
 
         fun loadMoods()
     }

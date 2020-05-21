@@ -45,7 +45,7 @@ class HabitsActivity : AppCompatActivity() {
                 R.id.navigation_habits-> {
                     title=resources.getString(R.string.habits)
                     val fragment = HabitsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
@@ -53,7 +53,7 @@ class HabitsActivity : AppCompatActivity() {
                 R.id.navigation_moods-> {
                     title=resources.getString(R.string.moods)
                     val fragment = MoodsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
@@ -61,7 +61,7 @@ class HabitsActivity : AppCompatActivity() {
                 R.id.navigation_analysis-> {
                     title=resources.getString(R.string.analysis)
                     val fragment = StatisticsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
@@ -70,11 +70,12 @@ class HabitsActivity : AppCompatActivity() {
                 R.id.navigation_settings-> {
                     title=resources.getString(R.string.settings)
                     val fragment = HabitsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+                    supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     return@setOnNavigationItemSelectedListener true
                 }
             }
+
             false
         }
 

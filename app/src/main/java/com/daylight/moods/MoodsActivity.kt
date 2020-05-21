@@ -75,6 +75,7 @@ class MoodsActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
             }
+
             false
         }
 

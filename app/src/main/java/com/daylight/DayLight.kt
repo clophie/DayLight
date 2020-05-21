@@ -5,7 +5,7 @@ import com.maltaisn.icondialog.pack.IconPack
 import com.maltaisn.icondialog.pack.IconPackLoader
 import com.maltaisn.iconpack.defaultpack.createDefaultIconPack
 
-class App : Application() {
+class DayLight : Application() {
 
     var iconPack: IconPack? = null
 

@@ -19,15 +19,13 @@ interface  HabitsContract {
 
         fun showAddHabit()
 
+        fun showAddMood()
+
         fun showTrackHabit()
 
+        fun showTrackMood()
+
         fun showHabitDetailsUi(habitId: String)
-
-        fun showHabitMarkedComplete()
-
-        fun showHabitMarkedActive()
-
-        fun showCompletedHabitsCleared()
 
         fun showLoadingHabitsError()
 
@@ -46,7 +44,11 @@ interface  HabitsContract {
 
         fun addNewHabit()
 
+        fun addNewMood()
+
         fun trackHabit()
+
+        fun trackMood()
 
         fun openHabitDetails(requestedHabit: Habit)
     }

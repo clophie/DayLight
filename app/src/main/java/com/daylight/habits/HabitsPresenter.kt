@@ -4,6 +4,8 @@ import android.app.Activity
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitsDataSource
+import com.daylight.moods.MoodsContract
+import com.daylight.moods.MoodsPresenter
 import java.util.ArrayList
 
 /**
@@ -45,7 +47,7 @@ class HabitsPresenter(
     }
 
     override fun loadHabits(forceUpdate: Boolean) {
-        loadHabits(forceUpdate || firstLoad, true)
+        loadHabits(forceUpdate || firstLoad, false)
         firstLoad = false
     }
 
@@ -105,8 +107,16 @@ class HabitsPresenter(
         habitsView.showAddHabit()
     }
 
+    override fun addNewMood() {
+        habitsView.showAddMood()
+    }
+
     override fun trackHabit() {
         habitsView.showTrackHabit()
+    }
+
+    override fun trackMood() {
+        habitsView.showTrackMood()
     }
 
     override fun openHabitDetails(requestedHabit: Habit) {

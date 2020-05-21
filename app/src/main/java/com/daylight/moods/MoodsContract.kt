@@ -20,7 +20,11 @@ interface  MoodsContract {
 
         fun showAddMood()
 
+        fun showAddHabit()
+
         fun showTrackMood()
+
+        fun showTrackHabit()
 
         fun showMoodDetailsUi(moodId: String)
 
@@ -33,14 +37,17 @@ interface  MoodsContract {
 
     interface Presenter : BasePresenter {
 
-
         fun result(requestCode: Int, resultCode: Int)
 
         fun loadMoods(forceUpdate: Boolean)
 
         fun addNewMood()
 
+        fun addNewHabit()
+
         fun trackMood()
+
+        fun trackHabit()
 
         fun openMoodDetails(requestedMood: Mood)
     }

@@ -19,6 +19,8 @@ import com.daylight.habitdetail.HabitDetailActivity
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.daylight.addeditmood.AddEditMoodActivity
+import com.daylight.trackmood.TrackMoodActivity
 import com.daylight.util.ScrollChildSwipeRefreshLayout
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
@@ -108,8 +110,16 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             setOnClickListener { presenter.addNewHabit() }
         }
 
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_mood).apply {
+            setOnClickListener { presenter.addNewMood() }
+        }
+
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_habit).apply {
             setOnClickListener { presenter.trackHabit() }
+        }
+
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_mood).apply {
+            setOnClickListener { presenter.trackMood() }
         }
 
         setHasOptionsMenu(true)
@@ -169,9 +179,19 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         startActivityForResult(intent, AddEditHabitActivity.REQUEST_ADD_HABIT)
     }
 
+    override fun showAddMood() {
+        val intent = Intent(context, AddEditMoodActivity::class.java)
+        startActivityForResult(intent, AddEditMoodActivity.REQUEST_ADD_MOOD)
+    }
+
     override fun showTrackHabit() {
         val intent = Intent(context, TrackHabitActivity::class.java)
         startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
+    }
+
+    override fun showTrackMood() {
+        val intent = Intent(context, TrackMoodActivity::class.java)
+        startActivityForResult(intent, TrackMoodActivity.REQUEST_TRACK_MOOD)
     }
 
     override fun showHabitDetailsUi(habitId: String) {
@@ -181,18 +201,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             putExtra(HabitDetailActivity.EXTRA_HABIT_ID, habitId)
         }
         startActivity(intent)
-    }
-
-    override fun showHabitMarkedComplete() {
-        showMessage(getString(R.string.habit_marked_complete))
-    }
-
-    override fun showHabitMarkedActive() {
-        showMessage(getString(R.string.habit_marked_active))
-    }
-
-    override fun showCompletedHabitsCleared() {
-        showMessage(getString(R.string.completed_habits_cleared))
     }
 
     override fun showLoadingHabitsError() {

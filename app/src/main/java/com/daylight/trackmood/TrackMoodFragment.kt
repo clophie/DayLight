@@ -26,8 +26,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
     private lateinit var moodSpinner: Spinner
     private lateinit var dateField: EditText
     private lateinit var dateButton: Button
-    private lateinit var timeField: EditText
-    private lateinit var timeButton: Button
 
     private lateinit var selectedMoodId: String
 
@@ -45,8 +43,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
             moodSpinner = findViewById(R.id.mood_spinner)
             dateField = findViewById(R.id.dateField)
             dateButton = findViewById(R.id.dateButton)
-            timeField = findViewById(R.id.timeField)
-            timeButton = findViewById(R.id.timeButton)
         }
 
         // Set up date and time pop ups
@@ -58,7 +54,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
         val minute = c.get(Calendar.MINUTE)
 
         dateField.setText("$day/$month/$year")
-        timeField.setText(String.format("%02d:%02d", hour, minute))
 
         dateButton.setOnClickListener {
             val dpd =
@@ -75,22 +70,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                     }, year, month, day)
 
             dpd.show()
-        }
-
-        timeButton.setOnClickListener {
-            val tpd = TimePickerDialog(activity!!,
-                TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-
-                    // Display Selected date in textbox
-                    timeField.setText(String.format("%02d:%02d", hour, minute))
-
-                    c.set(Calendar.HOUR_OF_DAY, hour)
-                    c.set(Calendar.MINUTE, minute)
-
-                }, hour, minute, false
-            )
-
-            tpd.show()
         }
 
         // Set up floating action button

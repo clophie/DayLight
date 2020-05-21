@@ -1,11 +1,14 @@
 package com.daylight.addeditmood
 
 import android.app.Activity
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -28,10 +31,8 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
         get() = isAdded
 
     private lateinit var name: TextView
-    private lateinit var score: TextView
-    private lateinit var image: TextView
-    private lateinit var iconPack: IconPack
-    private val ICON_DIALOG_TAG = "icon-dialog"
+    private lateinit var score: NumberPicker
+    private lateinit var image: ImageView
 
 
     override fun onResume() {
@@ -44,7 +45,7 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_mood_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
-                presenter.saveMood(name.text.toString(), score.text.toString().toInt(), image.text.toString(), context)
+                presenter.saveMood(name.text.toString(), score.value, image.drawable, context)
             }
         }
     }
@@ -58,6 +59,18 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
             image = findViewById(R.id.moodIcon)
         }
         setHasOptionsMenu(true)
+
+        score.minValue = 1
+        score.maxValue = 5
+
+        // If dialog is already added to fragment manager, get it. If not, create a new instance.
+        val iconDialog = fragmentManager?.findFragmentByTag(ICON_DIALOG_TAG) as IconDialog?
+            ?: IconDialog.newInstance(IconDialogSettings())
+
+        image.setOnClickListener {
+            // Open icon dialog
+            fragmentManager?.let { it1 -> iconDialog.show(it1, ICON_DIALOG_TAG) }
+        }
 
         return root
     }
@@ -77,15 +90,24 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
     }
 
     override fun setScore(score: Int) {
-        this.score.text = score.toString()
+        this.score.value = score
     }
 
-    override fun setImage(image: String) {
+    override fun setIcon(icon: String) {
+        context?.resources?.getIdentifier(icon, "drawable", context!!.packageName)?.let {
+            this.image.setImageResource(
+                it
+            )
+        }
+    }
 
+    override fun setIcon(icon: Drawable) {
+        this.image.setImageDrawable(icon)
     }
 
     companion object {
         const val ARGUMENT_EDIT_MOOD_ID = "EDIT_MOOD_ID"
+        private const val ICON_DIALOG_TAG = "icon-dialog"
 
         fun newInstance(moodId: String?) =
             AddEditMoodFragment().apply {

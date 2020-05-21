@@ -1,8 +1,10 @@
 package com.daylight.addeditmood
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsDataSource
+import com.google.common.reflect.Reflection.getPackageName
 
 
 /**
@@ -33,7 +35,7 @@ class AddEditMoodPresenter(
         }
     }
 
-    override fun saveMood(name: String, score: Int, image:String, context: Context) {
+    override fun saveMood(name: String, score: Int, image: Drawable, context: Context) {
         if (moodId == null) {
             createMood(name, score, image, context)
         } else {
@@ -48,12 +50,16 @@ class AddEditMoodPresenter(
         moodsRepository.getMood(moodId, this)
     }
 
+    override fun setIcon(icon: Drawable) {
+        addMoodView.setIcon(icon.toString())
+    }
+
     override fun onMoodLoaded(mood: Mood) {
         // The view may not be able to handle UI updates anymore
         if (addMoodView.isActive) {
             addMoodView.setName(mood.name)
             addMoodView.setScore(mood.score)
-            addMoodView.setImage(mood.image)
+            addMoodView.setIcon(mood.image)
         }
         isDataMissing = false
     }
@@ -65,25 +71,25 @@ class AddEditMoodPresenter(
         }
     }
 
-    private fun createMood(name: String, score: Int, image:String, context: Context) {
+    private fun createMood(name: String, score: Int, image: Drawable, context: Context) {
         val newMood = Mood(
-            name,
+            image.toString(),
             score,
-            image
+            name
         )
         moodsRepository.saveMood(newMood)
         addMoodView.showMoodsList()
         //AlarmScheduler.scheduleAlarmsForMood(context, newMood)
     }
 
-    private fun updateMood(name: String, score: Int, image:String, context: Context) {
+    private fun updateMood(name: String, score: Int, image: Drawable, context: Context) {
         if (moodId == null) {
             throw RuntimeException("updateMood() was called but mood is new.")
         }
         val mood = Mood(
-            name,
+            image.toString(),
             score,
-            image
+            name
         )
         moodsRepository.saveMood(mood)
         addMoodView.showMoodsList() // After an edit, go back to the list.

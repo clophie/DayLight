@@ -14,12 +14,14 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
+import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.mooddetail.MoodDetailActivity
+import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.trackmood.TrackMoodActivity
 import com.daylight.util.AppExecutors
 import com.daylight.util.ScrollChildSwipeRefreshLayout
@@ -106,8 +108,16 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         }
 
         // Set up floating action buttons
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_habit).apply {
+            setOnClickListener { presenter.addNewHabit() }
+        }
+
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_mood).apply {
             setOnClickListener { presenter.addNewMood() }
+        }
+
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_habit).apply {
+            setOnClickListener { presenter.trackHabit() }
         }
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_track_mood).apply {
@@ -171,9 +181,19 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         startActivityForResult(intent, AddEditMoodActivity.REQUEST_ADD_MOOD)
     }
 
+    override fun showAddHabit() {
+        val intent = Intent(context, AddEditHabitActivity::class.java)
+        startActivityForResult(intent, AddEditHabitActivity.REQUEST_ADD_HABIT)
+    }
+
     override fun showTrackMood() {
         val intent = Intent(context, TrackMoodActivity::class.java)
         startActivityForResult(intent, TrackMoodActivity.REQUEST_TRACK_MOOD)
+    }
+
+    override fun showTrackHabit() {
+        val intent = Intent(context, TrackHabitActivity::class.java)
+        startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
     }
 
     override fun showMoodDetailsUi(moodId: String) {

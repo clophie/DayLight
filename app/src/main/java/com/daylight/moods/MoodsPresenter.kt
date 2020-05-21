@@ -44,7 +44,7 @@ class MoodsPresenter(
     }
 
     override fun loadMoods(forceUpdate: Boolean) {
-        loadMoods(forceUpdate || firstLoad, true)
+        loadMoods(forceUpdate || firstLoad, false)
         firstLoad = false
     }
 
@@ -104,8 +104,16 @@ class MoodsPresenter(
         moodsView.showAddMood()
     }
 
+    override fun addNewHabit() {
+        moodsView.showAddHabit()
+    }
+
     override fun trackMood() {
         moodsView.showTrackMood()
+    }
+
+    override fun trackHabit() {
+        moodsView.showTrackHabit()
     }
 
     override fun openMoodDetails(requestedMood: Mood) {
