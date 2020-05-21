@@ -24,12 +24,6 @@ interface  MoodsContract {
 
         fun showMoodDetailsUi(moodId: String)
 
-        fun showMoodMarkedComplete()
-
-        fun showMoodMarkedActive()
-
-        fun showCompletedMoodsCleared()
-
         fun showLoadingMoodsError()
 
         fun showNoMoods()

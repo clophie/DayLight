@@ -14,7 +14,7 @@ interface AddEditMoodContract {
 
         fun showMoodsList()
 
-        fun setName(title: String)
+        fun setName(name: String)
 
         fun setScore(score: Int)
 

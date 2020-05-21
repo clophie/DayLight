@@ -22,6 +22,7 @@ import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.mooddetail.MoodDetailActivity
 import com.daylight.trackmood.TrackMoodActivity
 import com.daylight.util.AppExecutors
+import com.daylight.util.ScrollChildSwipeRefreshLayout
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -78,10 +79,10 @@ class MoodsFragment : Fragment(), MoodsContract.View {
 
         // Set up moods view
         with(root) {
-            val listView = findViewById(R.id.moods_list).apply { adapter = listAdapter }
+            val listView = findViewById<ListView>(R.id.moods_list).apply { adapter = listAdapter }
 
             // Set up progress indicator
-            findViewById(R.id.refresh_layout).apply {
+            findViewById<ScrollChildSwipeRefreshLayout>(R.id.refresh_layout).apply {
                 setColorSchemeColors(
                     androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorPrimary),
                     androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorAccent),
@@ -212,8 +213,8 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             val rowView = view ?: LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.mood_item, viewGroup, false)
 
-            with(rowView.findViewById<TextView>(R.id.title)) {
-                text = mood.titleForList
+            with(rowView.findViewById(R.id.title)) {
+                text = mood.nameForList
             }
 
             rowView.setOnClickListener { itemListener.onMoodClick(mood) }

@@ -21,4 +21,7 @@ data class Mood @JvmOverloads constructor(
     @ColumnInfo(name = "score") var score: Int = 0,
     @ColumnInfo(name = "name") var name: String = "",
     @PrimaryKey @ColumnInfo(name = "moodid") var id: String = UUID.randomUUID().toString()
-) { }
+) {
+    val nameForList: String
+        get() = name
+}

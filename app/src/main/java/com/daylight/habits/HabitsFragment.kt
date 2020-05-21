@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.data.habits.Habit
@@ -19,6 +18,7 @@ import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.habitdetail.HabitDetailActivity
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.util.ScrollChildSwipeRefreshLayout
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton

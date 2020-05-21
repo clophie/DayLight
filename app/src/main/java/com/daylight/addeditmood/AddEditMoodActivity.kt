@@ -1,19 +1,26 @@
 package com.daylight.addeditmood
 
+import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.daylight.App
 import com.daylight.R
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
+import com.maltaisn.icondialog.IconDialog
+import com.maltaisn.icondialog.IconDialogSettings
+import com.maltaisn.icondialog.pack.IconPack
 
 
 /**
  * Displays an add or edit mood screen.
  */
-class AddEditMoodActivity : AppCompatActivity() {
+class AddEditMoodActivity : AppCompatActivity(), IconDialog.Callback {
 
     private lateinit var addEditMoodPresenter: AddEditMoodPresenter
 
@@ -47,6 +54,16 @@ class AddEditMoodActivity : AppCompatActivity() {
         addEditMoodPresenter = AddEditMoodPresenter(moodId,
             MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()), addEditMoodFragment,
             shouldLoadDataFromRepo)
+
+        // If dialog is already added to fragment manager, get it. If not, create a new instance.
+        val iconDialog = supportFragmentManager.findFragmentByTag(ICON_DIALOG_TAG) as IconDialog?
+            ?: IconDialog.newInstance(IconDialogSettings())
+
+        val image: ImageView = findViewById(R.id.moodIcon)
+        image.setOnClickListener {
+            // Open icon dialog
+            iconDialog.show(supportFragmentManager, ICON_DIALOG_TAG)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -61,8 +78,18 @@ class AddEditMoodActivity : AppCompatActivity() {
         return true
     }
 
+    override val iconDialogIconPack: IconPack?
+        get() = (application as App).iconPack
+
+    override fun onIconDialogIconsSelected(dialog: IconDialog, icons: List<com.maltaisn.icondialog.data.Icon>) {
+        // Show a toast with the list of selected icon IDs.
+        Toast.makeText(this, "Icons selected: ${icons.map { it.id }}", Toast.LENGTH_SHORT).show()
+    }
+
+
     companion object {
         const val SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY"
         const val REQUEST_ADD_MOOD = 1
+        private const val ICON_DIALOG_TAG = "icon-dialog"
     }
 }

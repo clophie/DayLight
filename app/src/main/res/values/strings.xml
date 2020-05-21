@@ -22,7 +22,7 @@
     <string name="statistics_completed_habits">Completed habits:</string>
     <string name="statistics_error">Error loading statistics.</string>
     <string name="no_data">No data</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
 
     <string-array name="list_habits_array">
         <item>@string/nav_all</item>
@@ -72,5 +72,13 @@
     <string name="no_moods_all">You have no moods!</string>
     <string name="nomoodsicon">noMoodsIcon</string>
     <string name="mood_hint">Mood name</string>
-    <string name="score_text">Mood Score (1 - very negative, 5 - very positive)</string>
+    <string name="score_text">Mood Score\n(1 - very negative, 5 - very positive)</string>
+    <string name="mood_icon">Mood Icon</string>
+    <string name="add_mood">Add Mood</string>
+    <string name="edit_mood">Edit Mood</string>
+    <string name="mood_notification_channel_description">Mood Reminder</string>
+    <string name="loading_moods_error">Error while loading moods</string>
+    <string name="successfully_saved_mood_message">Mood saved</string>
+    <string name="mood_notification_channel_id">1002</string>
+    <string name="mood_notification_channel_name">Mood</string>
 </resources>

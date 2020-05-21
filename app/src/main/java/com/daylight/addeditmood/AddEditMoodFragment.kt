@@ -1,14 +1,22 @@
 package com.daylight.addeditmood
 
 import android.app.Activity
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.daylight.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.maltaisn.icondialog.IconDialog
+import com.maltaisn.icondialog.IconDialogSettings
+import com.maltaisn.icondialog.pack.IconPack
+import com.maltaisn.icondialog.pack.IconPackLoader
+
 
 /**
  * Main UI for the add mood screen. Users can enter a mood title, description, target day and target time.
@@ -22,6 +30,8 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
     private lateinit var name: TextView
     private lateinit var score: TextView
     private lateinit var image: TextView
+    private lateinit var iconPack: IconPack
+    private val ICON_DIALOG_TAG = "icon-dialog"
 
 
     override fun onResume() {
@@ -43,12 +53,12 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
                               savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.addmood_frag, container, false)
         with(root) {
-            title = findViewById(R.id.add_mood_title)
-            description = findViewById(R.id.add_mood_description)
-            days =  findViewById(R.id.mood_day_picker)
-            time = findViewById(R.id.mood_time_picker)
+            name = findViewById(R.id.add_mood_title)
+            score = findViewById(R.id.moodScorePicker)
+            image = findViewById(R.id.moodIcon)
         }
         setHasOptionsMenu(true)
+
         return root
     }
 
@@ -71,9 +81,8 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
     }
 
     override fun setImage(image: String) {
-        this.image.text = image
-    }
 
+    }
 
     companion object {
         const val ARGUMENT_EDIT_MOOD_ID = "EDIT_MOOD_ID"
