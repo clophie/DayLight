@@ -81,4 +81,8 @@
     <string name="successfully_saved_mood_message">Mood saved</string>
     <string name="mood_notification_channel_id">1002</string>
     <string name="mood_notification_channel_name">Mood</string>
+    <string name="mood_tracking_history">Mood Tracking History</string>
+    <string name="moodcompletiontime">What day do you want to track a mood for?</string>
+    <string name="moodDate">Date for Mood</string>
+    <string name="mood_selection_prompt">What mood do you want to track for this day?</string>
 </resources>

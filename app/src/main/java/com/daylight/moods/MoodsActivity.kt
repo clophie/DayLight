@@ -94,12 +94,6 @@ class MoodsActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState.apply {
-            putSerializable(CURRENT_FILTERING_KEY, moodsPresenter.currentFiltering)
-        })
-    }
-
     private fun loadFragment(fragment: Fragment) {
         // load fragment
         val transaction = supportFragmentManager.beginTransaction()
