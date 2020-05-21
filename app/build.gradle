@@ -10,7 +10,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.daylight"
+        applicationId 'com.daylight'
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'ca.antonious:materialdaypicker:0.7.2'
     implementation 'com.github.clans:fab:1.6.4'
+    implementation 'com.maltaisn:icondialog:3.2.2'
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // Dependencies for local unit tests

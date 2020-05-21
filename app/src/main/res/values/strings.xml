@@ -65,7 +65,12 @@
     <string name="habit_notification_channel_name">Habit</string>
     <string name="snooze">Snooze</string>
     <!--Make sure the actions don't have the same length otherwise notifications will override each other-->
-    <string name="action_notify_habit_reminder">com.example.daylight.action.HABIT_REMINDER</string>
-    <string name="action_notify_remove_notification">com.example.daylight.action.REMOVE_NOTIFICATION</string>
-    <string name="action_track_habit">com.example.daylight.action.TRACK_HABIT</string>
+    <string name="action_notify_habit_reminder">com.daylight.action.HABIT_REMINDER</string>
+    <string name="action_notify_remove_notification">com.daylight.action.REMOVE_NOTIFICATION</string>
+    <string name="action_track_habit">com.daylight.action.TRACK_HABIT</string>
+    <string name="no_moods_add">Add a new mood +</string>
+    <string name="no_moods_all">You have no moods!</string>
+    <string name="nomoodsicon">noMoodsIcon</string>
+    <string name="mood_hint">Mood name</string>
+    <string name="score_text">Mood Score (1 - very negative, 5 - very positive)</string>
 </resources>

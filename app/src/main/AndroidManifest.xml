@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.daylight">
+    package="com.daylight">
 
     <application
         android:allowBackup="false"
@@ -11,20 +11,20 @@
         android:theme="@style/AppTheme">
 
         <receiver
-            android:name="com.example.daylight.util.notif.AlarmReceiver"
+            android:name="com.daylight.util.notif.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.daylight.action.HABIT_REMINDER" />
+                <action android:name="com.daylight.action.HABIT_REMINDER" />
             </intent-filter>
         </receiver>
 
         <receiver
-            android:name="com.example.daylight.util.notif.TrackReceiver"
+            android:name="com.daylight.util.notif.TrackReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.daylight.action.TRACK_HABIT" />
+                <action android:name="com.daylight.action.TRACK_HABIT" />
             </intent-filter>
         </receiver>
 
