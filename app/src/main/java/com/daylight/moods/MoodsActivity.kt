@@ -1,5 +1,6 @@
 package com.daylight.moods
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -52,10 +53,8 @@ class MoodsActivity : AppCompatActivity() {
                 //TODO Change this to the moods fragment
                 R.id.navigation_moods-> {
                     title=resources.getString(R.string.moods)
-                    val fragment = MoodsFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
-                        .commit()
-                    return@setOnNavigationItemSelectedListener true
+                    val intent = Intent(this, MoodsActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.navigation_analysis-> {

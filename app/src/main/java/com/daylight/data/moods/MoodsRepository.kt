@@ -155,10 +155,8 @@ class MoodsRepository(
 
     private inline fun cacheAndPerform(mood: Mood, perform: (Mood) -> Unit) {
         val cachedMood = Mood(
-            mood.image,
             mood.score,
-            mood.name,
-            mood.id
+            mood.name
         )
         cachedMoods.put(cachedMood.id, cachedMood)
         perform(cachedMood)

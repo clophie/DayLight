@@ -32,7 +32,6 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
 
     private lateinit var name: TextView
     private lateinit var score: NumberPicker
-    private lateinit var image: ImageView
 
 
     override fun onResume() {
@@ -45,7 +44,7 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_mood_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
-                presenter.saveMood(name.text.toString(), score.value, image.drawable, context)
+                presenter.saveMood(name.text.toString(), score.value, context)
             }
         }
     }
@@ -56,21 +55,11 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
         with(root) {
             name = findViewById(R.id.add_mood_title)
             score = findViewById(R.id.moodScorePicker)
-            image = findViewById(R.id.moodIcon)
         }
         setHasOptionsMenu(true)
 
         score.minValue = 1
         score.maxValue = 5
-
-        // If dialog is already added to fragment manager, get it. If not, create a new instance.
-        val iconDialog = fragmentManager?.findFragmentByTag(ICON_DIALOG_TAG) as IconDialog?
-            ?: IconDialog.newInstance(IconDialogSettings())
-
-        image.setOnClickListener {
-            // Open icon dialog
-            fragmentManager?.let { it1 -> iconDialog.show(it1, ICON_DIALOG_TAG) }
-        }
 
         return root
     }
@@ -91,18 +80,6 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
 
     override fun setScore(score: Int) {
         this.score.value = score
-    }
-
-    override fun setIcon(icon: String) {
-        context?.resources?.getIdentifier(icon, "drawable", context!!.packageName)?.let {
-            this.image.setImageResource(
-                it
-            )
-        }
-    }
-
-    override fun setIcon(icon: Drawable) {
-        this.image.setImageDrawable(icon)
     }
 
     companion object {

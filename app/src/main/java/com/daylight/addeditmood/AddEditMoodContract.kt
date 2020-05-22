@@ -19,18 +19,12 @@ interface AddEditMoodContract {
         fun setName(name: String)
 
         fun setScore(score: Int)
-
-        fun setIcon(icon: String)
-
-        fun setIcon(icon: Drawable)
     }
 
     interface Presenter : BasePresenter {
         var isDataMissing: Boolean
 
-        fun setIcon(icon: Drawable)
-
-        fun saveMood(name: String, score: Int, image: Drawable, context: Context)
+        fun saveMood(name: String, score: Int, context: Context)
 
         fun populateMood()
     }

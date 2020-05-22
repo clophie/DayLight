@@ -233,7 +233,7 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             val rowView = view ?: LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.mood_item, viewGroup, false)
 
-            with(rowView.findViewById<TextView>(R.id.title)) {
+            with(rowView.findViewById<TextView>(R.id.name)) {
                 text = mood.nameForList
             }
 

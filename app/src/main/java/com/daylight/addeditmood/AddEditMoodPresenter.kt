@@ -35,11 +35,11 @@ class AddEditMoodPresenter(
         }
     }
 
-    override fun saveMood(name: String, score: Int, image: Drawable, context: Context) {
+    override fun saveMood(name: String, score: Int, context: Context) {
         if (moodId == null) {
-            createMood(name, score, image, context)
+            createMood(name, score, context)
         } else {
-            updateMood(name, score, image, context)
+            updateMood(name, score, context)
         }
     }
 
@@ -50,16 +50,11 @@ class AddEditMoodPresenter(
         moodsRepository.getMood(moodId, this)
     }
 
-    override fun setIcon(icon: Drawable) {
-        addMoodView.setIcon(icon.toString())
-    }
-
     override fun onMoodLoaded(mood: Mood) {
         // The view may not be able to handle UI updates anymore
         if (addMoodView.isActive) {
             addMoodView.setName(mood.name)
             addMoodView.setScore(mood.score)
-            addMoodView.setIcon(mood.image)
         }
         isDataMissing = false
     }
@@ -71,9 +66,8 @@ class AddEditMoodPresenter(
         }
     }
 
-    private fun createMood(name: String, score: Int, image: Drawable, context: Context) {
+    private fun createMood(name: String, score: Int, context: Context) {
         val newMood = Mood(
-            image.toString(),
             score,
             name
         )
@@ -82,12 +76,11 @@ class AddEditMoodPresenter(
         //AlarmScheduler.scheduleAlarmsForMood(context, newMood)
     }
 
-    private fun updateMood(name: String, score: Int, image: Drawable, context: Context) {
+    private fun updateMood(name: String, score: Int, context: Context) {
         if (moodId == null) {
             throw RuntimeException("updateMood() was called but mood is new.")
         }
         val mood = Mood(
-            image.toString(),
             score,
             name
         )

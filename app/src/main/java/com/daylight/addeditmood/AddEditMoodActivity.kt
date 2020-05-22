@@ -17,7 +17,7 @@ import com.maltaisn.icondialog.pack.IconPack
 /**
  * Displays an add or edit mood screen.
  */
-class AddEditMoodActivity : AppCompatActivity(), IconDialog.Callback {
+class AddEditMoodActivity : AppCompatActivity() {
 
     private lateinit var addEditMoodPresenter: AddEditMoodPresenter
 
@@ -59,22 +59,6 @@ class AddEditMoodActivity : AppCompatActivity(), IconDialog.Callback {
             putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY, addEditMoodPresenter.isDataMissing)
         })
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override val iconDialogIconPack: IconPack?
-        get() = (application as DayLight).iconPack
-
-    override fun onIconDialogIconsSelected(dialog: IconDialog, icons: List<com.maltaisn.icondialog.data.Icon>) {
-        // Show a toast with the list of selected icon IDs.
-        Toast.makeText(this, "Icons selected: ${icons.map { it.id }}", Toast.LENGTH_SHORT).show()
-
-        icons[0].drawable?.let { addEditMoodPresenter.setIcon(it.current) }
-    }
-
 
     companion object {
         const val SHOULD_LOAD_DATA_FROM_REPO_KEY = "SHOULD_LOAD_DATA_FROM_REPO_KEY"

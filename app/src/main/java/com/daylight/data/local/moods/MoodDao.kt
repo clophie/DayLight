@@ -1,6 +1,7 @@
 package com.daylight.data.local.moods
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.daylight.data.moods.Mood
 import com.daylight.util.Converters
 
@@ -49,4 +50,5 @@ interface MoodsDao {
      * Delete all moods.
      */
     @Query("DELETE FROM Moods") fun deleteMoods()
+
 }
