@@ -51,6 +51,14 @@ class HabitsPresenter(
         firstLoad = false
     }
 
+    override fun confirmDelete(requestedHabit: Habit) {
+        habitsView.showConfirmDelete(requestedHabit)
+    }
+
+    override fun deleteHabit(requestedHabit: Habit) {
+        habitsRepository.deleteHabit(requestedHabit.id)
+    }
+
     /**
      * @param forceUpdate   Pass in true to refresh the data in the [HabitsDataSource]
      * *
@@ -76,9 +84,8 @@ class HabitsPresenter(
                 if (!habitsView.isActive) {
                     return
                 }
-                if (showLoadingUI) {
-                    habitsView.setLoadingIndicator(false)
-                }
+
+                habitsView.setLoadingIndicator(false)
 
                 processHabits(habitsToShow)
             }

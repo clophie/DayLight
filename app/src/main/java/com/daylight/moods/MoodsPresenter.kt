@@ -73,9 +73,7 @@ class MoodsPresenter(
                 if (!moodsView.isActive) {
                     return
                 }
-                if (showLoadingUI) {
-                    moodsView.setLoadingIndicator(false)
-                }
+                moodsView.setLoadingIndicator(false)
 
                 processMoods(moodsToShow)
             }

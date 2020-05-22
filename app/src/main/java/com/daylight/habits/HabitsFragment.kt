@@ -1,31 +1,36 @@
 package com.daylight.habits
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
+import com.daylight.addeditmood.AddEditMoodActivity
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.habitdetail.HabitDetailActivity
 import com.daylight.trackhabit.TrackHabitActivity
-import com.daylight.util.AppExecutors
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.daylight.addeditmood.AddEditMoodActivity
 import com.daylight.trackmood.TrackMoodActivity
+import com.daylight.util.AppExecutors
 import com.daylight.util.ScrollChildSwipeRefreshLayout
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import java.util.ArrayList
+import java.util.*
 
 
 /**
@@ -50,6 +55,12 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     internal var itemListener: HabitItemListener = object : HabitItemListener {
         override fun onHabitClick(clickedHabit: Habit) {
             presenter.openHabitDetails(clickedHabit)
+        }
+
+        override fun onHabitLongClick(clickedHabit: Habit) : Boolean {
+            presenter.confirmDelete(clickedHabit)
+            presenter.loadHabits(true)
+            return true
         }
     }
 
@@ -165,6 +176,24 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         showMessage(getString(R.string.successfully_saved_habit_message))
     }
 
+    override fun showConfirmDelete(requestedHabit: Habit) {
+        AlertDialog.Builder(context)
+            .setTitle("Delete Habit")
+            .setMessage("Do you really want to delete this habit?")
+            .setPositiveButton(android.R.string.yes) { _, _ ->
+                Toast.makeText(
+                    context,
+                    "Habit Deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                presenter.deleteHabit(requestedHabit)
+
+                fragmentManager?.beginTransaction()?.replace(R.id.contentFrame, HabitsFragment())?.commit()
+            }
+            .setNegativeButton(android.R.string.no, null).show()
+    }
+
     private fun showNoHabitsViews(mainText: String, iconRes: Int, showAddView: Boolean) {
         habitsView.visibility = View.GONE
         noHabitsView.visibility = View.VISIBLE
@@ -236,6 +265,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             }
 
             rowView.setOnClickListener { itemListener.onHabitClick(habit) }
+            rowView.setOnLongClickListener { itemListener.onHabitLongClick(habit) }
             return rowView
         }
     }
@@ -267,6 +297,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     interface HabitItemListener {
 
         fun onHabitClick(clickedHabit: Habit)
+
+        fun onHabitLongClick(clickedHabit: Habit) : Boolean
     }
 
     companion object {

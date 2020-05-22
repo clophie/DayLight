@@ -10,6 +10,7 @@ import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.daylight.R
+import com.daylight.habits.HabitsFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
