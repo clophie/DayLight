@@ -1,17 +1,13 @@
 package com.daylight.addeditmood
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.daylight.DayLight
 import com.daylight.R
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
-import com.maltaisn.icondialog.IconDialog
-import com.maltaisn.icondialog.pack.IconPack
 
 
 /**

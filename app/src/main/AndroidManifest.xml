@@ -38,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".moods.MoodsActivity" />
         <activity android:name=".habitdetail.HabitDetailActivity" />
         <activity android:name=".mooddetail.MoodDetailActivity" />
         <activity android:name=".addedithabit.AddEditHabitActivity" />

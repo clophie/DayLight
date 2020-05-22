@@ -237,6 +237,16 @@ class MoodsFragment : Fragment(), MoodsContract.View {
                 text = mood.nameForList
             }
 
+            with(rowView.findViewById<ImageView>(R.id.moodIcon)) {
+                when (mood.score) {
+                    1 -> this.setImageResource(R.drawable.ic_mood_1)
+                    2 -> this.setImageResource(R.drawable.ic_mood_2)
+                    3 -> this.setImageResource(R.drawable.ic_mood_3)
+                    4 -> this.setImageResource(R.drawable.ic_mood_4)
+                    5 -> this.setImageResource(R.drawable.ic_mood_5)
+                }
+            }
+
             rowView.setOnClickListener { itemListener.onMoodClick(mood) }
             return rowView
         }
@@ -254,7 +264,7 @@ class MoodsFragment : Fragment(), MoodsContract.View {
                 }
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+            notificationChannel.lightColor = Color.CYAN
             notificationChannel.enableVibration(true)
             notificationChannel.description = getString(R.string.mood_notification_channel_description)
 
