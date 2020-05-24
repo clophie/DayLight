@@ -1,5 +1,6 @@
 package com.daylight.moods
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
@@ -16,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
+import com.daylight.data.habits.Habit
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
@@ -53,6 +55,11 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         override fun onMoodClick(clickedMood: Mood) {
             presenter.openMoodDetails(clickedMood)
         }
+
+        override fun onMoodLongClick(clickedMood: Mood) : Boolean {
+            presenter.confirmDelete(clickedMood)
+            return true
+        }
     }
 
     private val listAdapter = MoodsAdapter(ArrayList(0), itemListener)
@@ -69,6 +76,9 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         }
 
         presenter.start()
+
+        presenter.loadMoods(true)
+        listAdapter.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -167,6 +177,24 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         showMessage(getString(R.string.successfully_saved_mood_message))
     }
 
+    override fun showConfirmDelete(requestedMood: Mood) {
+        AlertDialog.Builder(context)
+            .setTitle("Delete Mood")
+            .setMessage("Do you really want to delete this mood?")
+            .setPositiveButton(android.R.string.yes) { _, _ ->
+                Toast.makeText(
+                    context,
+                    "Mood Deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                presenter.deleteMood(requestedMood)
+
+                fragmentManager?.beginTransaction()?.replace(R.id.contentFrame, MoodsFragment())?.commit()
+            }
+            .setNegativeButton(android.R.string.no, null).show()
+    }
+
     private fun showNoMoodsViews(mainText: String, iconRes: Int, showAddView: Boolean) {
         moodsView.visibility = View.GONE
         noMoodsView.visibility = View.VISIBLE
@@ -248,6 +276,8 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             }
 
             rowView.setOnClickListener { itemListener.onMoodClick(mood) }
+            rowView.setOnLongClickListener { itemListener.onMoodLongClick(mood) }
+
             return rowView
         }
     }
@@ -271,14 +301,16 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             val notificationManager = requireActivity().getSystemService(
                 NotificationManager::class.java
             )
-            notificationManager.createNotificationChannel(notificationChannel)
 
+            notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 
     interface MoodItemListener {
 
         fun onMoodClick(clickedMood: Mood)
+
+        fun onMoodLongClick(clickedMood: Mood) : Boolean
     }
 
     companion object {

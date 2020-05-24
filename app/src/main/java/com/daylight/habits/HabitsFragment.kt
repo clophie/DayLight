@@ -76,7 +76,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         }
 
         presenter.start()
-        
+
         presenter.loadHabits(true)
         listAdapter.notifyDataSetChanged()
     }

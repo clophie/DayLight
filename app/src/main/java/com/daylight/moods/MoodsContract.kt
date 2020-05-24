@@ -33,6 +33,8 @@ interface  MoodsContract {
         fun showNoMoods()
 
         fun showSuccessfullySavedMessage()
+
+        fun showConfirmDelete(requestedMood: Mood)
     }
 
     interface Presenter : BasePresenter {
@@ -40,6 +42,10 @@ interface  MoodsContract {
         fun result(requestCode: Int, resultCode: Int)
 
         fun loadMoods(forceUpdate: Boolean)
+
+        fun confirmDelete(requestedMood: Mood)
+
+        fun deleteMood(requestedMood: Mood)
 
         fun addNewMood()
 

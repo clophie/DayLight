@@ -48,6 +48,14 @@ class MoodsPresenter(
         firstLoad = false
     }
 
+    override fun confirmDelete(requestedMood: Mood) {
+        moodsView.showConfirmDelete(requestedMood)
+    }
+
+    override fun deleteMood(requestedMood: Mood) {
+        moodsRepository.deleteMood(requestedMood.id)
+    }
+
     /**
      * @param forceUpdate   Pass in true to refresh the data in the [MoodsDataSource]
      * *

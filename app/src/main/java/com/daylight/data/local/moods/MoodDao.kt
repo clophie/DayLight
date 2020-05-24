@@ -44,7 +44,7 @@ interface MoodsDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM Moods WHERE moodId = :moodId") fun deleteMoodById(moodId: String): Int
+    @Query("DELETE FROM Moods WHERE moodid = :moodId") fun deleteMoodById(moodId: String): Int
 
     /**
      * Delete all moods.
