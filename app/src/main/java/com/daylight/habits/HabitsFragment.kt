@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -52,14 +51,13 @@ class HabitsFragment : Fragment(), HabitsContract.View {
     /**
      * Listener for clicks on habits in the ListView.
      */
-    internal var itemListener: HabitItemListener = object : HabitItemListener {
+    private var itemListener: HabitItemListener = object : HabitItemListener {
         override fun onHabitClick(clickedHabit: Habit) {
             presenter.openHabitDetails(clickedHabit)
         }
 
         override fun onHabitLongClick(clickedHabit: Habit) : Boolean {
             presenter.confirmDelete(clickedHabit)
-            presenter.loadHabits(true)
             return true
         }
     }
@@ -78,6 +76,9 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         }
 
         presenter.start()
+        
+        presenter.loadHabits(true)
+        listAdapter.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
