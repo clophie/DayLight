@@ -11,7 +11,7 @@ import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.habits.HabitsActivity
-import com.daylight.statistics.StatisticsActivity
+import com.daylight.analysis.AnalysisActivity
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
@@ -56,7 +56,7 @@ class MoodsActivity : AppCompatActivity() {
 
                 R.id.navigation_analysis-> {
                     toolbar!!.title = resources.getString(R.string.analysis)
-                    val intent = Intent(this, StatisticsActivity::class.java)
+                    val intent = Intent(this, AnalysisActivity::class.java)
                     startActivity(intent)
                 }
 

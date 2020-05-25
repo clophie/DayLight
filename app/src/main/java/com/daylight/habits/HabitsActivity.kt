@@ -9,7 +9,7 @@ import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.moods.MoodsFragment
-import com.daylight.statistics.StatisticsFragment
+import com.daylight.analysis.AnalysisFragment
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
@@ -62,7 +62,7 @@ class HabitsActivity : AppCompatActivity() {
 
                 R.id.navigation_analysis-> {
                     toolbar!!.title = resources.getString(R.string.analysis)
-                    val fragment = StatisticsFragment()
+                    val fragment = AnalysisFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     return@setOnNavigationItemSelectedListener true

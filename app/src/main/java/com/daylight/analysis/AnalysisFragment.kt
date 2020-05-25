@@ -1,4 +1,4 @@
-package com.daylight.statistics
+package com.daylight.analysis
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,21 +14,21 @@ import com.daylight.util.AppExecutors
 
 
 /**
- * Main UI for the statistics screen.
+ * Main UI for the analysis screen.
  */
-class StatisticsFragment : Fragment(), StatisticsContract.View {
+class AnalysisFragment : Fragment(), AnalysisContract.View {
 
-    private lateinit var statisticsTV: TextView
+    private lateinit var analysisTV: TextView
 
-    override lateinit var presenter: StatisticsContract.Presenter
+    override lateinit var presenter: AnalysisContract.Presenter
 
     override val isActive: Boolean
         get() = isAdded
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.statistics_frag, container, false)
-        statisticsTV = root.findViewById(R.id.statistics)
+        val root = inflater.inflate(R.layout.analysis_frag, container, false)
+        analysisTV = root.findViewById(R.id.analysis)
         return root
     }
 
@@ -39,7 +39,7 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
             val repo = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
-            StatisticsPresenter(repo, this)
+            AnalysisPresenter(repo, this)
         }
 
         presenter.start()
@@ -47,32 +47,32 @@ class StatisticsFragment : Fragment(), StatisticsContract.View {
 
     override fun setProgressIndicator(active: Boolean) {
         if (active) {
-            statisticsTV.text = getString(R.string.loading)
+            analysisTV.text = getString(R.string.loading)
         } else {
-            statisticsTV.text = ""
+            analysisTV.text = ""
         }
     }
 
-    override fun showStatistics(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int) {
+    override fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int) {
         if (numberOfCompletedTasks == 0 && numberOfIncompleteTasks == 0) {
-            statisticsTV.text = resources.getString(R.string.statistics_no_habits)
+            analysisTV.text = resources.getString(R.string.analysis_no_habits)
         } else {
-            val displayString = "${resources.getString(R.string.statistics_active_habits)} " +
+            val displayString = "${resources.getString(R.string.analysis_active_habits)} " +
                     "$numberOfIncompleteTasks\n" +
-                    "${resources.getString(R.string.statistics_completed_habits)} " +
+                    "${resources.getString(R.string.analysis_completed_habits)} " +
                     "$numberOfCompletedTasks"
-            statisticsTV.text = displayString
+            analysisTV.text = displayString
         }
     }
 
-    override fun showLoadingStatisticsError() {
-        statisticsTV.text = resources.getString(R.string.statistics_error)
+    override fun showLoadingAnalysisError() {
+        analysisTV.text = resources.getString(R.string.analysis_error)
     }
 
     companion object {
 
-        fun newInstance(): StatisticsFragment {
-            return StatisticsFragment()
+        fun newInstance(): AnalysisFragment {
+            return AnalysisFragment()
         }
     }
 }

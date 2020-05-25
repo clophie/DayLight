@@ -1,4 +1,4 @@
-package com.daylight.statistics
+package com.daylight.analysis
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,25 +12,25 @@ import com.daylight.util.setupActionBar
 
 
 /**
- * Show statistics for habits.
+ * Show analysis for habits.
  */
-class StatisticsActivity : AppCompatActivity() {
+class AnalysisActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.statistics_act)
+        setContentView(R.layout.analysis_act)
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {
-            setTitle(R.string.statistics_title)
+            setTitle(R.string.analysis_title)
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val statisticsFragment = supportFragmentManager
-            .findFragmentById(R.id.contentFrame) as StatisticsFragment?
-            ?: StatisticsFragment.newInstance().also {
+        val analysisFragment = supportFragmentManager
+            .findFragmentById(R.id.contentFrame) as AnalysisFragment?
+            ?: AnalysisFragment.newInstance().also {
                 replaceFragmentInActivity(it, R.id.contentFrame)
             }
         
@@ -38,6 +38,6 @@ class StatisticsActivity : AppCompatActivity() {
         val repo = HabitsRepository.getInstance(
             HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
         
-        StatisticsPresenter(repo, statisticsFragment)
+        AnalysisPresenter(repo, analysisFragment)
     }
 }

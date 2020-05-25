@@ -1,4 +1,4 @@
-package com.daylight.statistics
+package com.daylight.analysis
 
 import com.daylight.BasePresenter
 import com.daylight.BaseView
@@ -6,16 +6,16 @@ import com.daylight.BaseView
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface StatisticsContract {
+interface AnalysisContract {
 
     interface View : BaseView<Presenter> {
         val isActive: Boolean
 
         fun setProgressIndicator(active: Boolean)
 
-        fun showStatistics(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
+        fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
 
-        fun showLoadingStatisticsError()
+        fun showLoadingAnalysisError()
     }
 
     interface Presenter : BasePresenter

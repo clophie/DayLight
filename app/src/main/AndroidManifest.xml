@@ -46,7 +46,7 @@
         <activity android:name=".trackhabit.TrackHabitActivity" />
         <activity android:name=".trackmood.TrackMoodActivity" />
         <activity
-            android:name=".statistics.StatisticsActivity"
+            android:name=".analysis.AnalysisActivity"
             android:parentActivityName=".habits.HabitsActivity"
             tools:ignore="UnusedAttribute">
 
