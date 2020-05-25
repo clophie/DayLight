@@ -14,6 +14,7 @@ import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.habit_item.view.*
 import kotlinx.android.synthetic.main.habits_act.*
 
 
@@ -38,12 +39,13 @@ class HabitsActivity : AppCompatActivity() {
             setDisplayShowTitleEnabled(true)
             title = resources.getString(R.string.habits)
         }
+        val toolbar = supportActionBar
 
         // Set up the bottom navigation.
         navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.navigation_habits-> {
-                    title=resources.getString(R.string.habits)
+                    toolbar!!.title = resources.getString(R.string.habits)
                     val fragment = HabitsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
@@ -51,7 +53,7 @@ class HabitsActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_moods-> {
-                    title=resources.getString(R.string.moods)
+                    toolbar!!.title = resources.getString(R.string.moods)
                     val fragment = MoodsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
@@ -59,7 +61,7 @@ class HabitsActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_analysis-> {
-                    title=resources.getString(R.string.analysis)
+                    toolbar!!.title = resources.getString(R.string.analysis)
                     val fragment = StatisticsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
@@ -68,7 +70,7 @@ class HabitsActivity : AppCompatActivity() {
 
                 //TODO Change this to the settings fragment
                 R.id.navigation_settings-> {
-                    title=resources.getString(R.string.settings)
+                    toolbar!!.title = resources.getString(R.string.settings)
                     val fragment = HabitsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()

@@ -47,17 +47,17 @@ interface MoodsDataSource {
 
     fun deleteAllMoods()
 
-    fun deleteMood(moodId: String)
+    fun deleteMood(moodName: String)
 
     fun getMoodTracking()
 
-    fun getMoodTrackingByMoodId(moodId: String, callback: GetMoodTrackingCallback)
+    fun getMoodTrackingByName(name: String, callback: GetMoodTrackingCallback)
 
     fun insertMoodTracking(moodTracking: MoodTracking)
 
     fun updateMoodTracking(moodTracking: MoodTracking)
 
-    fun deleteMoodTrackingByMoodId(moodId: String)
+    fun deleteMoodTrackingByName(name: String)
 
     fun deleteMoodTrackingByTimestamp(timestamp: Calendar)
 

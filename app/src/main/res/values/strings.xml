@@ -85,4 +85,5 @@
     <string name="moodcompletiontime">What day do you want to track a mood for?</string>
     <string name="moodDate">Date for Mood</string>
     <string name="mood_selection_prompt">What mood do you want to track for this day?</string>
+    <string name="moodIcon">mood icon</string>
 </resources>

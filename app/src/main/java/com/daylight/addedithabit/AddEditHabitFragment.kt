@@ -10,6 +10,7 @@ import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.daylight.R
+import com.daylight.habits.HabitsFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -36,12 +37,12 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        time.setIs24HourView(true) //set Timer to 24 hours Format
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
                 var c = Calendar.getInstance()
 
-                time.setIs24HourView(true) //set Timer to 24 hours Format
 
                 c.set(Calendar.HOUR, time.hour)
                 c.set(Calendar.HOUR_OF_DAY, time.hour)

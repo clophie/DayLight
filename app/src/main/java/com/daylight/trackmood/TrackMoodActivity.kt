@@ -6,8 +6,6 @@ import com.daylight.R
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
-import com.daylight.trackmood.TrackMoodFragment
-import com.daylight.trackmood.TrackMoodPresenter
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar

@@ -1,5 +1,6 @@
 package com.daylight.moods
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
@@ -16,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
+import com.daylight.data.habits.Habit
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
@@ -53,6 +55,11 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         override fun onMoodClick(clickedMood: Mood) {
             presenter.openMoodDetails(clickedMood)
         }
+
+        override fun onMoodLongClick(clickedMood: Mood) : Boolean {
+            presenter.confirmDelete(clickedMood)
+            return true
+        }
     }
 
     private val listAdapter = MoodsAdapter(ArrayList(0), itemListener)
@@ -69,6 +76,9 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         }
 
         presenter.start()
+
+        presenter.loadMoods(true)
+        listAdapter.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -167,6 +177,24 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         showMessage(getString(R.string.successfully_saved_mood_message))
     }
 
+    override fun showConfirmDelete(requestedMood: Mood) {
+        AlertDialog.Builder(context)
+            .setTitle("Delete Mood")
+            .setMessage("Do you really want to delete this mood?")
+            .setPositiveButton(android.R.string.yes) { _, _ ->
+                Toast.makeText(
+                    context,
+                    "Mood Deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                presenter.deleteMood(requestedMood)
+
+                fragmentManager?.beginTransaction()?.replace(R.id.contentFrame, MoodsFragment())?.commit()
+            }
+            .setNegativeButton(android.R.string.no, null).show()
+    }
+
     private fun showNoMoodsViews(mainText: String, iconRes: Int, showAddView: Boolean) {
         moodsView.visibility = View.GONE
         noMoodsView.visibility = View.VISIBLE
@@ -196,11 +224,12 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
     }
 
-    override fun showMoodDetailsUi(moodId: String) {
+    override fun showMoodDetailsUi(moodId: String, moodName: String) {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
         val intent = Intent(context, MoodDetailActivity::class.java).apply {
             putExtra(MoodDetailActivity.EXTRA_MOOD_ID, moodId)
+            putExtra(MoodDetailActivity.EXTRA_MOOD_NAME, moodName)
         }
         startActivity(intent)
     }
@@ -233,11 +262,23 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             val rowView = view ?: LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.mood_item, viewGroup, false)
 
-            with(rowView.findViewById<TextView>(R.id.title)) {
+            with(rowView.findViewById<TextView>(R.id.name)) {
                 text = mood.nameForList
             }
 
+            with(rowView.findViewById<ImageView>(R.id.moodIcon)) {
+                when (mood.score) {
+                    1 -> this.setImageResource(R.drawable.ic_mood_1)
+                    2 -> this.setImageResource(R.drawable.ic_mood_2)
+                    3 -> this.setImageResource(R.drawable.ic_mood_3)
+                    4 -> this.setImageResource(R.drawable.ic_mood_4)
+                    5 -> this.setImageResource(R.drawable.ic_mood_5)
+                }
+            }
+
             rowView.setOnClickListener { itemListener.onMoodClick(mood) }
+            rowView.setOnLongClickListener { itemListener.onMoodLongClick(mood) }
+
             return rowView
         }
     }
@@ -254,21 +295,23 @@ class MoodsFragment : Fragment(), MoodsContract.View {
                 }
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+            notificationChannel.lightColor = Color.CYAN
             notificationChannel.enableVibration(true)
             notificationChannel.description = getString(R.string.mood_notification_channel_description)
 
             val notificationManager = requireActivity().getSystemService(
                 NotificationManager::class.java
             )
-            notificationManager.createNotificationChannel(notificationChannel)
 
+            notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 
     interface MoodItemListener {
 
         fun onMoodClick(clickedMood: Mood)
+
+        fun onMoodLongClick(clickedMood: Mood) : Boolean
     }
 
     companion object {

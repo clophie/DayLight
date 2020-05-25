@@ -75,7 +75,7 @@ class AddEditHabitPresenter(
             days,
             time
         )
-        if (newHabit.isEmpty) {
+        if (newHabit.title.isEmpty()) {
             addHabitView.showEmptyHabitError()
         } else {
             habitsRepository.saveHabit(newHabit)

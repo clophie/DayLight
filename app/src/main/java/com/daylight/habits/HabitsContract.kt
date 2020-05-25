@@ -32,6 +32,8 @@ interface  HabitsContract {
         fun showNoHabits()
 
         fun showSuccessfullySavedMessage()
+
+        fun showConfirmDelete(requestedHabit: Habit)
     }
 
     interface Presenter : BasePresenter {
@@ -41,6 +43,10 @@ interface  HabitsContract {
         fun result(requestCode: Int, resultCode: Int)
 
         fun loadHabits(forceUpdate: Boolean)
+
+        fun confirmDelete(requestedHabit: Habit)
+
+        fun deleteHabit(requestedHabit: Habit)
 
         fun addNewHabit()
 

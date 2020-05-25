@@ -27,7 +27,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
     private lateinit var dateField: EditText
     private lateinit var dateButton: Button
 
-    private lateinit var selectedMoodId: String
+    private lateinit var selectedMoodName: String
 
     override lateinit var presenter: TrackMoodContract.Presenter
 
@@ -50,8 +50,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
-        val hour = c.get(Calendar.HOUR_OF_DAY)
-        val minute = c.get(Calendar.MINUTE)
 
         dateField.setText("$day/$month/$year")
 
@@ -78,7 +76,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
             setOnClickListener {
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
-                presenter.submitTracking(selectedMoodId, c)
+                presenter.submitTracking(selectedMoodName, c)
 
                 // Redirect back to the moods screen
                 val intent = Intent(context, MoodsActivity::class.java)
@@ -113,7 +111,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                 pos: Int,
                 id: Long
             ) {
-                selectedMoodId = moods[pos].id
+                selectedMoodName = moods[pos].name
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

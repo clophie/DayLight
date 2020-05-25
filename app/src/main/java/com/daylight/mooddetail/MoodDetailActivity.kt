@@ -6,8 +6,6 @@ import com.daylight.R
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
-import com.daylight.mooddetail.MoodDetailFragment
-import com.daylight.mooddetail.MoodDetailPresenter
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
@@ -31,6 +29,7 @@ class MoodDetailActivity : AppCompatActivity() {
 
         // Get the requested mood id
         val moodId = intent.getStringExtra(EXTRA_MOOD_ID)
+        val moodName = intent.getStringExtra(EXTRA_MOOD_NAME)
 
         val moodDetailFragment = supportFragmentManager
             .findFragmentById(R.id.contentFrame) as MoodDetailFragment? ?:
@@ -43,7 +42,7 @@ class MoodDetailActivity : AppCompatActivity() {
             MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
 
         // Create the presenter
-        MoodDetailPresenter(moodId, repo,
+        MoodDetailPresenter(moodId, moodName, repo,
             moodDetailFragment)
     }
 
@@ -54,5 +53,6 @@ class MoodDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MOOD_ID = "MOOD_ID"
+        const val EXTRA_MOOD_NAME = "MOOD_NAME"
     }
 }

@@ -15,6 +15,7 @@ import java.util.*
  */
 class MoodDetailPresenter(
     private val moodId: String,
+    private val moodName: String,
     private val moodsRepository: MoodsRepository,
     private val moodDetailView: MoodDetailContract.View
 ) : MoodDetailContract.Presenter {
@@ -92,7 +93,7 @@ class MoodDetailPresenter(
     }
 
     override fun loadMoodTracking() {
-        moodsRepository.getMoodTrackingByMoodId(moodId, object : MoodsDataSource.GetMoodTrackingCallback {
+        moodsRepository.getMoodTrackingByName(moodName, object : MoodsDataSource.GetMoodTrackingCallback {
             override fun onMoodTrackingLoaded(moodTracking: List<MoodTracking>) {
                 with(moodDetailView) {
                     setLoadingIndicator(false)

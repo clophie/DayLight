@@ -1,6 +1,7 @@
 package com.daylight.data.local.moods
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.daylight.data.moods.Mood
 import com.daylight.util.Converters
 
@@ -43,10 +44,11 @@ interface MoodsDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM Moods WHERE moodId = :moodId") fun deleteMoodById(moodId: String): Int
+    @Query("DELETE FROM moods WHERE name = :moodName") fun deleteMoodByName(moodName: String): Int
 
     /**
      * Delete all moods.
      */
     @Query("DELETE FROM Moods") fun deleteMoods()
+
 }

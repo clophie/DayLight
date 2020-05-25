@@ -48,6 +48,14 @@ class MoodsPresenter(
         firstLoad = false
     }
 
+    override fun confirmDelete(requestedMood: Mood) {
+        moodsView.showConfirmDelete(requestedMood)
+    }
+
+    override fun deleteMood(requestedMood: Mood) {
+        moodsRepository.deleteMood(requestedMood.name)
+    }
+
     /**
      * @param forceUpdate   Pass in true to refresh the data in the [MoodsDataSource]
      * *
@@ -73,9 +81,7 @@ class MoodsPresenter(
                 if (!moodsView.isActive) {
                     return
                 }
-                if (showLoadingUI) {
-                    moodsView.setLoadingIndicator(false)
-                }
+                moodsView.setLoadingIndicator(false)
 
                 processMoods(moodsToShow)
             }
@@ -117,6 +123,6 @@ class MoodsPresenter(
     }
 
     override fun openMoodDetails(requestedMood: Mood) {
-        moodsView.showMoodDetailsUi(requestedMood.id)
+        moodsView.showMoodDetailsUi(requestedMood.id, requestedMood.name)
     }
 }
