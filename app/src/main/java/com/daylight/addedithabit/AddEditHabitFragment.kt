@@ -37,12 +37,12 @@ class AddEditHabitFragment : Fragment(), AddEditHabitContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        time.setIs24HourView(true) //set Timer to 24 hours Format
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_habit_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
                 var c = Calendar.getInstance()
 
-                time.setIs24HourView(true) //set Timer to 24 hours Format
 
                 c.set(Calendar.HOUR, time.hour)
                 c.set(Calendar.HOUR_OF_DAY, time.hour)

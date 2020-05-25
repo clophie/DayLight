@@ -71,9 +71,13 @@ class AddEditMoodPresenter(
             score,
             name
         )
-        moodsRepository.saveMood(newMood)
-        addMoodView.showMoodsList()
-        //AlarmScheduler.scheduleAlarmsForMood(context, newMood)
+        if (newMood.name.isEmpty()) {
+            addMoodView.showEmptyMoodError()
+        } else {
+            moodsRepository.saveMood(newMood)
+            addMoodView.showMoodsList()
+            //AlarmScheduler.scheduleAlarmsForMood(context, newMood)
+        }
     }
 
     private fun updateMood(name: String, score: Int, context: Context) {
