@@ -103,9 +103,9 @@ class MoodsRepository(
         cachedMoods.clear()
     }
 
-    override fun deleteMood(moodId: String) {
-        moodsLocalDataSource.deleteMood(moodId)
-        cachedMoods.remove(moodId)
+    override fun deleteMood(moodName: String) {
+        moodsLocalDataSource.deleteMood(moodName)
+        cachedMoods.remove(moodName)
     }
 
     override fun getMoodTracking() {

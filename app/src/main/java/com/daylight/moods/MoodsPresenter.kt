@@ -53,7 +53,7 @@ class MoodsPresenter(
     }
 
     override fun deleteMood(requestedMood: Mood) {
-        moodsRepository.deleteMood(requestedMood.id)
+        moodsRepository.deleteMood(requestedMood.name)
     }
 
     /**

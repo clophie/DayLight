@@ -64,8 +64,8 @@ class MoodsLocalDataSource private constructor(
         appExecutors.diskIO.execute { moodsDao.deleteMoods() }
     }
 
-    override fun deleteMood(moodId: String) {
-        appExecutors.diskIO.execute { moodsDao.deleteMoodById(moodId) }
+    override fun deleteMood(moodName: String) {
+        appExecutors.diskIO.execute { moodsDao.deleteMoodByName(moodName) }
     }
 
     override fun getMoodTracking() {
