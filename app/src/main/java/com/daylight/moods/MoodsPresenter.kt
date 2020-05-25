@@ -123,6 +123,6 @@ class MoodsPresenter(
     }
 
     override fun openMoodDetails(requestedMood: Mood) {
-        moodsView.showMoodDetailsUi(requestedMood.id)
+        moodsView.showMoodDetailsUi(requestedMood.id, requestedMood.name)
     }
 }

@@ -14,7 +14,7 @@ import java.util.*
 @Entity(tableName = "moodTracking")
 @TypeConverters(Converters::class)
 data class MoodTracking @JvmOverloads constructor(
-    @ForeignKey(entity = Mood::class, parentColumns = arrayOf("moodId"), childColumns = arrayOf("moodId"), onDelete = CASCADE) @ColumnInfo(name = "moodId") var moodId: String = UUID.randomUUID().toString(),
+    @ForeignKey(entity = Mood::class, parentColumns = arrayOf("name"), childColumns = arrayOf("name"), onDelete = CASCADE) @ColumnInfo(name = "name") var moodId: String = "",
     @PrimaryKey @ColumnInfo(name = "date") var date: Calendar = Calendar.getInstance()
 )
 

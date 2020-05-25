@@ -224,11 +224,12 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         startActivityForResult(intent, TrackHabitActivity.REQUEST_TRACK_HABIT)
     }
 
-    override fun showMoodDetailsUi(moodId: String) {
+    override fun showMoodDetailsUi(moodId: String, moodName: String) {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
         val intent = Intent(context, MoodDetailActivity::class.java).apply {
             putExtra(MoodDetailActivity.EXTRA_MOOD_ID, moodId)
+            putExtra(MoodDetailActivity.EXTRA_MOOD_NAME, moodName)
         }
         startActivity(intent)
     }

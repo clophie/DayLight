@@ -26,7 +26,7 @@ interface  MoodsContract {
 
         fun showTrackHabit()
 
-        fun showMoodDetailsUi(moodId: String)
+        fun showMoodDetailsUi(moodId: String, moodName: String)
 
         fun showLoadingMoodsError()
 

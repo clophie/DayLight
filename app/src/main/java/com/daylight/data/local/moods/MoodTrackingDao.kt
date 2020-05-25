@@ -21,7 +21,7 @@ interface MoodTrackingDao {
      *
      * @param moodId the mood id.
      */
-    @Query("SELECT * FROM MoodTracking WHERE moodid = :moodId") fun getMoodTrackingByMoodId(moodId: String): List<MoodTracking>?
+    @Query("SELECT * FROM MoodTracking WHERE name = :name") fun getMoodTrackingByName(name: String): List<MoodTracking>?
 
     /**
      * Insert a mood in the database. If the mood already exists, replace it.
@@ -44,7 +44,7 @@ interface MoodTrackingDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM MoodTracking WHERE moodid = :moodId") fun deleteMoodTrackingByMoodId(moodId: String): Int
+    @Query("DELETE FROM MoodTracking WHERE name = :name") fun deleteMoodTrackingByName(name: String): Int
 
     /**
      * Delete a mood by id.

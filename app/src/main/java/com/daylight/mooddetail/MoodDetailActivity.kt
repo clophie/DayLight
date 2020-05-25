@@ -29,6 +29,7 @@ class MoodDetailActivity : AppCompatActivity() {
 
         // Get the requested mood id
         val moodId = intent.getStringExtra(EXTRA_MOOD_ID)
+        val moodName = intent.getStringExtra(EXTRA_MOOD_NAME)
 
         val moodDetailFragment = supportFragmentManager
             .findFragmentById(R.id.contentFrame) as MoodDetailFragment? ?:
@@ -41,7 +42,7 @@ class MoodDetailActivity : AppCompatActivity() {
             MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
 
         // Create the presenter
-        MoodDetailPresenter(moodId, repo,
+        MoodDetailPresenter(moodId, moodName, repo,
             moodDetailFragment)
     }
 
@@ -52,5 +53,6 @@ class MoodDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MOOD_ID = "MOOD_ID"
+        const val EXTRA_MOOD_NAME = "MOOD_NAME"
     }
 }

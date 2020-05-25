@@ -112,8 +112,8 @@ class MoodsRepository(
         moodsLocalDataSource.getMoodTracking()
     }
 
-    override fun getMoodTrackingByMoodId(moodId: String, callback: MoodsDataSource.GetMoodTrackingCallback) {
-        moodsLocalDataSource.getMoodTrackingByMoodId(moodId, object : MoodsDataSource.GetMoodTrackingCallback {
+    override fun getMoodTrackingByName(name: String, callback: MoodsDataSource.GetMoodTrackingCallback) {
+        moodsLocalDataSource.getMoodTrackingByName(name, object : MoodsDataSource.GetMoodTrackingCallback {
             override fun onMoodTrackingLoaded(moodTracking: List<MoodTracking>) {
                 callback.onMoodTrackingLoaded(moodTracking)
             }
@@ -131,8 +131,8 @@ class MoodsRepository(
         moodsLocalDataSource.updateMoodTracking(moodTracking)
     }
 
-    override fun deleteMoodTrackingByMoodId(moodId: String) {
-        moodsLocalDataSource.deleteMoodTrackingByMoodId(moodId)
+    override fun deleteMoodTrackingByName(name: String) {
+        moodsLocalDataSource.deleteMoodTrackingByName(name)
     }
 
     override fun deleteMoodTrackingByTimestamp(timestamp: Calendar) {
