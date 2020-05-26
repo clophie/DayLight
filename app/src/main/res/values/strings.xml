@@ -86,4 +86,5 @@
     <string name="moodDate">Date for Mood</string>
     <string name="mood_selection_prompt">What mood do you want to track for this day?</string>
     <string name="moodIcon">mood icon</string>
+    <string name="mood_over_the_last_month">Mood Over the Last Month</string>
 </resources>

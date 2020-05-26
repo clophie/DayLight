@@ -49,7 +49,7 @@ interface MoodsDataSource {
 
     fun deleteMood(moodName: String)
 
-    fun getMoodTracking()
+    fun getMoodTracking(callback: GetMoodTrackingCallback)
 
     fun getMoodTrackingByName(name: String, callback: GetMoodTrackingCallback)
 

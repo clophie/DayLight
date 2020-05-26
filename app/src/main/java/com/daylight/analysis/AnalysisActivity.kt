@@ -6,6 +6,8 @@ import com.daylight.R
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
@@ -37,7 +39,10 @@ class AnalysisActivity : AppCompatActivity() {
         val database = DaylightDatabase.getInstance(applicationContext)
         val repo = HabitsRepository.getInstance(
             HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+
+        val moodsRepo = MoodsRepository.getInstance(
+            MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
         
-        AnalysisPresenter(repo, analysisFragment)
+        AnalysisPresenter(repo, moodsRepo, analysisFragment)
     }
 }

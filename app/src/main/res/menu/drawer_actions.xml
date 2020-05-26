@@ -7,6 +7,6 @@
         android:title="@string/list_title" />
     <item
         android:id="@+id/analysis_navigation_menu_item"
-        android:icon="@drawable/ic_analysis"
+        android:icon="@drawable/ic_statistics"
         android:title="@string/analysis_title" />
 </menu>

@@ -108,8 +108,15 @@ class MoodsRepository(
         cachedMoods.remove(moodName)
     }
 
-    override fun getMoodTracking() {
-        moodsLocalDataSource.getMoodTracking()
+    override fun getMoodTracking(callback: MoodsDataSource.GetMoodTrackingCallback) {
+        moodsLocalDataSource.getMoodTracking(object : MoodsDataSource.GetMoodTrackingCallback {
+            override fun onMoodTrackingLoaded(moodTracking: List<MoodTracking>) {
+                callback.onMoodTrackingLoaded(moodTracking)
+            }
+
+            override fun onDataNotAvailable() {
+            }
+        })
     }
 
     override fun getMoodTrackingByName(name: String, callback: MoodsDataSource.GetMoodTrackingCallback) {

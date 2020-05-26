@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.anychart.AnyChart
+import com.anychart.AnyChartView
+import com.anychart.chart.common.dataentry.DataEntry
 import com.daylight.R
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
 
 
@@ -18,7 +23,7 @@ import com.daylight.util.AppExecutors
  */
 class AnalysisFragment : Fragment(), AnalysisContract.View {
 
-    private lateinit var analysisTV: TextView
+    private lateinit var moodChart : AnyChartView
 
     override lateinit var presenter: AnalysisContract.Presenter
 
@@ -27,8 +32,30 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        if (!this::presenter.isInitialized) {
+            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val repo = HabitsRepository.getInstance(
+                HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+
+            val moodsRepo = MoodsRepository.getInstance(
+                MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
+
+            AnalysisPresenter(repo, moodsRepo, this)
+        }
+
+        presenter.start()
+
         val root = inflater.inflate(R.layout.analysis_frag, container, false)
-        analysisTV = root.findViewById(R.id.analysis)
+
+        val chart = AnyChart.heatMap()
+
+        chart.labels().enabled(false)
+
+        val data = presenter.getDataForMoodChart()
+        chart.data(data.toMutableList() as List<DataEntry>?)
+        moodChart.setChart(chart)
+
         return root
     }
 
@@ -39,34 +66,20 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
             val repo = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
-            AnalysisPresenter(repo, this)
+            val moodsRepo = MoodsRepository.getInstance(
+                MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
+
+            AnalysisPresenter(repo, moodsRepo, this)
         }
 
         presenter.start()
     }
 
-    override fun setProgressIndicator(active: Boolean) {
-        if (active) {
-            analysisTV.text = getString(R.string.loading)
-        } else {
-            analysisTV.text = ""
-        }
-    }
-
     override fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int) {
-        if (numberOfCompletedTasks == 0 && numberOfIncompleteTasks == 0) {
-            analysisTV.text = resources.getString(R.string.analysis_no_habits)
-        } else {
-            val displayString = "${resources.getString(R.string.analysis_active_habits)} " +
-                    "$numberOfIncompleteTasks\n" +
-                    "${resources.getString(R.string.analysis_completed_habits)} " +
-                    "$numberOfCompletedTasks"
-            analysisTV.text = displayString
-        }
+
     }
 
     override fun showLoadingAnalysisError() {
-        analysisTV.text = resources.getString(R.string.analysis_error)
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.daylight.analysis
 
+import com.anychart.chart.common.dataentry.HeatDataEntry
 import com.daylight.BasePresenter
 import com.daylight.BaseView
 
@@ -11,12 +12,12 @@ interface AnalysisContract {
     interface View : BaseView<Presenter> {
         val isActive: Boolean
 
-        fun setProgressIndicator(active: Boolean)
-
         fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
 
         fun showLoadingAnalysisError()
     }
 
-    interface Presenter : BasePresenter
+    interface Presenter : BasePresenter {
+        fun getDataForMoodChart() : ArrayList<AnalysisPresenter.CustomHeatDataEntry>
+    }
 }

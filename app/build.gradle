@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.maltaisn:icondialog:3.2.2'
     implementation 'com.maltaisn:iconpack-default:1.0.1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
     kapt "androidx.room:room-compiler:$roomVersion"
 
