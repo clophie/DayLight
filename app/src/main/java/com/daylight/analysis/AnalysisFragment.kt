@@ -84,9 +84,10 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     override fun showLoadingAnalysisError() {
     }
 
-    override fun generateMoodChart(data: ArrayList<Entry>) {
+    override fun generateMoodChart(data: ArrayList<Entry>, latestDate: Calendar) {
         val dataSet = LineDataSet(data, "")
         dataSet.label = ""
+        dataSet.lineWidth = 3F
 
         val lineData = LineData(dataSet)
         lineData.setDrawValues(false)
@@ -100,6 +101,8 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         moodChart.axisRight.axisMaximum = 5F
         moodChart.axisRight.granularity = 1F
         moodChart.xAxis.granularity = 1F
+        moodChart.xAxis.axisMaximum = latestDate.get(Calendar.DAY_OF_YEAR).toFloat()
+        moodChart.xAxis.axisMinimum = latestDate.get(Calendar.DAY_OF_YEAR) - 30.toFloat()
         moodChart.legend.isEnabled = false
         moodChart.description.isEnabled = false
         moodChart.invalidate()

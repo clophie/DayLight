@@ -64,11 +64,18 @@ class AnalysisPresenter(
 
     private fun generateMoodChartData(moodTracking: List<MoodAndTracking>)  {
         val data = arrayListOf<Entry>()
+        var latestDate = Calendar.getInstance()
+        latestDate.set(Calendar.YEAR, 0)
+
         moodTracking.forEach {
             data.add(Entry(it.date.get(Calendar.DAY_OF_YEAR).toFloat(), it.score.toFloat()))
+
+            if (it.date > latestDate) {
+                latestDate = it.date
+            }
         }
 
-        analysisView.generateMoodChart(data)
+        analysisView.generateMoodChart(data, latestDate)
     }
 
 }
