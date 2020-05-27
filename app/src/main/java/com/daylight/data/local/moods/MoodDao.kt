@@ -21,7 +21,7 @@ interface MoodsDao {
      * @param moodId the mood id.
      * @return the mood with moodId.
      */
-    @Query("SELECT * FROM Moods WHERE moodid = :moodId") fun getMoodById(moodId: String): Mood?
+    @Query("SELECT * FROM Moods WHERE id = :moodId") fun getMoodById(moodId: String): Mood?
 
     /**
      * Insert a mood in the database. If the mood already exists, replace it.
@@ -44,7 +44,7 @@ interface MoodsDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM moods WHERE name = :moodName") fun deleteMoodByName(moodName: String): Int
+    @Query("DELETE FROM moods WHERE moodName = :moodName") fun deleteMoodByName(moodName: String): Int
 
     /**
      * Delete all moods.

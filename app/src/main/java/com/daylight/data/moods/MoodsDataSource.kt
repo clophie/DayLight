@@ -1,6 +1,7 @@
 package com.daylight.data.moods
 
 import android.content.Context
+import com.daylight.data.MoodAndTracking
 import java.util.*
 
 
@@ -30,6 +31,13 @@ interface MoodsDataSource {
         fun onDataNotAvailable()
     }
 
+    interface GetMoodTrackingAndMoodCallback {
+
+        fun onMoodTrackingLoaded(moodTracking: List<MoodAndTracking>)
+
+        fun onDataNotAvailable()
+    }
+
     interface GetMoodTrackingCallback {
 
         fun onMoodTrackingLoaded(moodTracking: List<MoodTracking>)
@@ -49,7 +57,7 @@ interface MoodsDataSource {
 
     fun deleteMood(moodName: String)
 
-    fun getMoodTracking(callback: GetMoodTrackingCallback)
+    fun getMoodTracking(callback: GetMoodTrackingAndMoodCallback)
 
     fun getMoodTrackingByName(name: String, callback: GetMoodTrackingCallback)
 

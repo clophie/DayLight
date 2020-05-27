@@ -87,4 +87,9 @@
     <string name="mood_selection_prompt">What mood do you want to track for this day?</string>
     <string name="moodIcon">mood icon</string>
     <string name="mood_over_the_last_month">Mood Over the Last Month</string>
+    <string name="moodScore1">#ff4d4d</string>
+    <string name="moodScore2">#ffa64d</string>
+    <string name="moodScore3">#ffff4d</string>
+    <string name="moodScore4">#a6ff4d</string>
+    <string name="moodScore5">#4dd2ff</string>
 </resources>

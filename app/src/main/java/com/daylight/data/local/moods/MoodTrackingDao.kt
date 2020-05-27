@@ -1,6 +1,7 @@
 package com.daylight.data.local.moods
 
 import androidx.room.*
+import com.daylight.data.MoodAndTracking
 import com.daylight.data.moods.MoodTracking
 import com.daylight.util.Converters
 import java.util.*
@@ -14,7 +15,7 @@ interface MoodTrackingDao {
      *
      * @return all moods.
      */
-    @Query("SELECT * FROM MoodTracking") fun getMoodTracking(): List<MoodTracking>
+    @Query("SELECT Moods.score, MoodTracking.name, Moods.id, MoodTracking.date FROM MoodTracking INNER JOIN Moods ON MoodTracking.name = Moods.moodName") fun getMoodTracking(): List<MoodAndTracking>
 
     /**
      * Select a mood by id.

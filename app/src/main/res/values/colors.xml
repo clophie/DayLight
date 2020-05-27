@@ -6,11 +6,6 @@
     <color name="colorAccent">#fff59d</color>
     <color name="colorAccentDark">#cbc26d</color>
     <color name="colorAccentLight">#ffffcf</color>
-    <color name="moodScore1">#ff4d4d</color>
-    <color name="moodScore2">#ffa64d</color>
-    <color name="moodScore3">#ffff4d</color>
-    <color name="moodScore4">#a6ff4d</color>
-    <color name="moodScore5">#4dd2ff</color>
 
     <drawable name="completedTaskBackground">#CCCCCC</drawable>
 

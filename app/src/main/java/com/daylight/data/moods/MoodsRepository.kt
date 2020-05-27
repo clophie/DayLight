@@ -1,5 +1,6 @@
 package com.daylight.data.moods
 
+import com.daylight.data.MoodAndTracking
 import java.util.*
 
 
@@ -108,9 +109,9 @@ class MoodsRepository(
         cachedMoods.remove(moodName)
     }
 
-    override fun getMoodTracking(callback: MoodsDataSource.GetMoodTrackingCallback) {
-        moodsLocalDataSource.getMoodTracking(object : MoodsDataSource.GetMoodTrackingCallback {
-            override fun onMoodTrackingLoaded(moodTracking: List<MoodTracking>) {
+    override fun getMoodTracking(callback: MoodsDataSource.GetMoodTrackingAndMoodCallback) {
+        moodsLocalDataSource.getMoodTracking(object : MoodsDataSource.GetMoodTrackingAndMoodCallback {
+            override fun onMoodTrackingLoaded(moodTracking: List<MoodAndTracking>) {
                 callback.onMoodTrackingLoaded(moodTracking)
             }
 

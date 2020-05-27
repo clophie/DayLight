@@ -32,6 +32,11 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        val root = inflater.inflate(R.layout.analysis_frag, container, false)
+
+        with(root) {
+            moodChart = findViewById(R.id.moodsChart)
+        }
 
         if (!this::presenter.isInitialized) {
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
@@ -45,16 +50,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         }
 
         presenter.start()
-
-        val root = inflater.inflate(R.layout.analysis_frag, container, false)
-
-        val chart = AnyChart.heatMap()
-
-        chart.labels().enabled(false)
-
-        val data = presenter.getDataForMoodChart()
-        chart.data(data.toMutableList() as List<DataEntry>?)
-        moodChart.setChart(chart)
+        presenter.getDataForMoodChart()
 
         return root
     }
@@ -80,6 +76,35 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     }
 
     override fun showLoadingAnalysisError() {
+    }
+
+    override fun generateMoodChart(data: ArrayList<AnalysisPresenter.CustomHeatDataEntry>) {
+        val chart = AnyChart.heatMap()
+        chart.labels().enabled(false)
+        chart.title().enabled(false)
+
+        chart.data(data as List<DataEntry>?)
+        moodChart.setChart(chart)
+    }
+
+    override fun getMoodScoreColor1(): String {
+        return resources.getString(R.string.moodScore1)
+    }
+
+    override fun getMoodScoreColor2(): String {
+        return resources.getString(R.string.moodScore2)
+    }
+
+    override fun getMoodScoreColor3(): String {
+        return resources.getString(R.string.moodScore3)
+    }
+
+    override fun getMoodScoreColor4(): String {
+        return resources.getString(R.string.moodScore4)
+    }
+
+    override fun getMoodScoreColor5(): String {
+        return resources.getString(R.string.moodScore5)
     }
 
     companion object {

@@ -15,9 +15,21 @@ interface AnalysisContract {
         fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
 
         fun showLoadingAnalysisError()
+
+        fun generateMoodChart(data: ArrayList<AnalysisPresenter.CustomHeatDataEntry>)
+
+        fun getMoodScoreColor1() : String
+
+        fun getMoodScoreColor2() : String
+
+        fun getMoodScoreColor3() : String
+
+        fun getMoodScoreColor4() : String
+
+        fun getMoodScoreColor5() : String
     }
 
     interface Presenter : BasePresenter {
-        fun getDataForMoodChart() : ArrayList<AnalysisPresenter.CustomHeatDataEntry>
+        fun getDataForMoodChart()
     }
 }

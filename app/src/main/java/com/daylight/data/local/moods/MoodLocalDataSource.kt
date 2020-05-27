@@ -68,7 +68,7 @@ class MoodsLocalDataSource private constructor(
         appExecutors.diskIO.execute { moodsDao.deleteMoodByName(moodName) }
     }
 
-    override fun getMoodTracking(callback: MoodsDataSource.GetMoodTrackingCallback) {
+    override fun getMoodTracking(callback: MoodsDataSource.GetMoodTrackingAndMoodCallback) {
         appExecutors.diskIO.execute {
             val moodTracking = moodTrackingDao.getMoodTracking()
             appExecutors.mainThread.execute {
