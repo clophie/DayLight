@@ -65,7 +65,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                         c.set(Calendar.MONTH, monthOfYear)
                         c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    }, year, month, day)
+                    }, year, month - 1, day)
 
             dpd.show()
         }

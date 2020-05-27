@@ -28,7 +28,7 @@ class MoodDetailPresenter(
         openMood()
     }
 
-    public fun openMood() {
+    fun openMood() {
         if (moodId.isEmpty()) {
             moodDetailView.showMissingMood()
             return

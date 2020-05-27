@@ -85,22 +85,21 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     }
 
     override fun generateMoodChart(data: ArrayList<Entry>) {
-        val dataSet = LineDataSet(data, "Label")
-        dataSet.color = R.color.moodScore1
+        val dataSet = LineDataSet(data, "")
+        dataSet.label = ""
 
         val lineData = LineData(dataSet)
+        lineData.setDrawValues(false)
 
         moodChart.data = lineData
         moodChart.xAxis.valueFormatter = MyXAxisFormatter()
         moodChart.axisLeft.axisMinimum = 1F
         moodChart.axisLeft.axisMaximum = 5F
         moodChart.axisLeft.granularity = 1F
-        moodChart.axisLeft.textSize = 10F
         moodChart.axisRight.axisMinimum = 0F
         moodChart.axisRight.axisMaximum = 5F
         moodChart.axisRight.granularity = 1F
-        moodChart.axisRight.textSize = 10F
-        moodChart.xAxis.textSize = 10F
+        moodChart.xAxis.granularity = 1F
         moodChart.legend.isEnabled = false
         moodChart.description.isEnabled = false
         moodChart.invalidate()

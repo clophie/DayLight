@@ -132,7 +132,7 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
 
         var moodTrackingTimes = moodTracking.map { "${
         it.date.get(Calendar.DAY_OF_MONTH)}/${
-        it.date.get(Calendar.MONTH) + 1}/${
+        it.date.get(Calendar.MONTH)}/${
         it.date.get(Calendar.YEAR)}" }
 
         // Display a message if the mood hasn't been tracked
