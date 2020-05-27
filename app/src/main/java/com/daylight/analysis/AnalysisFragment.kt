@@ -102,7 +102,8 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         moodChart.axisRight.granularity = 1F
         moodChart.xAxis.granularity = 1F
         moodChart.xAxis.axisMaximum = latestDate.get(Calendar.DAY_OF_YEAR).toFloat()
-        moodChart.xAxis.axisMinimum = latestDate.get(Calendar.DAY_OF_YEAR) - 30.toFloat()
+        latestDate.add(Calendar.HOUR, - 30*24)
+        moodChart.xAxis.axisMinimum = latestDate.get(Calendar.DAY_OF_YEAR).toFloat()
         moodChart.legend.isEnabled = false
         moodChart.description.isEnabled = false
         moodChart.invalidate()
@@ -136,8 +137,6 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     }
 
     class MyXAxisFormatter : ValueFormatter() {
-        private val days = arrayOf("Mo", "Tu", "Wed", "Th", "Fr", "Sa", "Su")
-
         override fun getAxisLabel(dayOfYear: Float, axis: AxisBase?): String? {
             val c = Calendar.getInstance()
             c.set(Calendar.DAY_OF_YEAR, dayOfYear.toInt())
