@@ -1,6 +1,5 @@
 package com.daylight.analysis
 
-import com.anychart.chart.common.dataentry.HeatDataEntry
 import com.daylight.R
 import com.daylight.data.MoodAndTracking
 import com.daylight.data.habits.HabitsRepository
@@ -8,6 +7,9 @@ import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -61,32 +63,12 @@ class AnalysisPresenter(
     }
 
     private fun generateMoodChartData(moodTracking: List<MoodAndTracking>)  {
-        val data = arrayListOf<CustomHeatDataEntry>()
-        var color = ""
+        val data = arrayListOf<Entry>()
         moodTracking.forEach {
-            when (it.score) {
-                1 -> color = analysisView.getMoodScoreColor1()
-                2 -> color = analysisView.getMoodScoreColor2()
-                3 -> color = analysisView.getMoodScoreColor3()
-                4 -> color = analysisView.getMoodScoreColor4()
-                5 -> color = analysisView.getMoodScoreColor5()
-            }
-
-            data.add(CustomHeatDataEntry(it.date.get(Calendar.DAY_OF_WEEK).toString(), it.date.get(Calendar.WEEK_OF_MONTH).toString(), it.date.get(Calendar.DAY_OF_MONTH), color))
+            data.add(Entry(it.date.get(Calendar.DAY_OF_YEAR).toFloat(), it.score.toFloat()))
         }
 
         analysisView.generateMoodChart(data)
     }
 
-    class CustomHeatDataEntry internal constructor(
-        x: String?,
-        y: String?,
-        day: Int?,
-        fill: String?
-    ) :
-        HeatDataEntry(x, y, day) {
-        init {
-            setValue("fill", fill)
-        }
-    }
 }

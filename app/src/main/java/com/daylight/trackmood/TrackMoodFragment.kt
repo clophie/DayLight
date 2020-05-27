@@ -76,6 +76,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
             setOnClickListener {
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
+                c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1)
                 presenter.submitTracking(selectedMoodName, c)
 
                 // Redirect back to the moods screen

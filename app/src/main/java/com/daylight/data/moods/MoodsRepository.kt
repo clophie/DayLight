@@ -132,6 +132,11 @@ class MoodsRepository(
     }
 
     override fun insertMoodTracking(moodTracking: MoodTracking) {
+        // Set all time related fields to 0 so that any conflicts in date will be picked up
+        moodTracking.date.set(Calendar.HOUR_OF_DAY, 0)
+        moodTracking.date.set(Calendar.MINUTE, 0)
+        moodTracking.date.set(Calendar.SECOND, 0)
+        moodTracking.date.set(Calendar.MILLISECOND, 0)
         moodsLocalDataSource.insertMoodTracking(moodTracking)
     }
 

@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.anychart.AnyChart
-import com.anychart.AnyChartView
-import com.anychart.chart.common.dataentry.DataEntry
 import com.daylight.R
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
@@ -16,6 +13,15 @@ import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import java.security.KeyStore
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -23,7 +29,7 @@ import com.daylight.util.AppExecutors
  */
 class AnalysisFragment : Fragment(), AnalysisContract.View {
 
-    private lateinit var moodChart : AnyChartView
+    private lateinit var moodChart : LineChart
 
     override lateinit var presenter: AnalysisContract.Presenter
 
@@ -78,13 +84,26 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     override fun showLoadingAnalysisError() {
     }
 
-    override fun generateMoodChart(data: ArrayList<AnalysisPresenter.CustomHeatDataEntry>) {
-        val chart = AnyChart.heatMap()
-        chart.labels().enabled(false)
-        chart.title().enabled(false)
+    override fun generateMoodChart(data: ArrayList<Entry>) {
+        val dataSet = LineDataSet(data, "Label")
+        dataSet.color = R.color.moodScore1
 
-        chart.data(data as List<DataEntry>?)
-        moodChart.setChart(chart)
+        val lineData = LineData(dataSet)
+
+        moodChart.data = lineData
+        moodChart.xAxis.valueFormatter = MyXAxisFormatter()
+        moodChart.axisLeft.axisMinimum = 1F
+        moodChart.axisLeft.axisMaximum = 5F
+        moodChart.axisLeft.granularity = 1F
+        moodChart.axisLeft.textSize = 10F
+        moodChart.axisRight.axisMinimum = 0F
+        moodChart.axisRight.axisMaximum = 5F
+        moodChart.axisRight.granularity = 1F
+        moodChart.axisRight.textSize = 10F
+        moodChart.xAxis.textSize = 10F
+        moodChart.legend.isEnabled = false
+        moodChart.description.isEnabled = false
+        moodChart.invalidate()
     }
 
     override fun getMoodScoreColor1(): String {
@@ -111,6 +130,17 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
         fun newInstance(): AnalysisFragment {
             return AnalysisFragment()
+        }
+    }
+
+    class MyXAxisFormatter : ValueFormatter() {
+        private val days = arrayOf("Mo", "Tu", "Wed", "Th", "Fr", "Sa", "Su")
+
+        override fun getAxisLabel(dayOfYear: Float, axis: AxisBase?): String? {
+            val c = Calendar.getInstance()
+            c.set(Calendar.DAY_OF_YEAR, dayOfYear.toInt())
+
+            return "${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH)}"
         }
     }
 }

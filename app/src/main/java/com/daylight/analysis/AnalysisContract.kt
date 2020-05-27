@@ -1,8 +1,8 @@
 package com.daylight.analysis
 
-import com.anychart.chart.common.dataentry.HeatDataEntry
 import com.daylight.BasePresenter
 import com.daylight.BaseView
+import com.github.mikephil.charting.data.Entry
 
 /**
  * This specifies the contract between the view and the presenter.
@@ -16,7 +16,7 @@ interface AnalysisContract {
 
         fun showLoadingAnalysisError()
 
-        fun generateMoodChart(data: ArrayList<AnalysisPresenter.CustomHeatDataEntry>)
+        fun generateMoodChart(data: ArrayList<Entry>)
 
         fun getMoodScoreColor1() : String
 
