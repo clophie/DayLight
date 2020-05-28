@@ -40,7 +40,7 @@ object AlarmScheduler {
             val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_track_habit), 1)
 
             // Schedule the alarm
-            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 2)
+            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 30)
         }
     }
 

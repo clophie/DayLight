@@ -1,20 +1,24 @@
 package com.daylight.util.notif
 
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.daylight.R
 import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
 import java.util.*
 
 class TrackReceiver: BroadcastReceiver() {
-    private val REQUEST_CODE = 0
 
     override fun onReceive(context: Context, intent: Intent) {
         val triggerTime = Calendar.getInstance()
@@ -30,7 +34,9 @@ class TrackReceiver: BroadcastReceiver() {
             val database = DaylightDatabase.getInstance(context)
             val habitsRepository = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(
-                    AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+                    AppExecutors(), database.habitDao(), database.habitTrackingDao()
+                )
+            )
 
             val habitTracking = intent.extras!!.getString("habitId")?.let {
                 HabitTracking(

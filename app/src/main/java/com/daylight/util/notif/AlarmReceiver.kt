@@ -3,9 +3,11 @@ package com.daylight.util.notif
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.daylight.R
 import com.daylight.data.habits.Habit
@@ -69,12 +71,16 @@ class AlarmReceiver: BroadcastReceiver() {
                                     trackFromNotificationIntent,
                                     FLAG_UPDATE_CURRENT)
 
-                                val trackIntent = Intent(context, TrackHabitActivity::class.java)
-                                val trackPendingIntent: PendingIntent = PendingIntent.getBroadcast(
-                                    context,
-                                    3,
-                                    trackIntent,
-                                    FLAG_UPDATE_CURRENT)
+                                // Create an Intent for the activity you want to start
+                                val resultIntent = Intent(context, TrackHabitActivity::class.java)
+
+                                // Create the TaskStackBuilder
+                                val trackPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
+                                    // Add the intent, which inflates the back stack
+                                    addNextIntentWithParentStack(resultIntent)
+                                    // Get the PendingIntent containing the entire back stack
+                                    getPendingIntent(0, FLAG_UPDATE_CURRENT)
+                                }
 
                                 val actions = listOf(Pair("Yes - Track now!", trackFromNotificationPendingIntent),
                                 Pair("Choose tracked time", trackPendingIntent))
@@ -88,7 +94,7 @@ class AlarmReceiver: BroadcastReceiver() {
                                     "Have you completed your habit?",
                                     "Have you completed the habit - ${habit.title}?",
                                     context,
-                                    actions,
+                                    actions as List<Pair<String, PendingIntent>>,
                                     context.resources.getString(R.string.habit_track_notification_channel_id),
                                     1
                                 )
