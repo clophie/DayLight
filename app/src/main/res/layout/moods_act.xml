@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".habits.HabitsActivity">
+    tools:context=".moods.MoodsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -120,14 +120,14 @@
                     fab:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fab_track_habit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                app:fab_colorNormal="@color/colorAccent"
-                app:fab_colorPressed="@color/colorAccentDark"
-                fab:fab_label="@string/trackHabitFab"
-                fab:fab_size="mini" />
+                    android:id="@+id/fab_track_habit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:fab_colorNormal="@color/colorAccent"
+                    app:fab_colorPressed="@color/colorAccentDark"
+                    fab:fab_label="@string/trackHabitFab"
+                    fab:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>
 

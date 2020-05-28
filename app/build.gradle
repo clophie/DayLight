@@ -10,7 +10,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.daylight"
+        applicationId 'com.daylight'
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
@@ -22,6 +22,26 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
     }
 }
 
@@ -40,6 +60,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'ca.antonious:materialdaypicker:0.7.2'
     implementation 'com.github.clans:fab:1.6.4'
+    implementation 'com.maltaisn:icondialog:3.2.2'
+    implementation 'com.maltaisn:iconpack-default:1.0.1'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // Dependencies for local unit tests
