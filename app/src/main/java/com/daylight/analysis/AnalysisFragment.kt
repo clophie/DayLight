@@ -1,25 +1,30 @@
 package com.daylight.analysis
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.daylight.R
+import com.daylight.data.HabitAndTracking
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
-import java.security.KeyStore
+import com.github.mikephil.charting.utils.ColorTemplate
+import kotlinx.android.synthetic.main.trackhabit_frag.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +35,7 @@ import kotlin.collections.ArrayList
 class AnalysisFragment : Fragment(), AnalysisContract.View {
 
     private lateinit var moodChart : LineChart
+    private lateinit var habitChart : PieChart
 
     override lateinit var presenter: AnalysisContract.Presenter
 
@@ -42,6 +48,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
         with(root) {
             moodChart = findViewById(R.id.moodsChart)
+            habitChart = findViewById(R.id.habitChart)
         }
 
         if (!this::presenter.isInitialized) {
@@ -57,6 +64,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
         presenter.start()
         presenter.getDataForMoodChart()
+        presenter.getDataForHabitChart()
 
         return root
     }
@@ -77,10 +85,6 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         presenter.start()
     }
 
-    override fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int) {
-
-    }
-
     override fun showLoadingAnalysisError() {
     }
 
@@ -93,7 +97,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         lineData.setDrawValues(false)
 
         moodChart.data = lineData
-        moodChart.xAxis.valueFormatter = MyXAxisFormatter()
+        moodChart.xAxis.valueFormatter = MoodXAxisFormatter()
         moodChart.axisLeft.axisMinimum = 1F
         moodChart.axisLeft.axisMaximum = 5F
         moodChart.axisLeft.granularity = 1F
@@ -104,9 +108,26 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         moodChart.xAxis.axisMaximum = latestDate.get(Calendar.DAY_OF_YEAR).toFloat()
         latestDate.add(Calendar.HOUR, - 30*24)
         moodChart.xAxis.axisMinimum = latestDate.get(Calendar.DAY_OF_YEAR).toFloat()
+        moodChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        moodChart.animateY(1400, Easing.EaseInOutQuad)
         moodChart.legend.isEnabled = false
         moodChart.description.isEnabled = false
+        moodChart.setPinchZoom(false)
         moodChart.invalidate()
+    }
+
+    override fun generateHabitChart(data: ArrayList<PieEntry>, habitAndTracking: List<HabitAndTracking>) {
+        val dataSet = PieDataSet(data, "")
+        dataSet.colors = getColors()
+
+        val pieData = PieData(dataSet)
+        pieData.setDrawValues(false)
+
+        habitChart.data = pieData
+        habitChart.description.isEnabled = false
+        habitChart.legend.isEnabled = false
+        habitChart.animateY(1400, Easing.EaseInOutQuad)
+        habitChart.invalidate()
     }
 
     override fun getMoodScoreColor1(): String {
@@ -136,12 +157,30 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         }
     }
 
-    class MyXAxisFormatter : ValueFormatter() {
+    class MoodXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(dayOfYear: Float, axis: AxisBase?): String? {
             val c = Calendar.getInstance()
             c.set(Calendar.DAY_OF_YEAR, dayOfYear.toInt())
 
             return "${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH)}"
         }
+    }
+
+    fun getColors() : ArrayList<Int> {
+        val colors : ArrayList<Int> = mutableListOf<Int>() as ArrayList<Int>
+
+        ColorTemplate.COLORFUL_COLORS.forEach {
+            colors.add(it)
+        }
+
+        ColorTemplate.JOYFUL_COLORS.forEach {
+            colors.add(it)
+        }
+
+        ColorTemplate.PASTEL_COLORS.forEach {
+            colors.add(it)
+        }
+
+        return colors
     }
 }
