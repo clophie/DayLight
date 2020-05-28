@@ -112,6 +112,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         moodChart.animateY(1400, Easing.EaseInOutQuad)
         moodChart.legend.isEnabled = false
         moodChart.description.isEnabled = false
+        moodChart.setPinchZoom(false)
         moodChart.invalidate()
     }
 
@@ -126,8 +127,6 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         habitChart.description.isEnabled = false
         habitChart.legend.isEnabled = false
         habitChart.animateY(1400, Easing.EaseInOutQuad)
-        habitChart.setEntryLabelColor(resources.getColor(R.color.black))
-        habitChart.setEntryLabelTypeface(Typeface.DEFAULT_BOLD)
         habitChart.invalidate()
     }
 
