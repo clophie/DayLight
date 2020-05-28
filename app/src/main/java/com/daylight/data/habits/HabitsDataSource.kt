@@ -47,7 +47,7 @@ interface HabitsDataSource {
 
     fun deleteHabit(habitId: String)
 
-    fun getHabitTracking()
+    fun getHabitTracking(callback: GetHabitTrackingCallback)
 
     fun getHabitTrackingByHabitId(habitId: String, callback: GetHabitTrackingCallback)
 

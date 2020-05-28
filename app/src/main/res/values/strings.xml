@@ -16,11 +16,11 @@
     <string name="empty_habit_message">TO DOs cannot be empty</string>
     <string name="successfully_saved_habit_message">Habit saved</string>
     <string name="list_title">Habit List</string>
-    <string name="statistics_title">Statistics</string>
-    <string name="statistics_no_habits">You have no habits.</string>
-    <string name="statistics_active_habits">Active habits:</string>
-    <string name="statistics_completed_habits">Completed habits:</string>
-    <string name="statistics_error">Error loading statistics.</string>
+    <string name="analysis_title">Analysis</string>
+    <string name="analysis_no_habits">You have no habits.</string>
+    <string name="analysis_active_habits">Active habits:</string>
+    <string name="analysis_completed_habits">Completed habits:</string>
+    <string name="analysis_error">Error loading analysis.</string>
     <string name="no_data">No data</string>
     <string name="loading">Loading…</string>
 
@@ -86,4 +86,10 @@
     <string name="moodDate">Date for Mood</string>
     <string name="mood_selection_prompt">What mood do you want to track for this day?</string>
     <string name="moodIcon">mood icon</string>
+    <string name="mood_over_the_last_month">Mood Over the Last Month</string>
+    <string name="moodScore1">#ff4d4d</string>
+    <string name="moodScore2">#ffa64d</string>
+    <string name="moodScore3">#ffff4d</string>
+    <string name="moodScore4">#a6ff4d</string>
+    <string name="moodScore5">#4dd2ff</string>
 </resources>

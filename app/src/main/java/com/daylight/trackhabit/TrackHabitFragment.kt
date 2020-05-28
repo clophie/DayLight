@@ -99,12 +99,21 @@ class TrackHabitFragment : Fragment(), TrackHabitContract.View {
             setOnClickListener {
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
-                presenter.submitTracking(selectedHabitId, c)
 
-                // Redirect back to the habits screen
-                val intent = Intent(context, HabitsActivity::class.java)
-                intent.putExtra("SNACKBAR_CONTENT", "Habit Tracked!")
-                startActivity(intent)
+                try {
+                    presenter.submitTracking(selectedHabitId, c)
+
+                    // Redirect back to the habits screen
+                    val intent = Intent(context, HabitsActivity::class.java)
+                    intent.putExtra("SNACKBAR_CONTENT", "Habit Tracked!")
+                    startActivity(intent)
+                } catch (e : Exception) {
+                    // Redirect back to the habits screen
+                    val intent = Intent(context, HabitsActivity::class.java)
+                    intent.putExtra("SNACKBAR_CONTENT", "Couldn't track habit.")
+                    startActivity(intent)
+                }
+
             }
         }
 

@@ -96,7 +96,7 @@
                     android:src="@drawable/ic_add"
                     app:fab_colorNormal="@color/colorAccent"
                     app:fab_colorPressed="@color/colorAccentDark"
-                    fab:fab_label="@string/addNewMoodFab"
+                    fab:fab_label="@string/addNewHabitFab"
                     fab:fab_size="mini" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -126,7 +126,7 @@
                     android:src="@drawable/ic_add"
                     app:fab_colorNormal="@color/colorAccent"
                     app:fab_colorPressed="@color/colorAccentDark"
-                    fab:fab_label="@string/trackMoodFab"
+                    fab:fab_label="@string/trackHabitFab"
                     fab:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>

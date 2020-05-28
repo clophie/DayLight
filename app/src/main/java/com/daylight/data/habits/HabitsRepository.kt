@@ -108,8 +108,15 @@ class HabitsRepository(
         cachedHabits.remove(habitId)
     }
 
-    override fun getHabitTracking() {
-        habitsLocalDataSource.getHabitTracking()
+    override fun getHabitTracking(callback: HabitsDataSource.GetHabitTrackingCallback) {
+        habitsLocalDataSource.getHabitTracking(object : HabitsDataSource.GetHabitTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+                callback.onHabitTrackingLoaded(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+            }
+        })
     }
 
     override fun getHabitTrackingByHabitId(habitId: String, callback: HabitsDataSource.GetHabitTrackingCallback) {

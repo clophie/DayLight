@@ -65,7 +65,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                         c.set(Calendar.MONTH, monthOfYear)
                         c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    }, year, month, day)
+                    }, year, month - 1, day)
 
             dpd.show()
         }
@@ -76,12 +76,21 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
             setOnClickListener {
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
-                presenter.submitTracking(selectedMoodName, c)
+                c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1)
 
-                // Redirect back to the moods screen
-                val intent = Intent(context, MoodsActivity::class.java)
-                intent.putExtra("SNACKBAR_CONTENT", "Mood Tracked!")
-                startActivity(intent)
+                try {
+                    presenter.submitTracking(selectedMoodName, c)
+
+                    // Redirect back to the moods screen
+                    val intent = Intent(context, MoodsActivity::class.java)
+                    intent.putExtra("SNACKBAR_CONTENT", "Mood Tracked!")
+                    startActivity(intent)
+                } catch (e : Exception) {
+                    // Redirect back to the moods screen
+                    val intent = Intent(context, MoodsActivity::class.java)
+                    intent.putExtra("SNACKBAR_CONTENT", "Couldn't track mood.")
+                    startActivity(intent)
+                }
             }
         }
 

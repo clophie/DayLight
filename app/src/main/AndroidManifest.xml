@@ -9,6 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        tools:replace="android:allowBackup"
         android:theme="@style/AppTheme">
 
         <receiver
@@ -46,7 +47,7 @@
         <activity android:name=".trackhabit.TrackHabitActivity" />
         <activity android:name=".trackmood.TrackMoodActivity" />
         <activity
-            android:name=".statistics.StatisticsActivity"
+            android:name=".analysis.AnalysisActivity"
             android:parentActivityName=".habits.HabitsActivity"
             tools:ignore="UnusedAttribute">
 

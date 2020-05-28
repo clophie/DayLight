@@ -31,9 +31,7 @@ class TrackMoodPresenter(
         moodsRepository.insertMoodTracking(moodTracking)
     }
 
-    override fun start() {
-        TODO("Not yet implemented")
-    }
+    override fun start() { }
 
     override fun loadMoods() {
         moodsRepository.getMoods(object : MoodsDataSource.LoadMoodsCallback {

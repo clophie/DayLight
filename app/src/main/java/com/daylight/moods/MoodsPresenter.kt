@@ -71,19 +71,13 @@ class MoodsPresenter(
 
         moodsRepository.getMoods(object : MoodsDataSource.LoadMoodsCallback {
             override fun onMoodsLoaded(moods: List<Mood>) {
-                val moodsToShow = ArrayList<Mood>()
-
-                // We filter the moods based on the requestType
-                for (mood in moods) {
-                    moodsToShow.add(mood)
-                }
                 // The view may not be able to handle UI updates anymore
                 if (!moodsView.isActive) {
                     return
                 }
                 moodsView.setLoadingIndicator(false)
 
-                processMoods(moodsToShow)
+                processMoods(moods)
             }
 
             override fun onDataNotAvailable() {
