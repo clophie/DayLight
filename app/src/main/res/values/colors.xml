@@ -11,6 +11,7 @@
     <color name="moodScore3">#ffff4d</color>
     <color name="moodScore4">#a6ff4d</color>
     <color name="moodScore5">#4dd2ff</color>
+    <color name="black">#000000</color>
 
     <drawable name="completedTaskBackground">#CCCCCC</drawable>
 

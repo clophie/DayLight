@@ -92,4 +92,5 @@
     <string name="moodScore3">#ffff4d</string>
     <string name="moodScore4">#a6ff4d</string>
     <string name="moodScore5">#4dd2ff</string>
+    <string name="most_frequently_completed_habits">Most Frequently Completed Habits</string>
 </resources>

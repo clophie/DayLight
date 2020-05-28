@@ -1,5 +1,6 @@
 package com.daylight.data.habits
 
+import com.daylight.data.HabitAndTracking
 import java.util.*
 
 /**
@@ -35,6 +36,13 @@ interface HabitsDataSource {
         fun onDataNotAvailable()
     }
 
+    interface GetHabitAndTrackingCallback {
+
+        fun onHabitTrackingLoaded(habitTracking: List<HabitAndTracking>)
+
+        fun onDataNotAvailable()
+    }
+
     fun getHabits(callback: LoadHabitsCallback)
 
     fun getHabit(habitId: String, callback: GetHabitCallback)
@@ -47,7 +55,7 @@ interface HabitsDataSource {
 
     fun deleteHabit(habitId: String)
 
-    fun getHabitTracking(callback: GetHabitTrackingCallback)
+    fun getHabitTracking(callback: GetHabitAndTrackingCallback)
 
     fun getHabitTrackingByHabitId(habitId: String, callback: GetHabitTrackingCallback)
 

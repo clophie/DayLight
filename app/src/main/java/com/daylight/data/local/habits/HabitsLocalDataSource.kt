@@ -68,7 +68,7 @@ class HabitsLocalDataSource private constructor(
         appExecutors.diskIO.execute { habitsDao.deleteHabitById(habitId) }
     }
 
-    override fun getHabitTracking(callback: HabitsDataSource.GetHabitTrackingCallback) {
+    override fun getHabitTracking(callback: HabitsDataSource.GetHabitAndTrackingCallback) {
         appExecutors.diskIO.execute {
             val habitTracking = habitTrackingDao.getHabitTracking()
             appExecutors.mainThread.execute {

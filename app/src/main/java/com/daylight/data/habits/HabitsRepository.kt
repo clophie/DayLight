@@ -1,5 +1,6 @@
 package com.daylight.data.habits
 
+import com.daylight.data.HabitAndTracking
 import java.util.*
 
 
@@ -108,9 +109,9 @@ class HabitsRepository(
         cachedHabits.remove(habitId)
     }
 
-    override fun getHabitTracking(callback: HabitsDataSource.GetHabitTrackingCallback) {
-        habitsLocalDataSource.getHabitTracking(object : HabitsDataSource.GetHabitTrackingCallback {
-            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
+    override fun getHabitTracking(callback: HabitsDataSource.GetHabitAndTrackingCallback) {
+        habitsLocalDataSource.getHabitTracking(object : HabitsDataSource.GetHabitAndTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitAndTracking>) {
                 callback.onHabitTrackingLoaded(habitTracking)
             }
 

@@ -2,7 +2,10 @@ package com.daylight.analysis
 
 import com.daylight.BasePresenter
 import com.daylight.BaseView
+import com.daylight.data.HabitAndTracking
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieEntry
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -14,11 +17,11 @@ interface AnalysisContract {
     interface View : BaseView<Presenter> {
         val isActive: Boolean
 
-        fun showAnalysis(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
-
         fun showLoadingAnalysisError()
 
         fun generateMoodChart(data: ArrayList<Entry>, latestDate: Calendar)
+
+        fun generateHabitChart(data: ArrayList<PieEntry>, habitAndTracking: List<HabitAndTracking>)
 
         fun getMoodScoreColor1() : String
 
@@ -33,5 +36,7 @@ interface AnalysisContract {
 
     interface Presenter : BasePresenter {
         fun getDataForMoodChart()
+
+        fun getDataForHabitChart()
     }
 }

@@ -1,14 +1,19 @@
 package com.daylight.analysis
 
 import com.daylight.R
+import com.daylight.data.HabitAndTracking
 import com.daylight.data.MoodAndTracking
+import com.daylight.data.habits.HabitTracking
+import com.daylight.data.habits.HabitsDataSource
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,7 +41,16 @@ class AnalysisPresenter(
             }
 
             override fun onDataNotAvailable() { }
+        })
+    }
 
+    override fun getDataForHabitChart() {
+        habitsRepository.getHabitTracking( object : HabitsDataSource.GetHabitAndTrackingCallback {
+            override fun onHabitTrackingLoaded(habitTracking: List<HabitAndTracking>) {
+                generateHabitChartData(habitTracking)
+            }
+
+            override fun onDataNotAvailable() { }
         })
     }
 
@@ -44,23 +58,7 @@ class AnalysisPresenter(
         loadAnalysis()
     }
 
-    private fun loadAnalysis() {
-/*        habitsRepository.getHabitTracking(object : HabitsDataSource.GetHabitTrackingCallback {
-            override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
-                habitTrackingList = habitTracking
-            }
-
-            override fun onDataNotAvailable() {
-                // The view may not be able to handle UI updates anymore
-                if (!analysisView.isActive) {
-                    return
-                }
-                analysisView.showLoadingAnalysisError()
-            }
-        })*/
-
-
-    }
+    private fun loadAnalysis() { }
 
     private fun generateMoodChartData(moodTracking: List<MoodAndTracking>)  {
         val data = arrayListOf<Entry>()
@@ -76,6 +74,26 @@ class AnalysisPresenter(
         }
 
         analysisView.generateMoodChart(data, latestDate)
+    }
+
+    private fun generateHabitChartData(habitTracking: List<HabitAndTracking>) {
+        val data = arrayListOf<PieEntry>()
+
+        val trackedTitles = mutableListOf<String>()
+
+        habitTracking.forEach { h ->
+            if (!trackedTitles.contains(h.title)) {
+                trackedTitles.add(h.title)
+
+                val count = habitTracking.filter { it.title == h.title}.count().toFloat()
+
+                data.add(
+                    PieEntry(count, h.title)
+                )
+            }
+        }
+
+        analysisView.generateHabitChart(data, habitTracking)
     }
 
 }

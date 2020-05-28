@@ -1,6 +1,7 @@
 package com.daylight.data.local.habits
 
 import androidx.room.*
+import com.daylight.data.HabitAndTracking
 import com.daylight.data.habits.HabitTracking
 import com.daylight.util.Converters
 import java.util.*
@@ -14,7 +15,7 @@ interface HabitTrackingDao {
      *
      * @return all habits.
      */
-    @Query("SELECT * FROM HabitTracking") fun getHabitTracking(): List<HabitTracking>
+    @Query("SELECT HabitTracking.completionDateTime, Habits.title FROM HabitTracking INNER JOIN Habits on Habits.habitid = HabitTracking.habitid") fun getHabitTracking(): List<HabitAndTracking>
 
     /**
      * Select a habit by id.
