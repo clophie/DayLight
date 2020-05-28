@@ -1,8 +1,10 @@
 package com.daylight.util.notif
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.daylight.R
 import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsRepository
@@ -18,6 +20,13 @@ class TrackReceiver: BroadcastReceiver() {
         val triggerTime = Calendar.getInstance()
 
         if (intent.action != null && intent.action!!.equals(context.getString(R.string.action_track_habit), ignoreCase = true) && intent.extras != null) {
+            val notificationManager = ContextCompat.getSystemService(
+                context,
+                NotificationManager::class.java
+            ) as NotificationManager
+
+            notificationManager.cancel(1)
+
             val database = DaylightDatabase.getInstance(context)
             val habitsRepository = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(

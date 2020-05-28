@@ -2,6 +2,7 @@ package com.daylight.util.notif
 
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -41,7 +42,9 @@ class AlarmReceiver: BroadcastReceiver() {
                                     "Complete your habits!",
                                     "Remember to complete your habit - ${habit.title}!",
                                     context,
-                                    emptyList()
+                                    emptyList(),
+                                    context.resources.getString(R.string.habit_notification_channel_id),
+                                    0
                                 )
                             }
 
@@ -58,19 +61,20 @@ class AlarmReceiver: BroadcastReceiver() {
 
                                 // Create pending intents for the two action options
                                 val trackFromNotificationIntent = Intent(context, TrackReceiver::class.java)
-                                intent.putExtra("habitId", habit.id)
+                                trackFromNotificationIntent.putExtra("habitId", habit.id)
+                                trackFromNotificationIntent.action = context.getString(R.string.action_track_habit)
                                 val trackFromNotificationPendingIntent: PendingIntent = PendingIntent.getBroadcast(
                                     context,
                                     2,
                                     trackFromNotificationIntent,
-                                    FLAGS)
+                                    FLAG_UPDATE_CURRENT)
 
                                 val trackIntent = Intent(context, TrackHabitActivity::class.java)
                                 val trackPendingIntent: PendingIntent = PendingIntent.getBroadcast(
                                     context,
                                     3,
                                     trackIntent,
-                                    FLAGS)
+                                    FLAG_UPDATE_CURRENT)
 
                                 val actions = listOf(Pair("Yes - Track now!", trackFromNotificationPendingIntent),
                                 Pair("Choose tracked time", trackPendingIntent))
@@ -84,7 +88,9 @@ class AlarmReceiver: BroadcastReceiver() {
                                     "Have you completed your habit?",
                                     "Have you completed the habit - ${habit.title}?",
                                     context,
-                                    actions
+                                    actions,
+                                    context.resources.getString(R.string.habit_track_notification_channel_id),
+                                    1
                                 )
                             }
 

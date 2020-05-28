@@ -141,6 +141,16 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             getString(R.string.habit_notification_channel_name)
         )
 
+        createChannel(
+            getString(R.string.mood_notification_channel_id),
+            getString(R.string.mood_notification_channel_name)
+        )
+
+        createChannel(
+            getString(R.string.habit_track_notification_channel_id),
+            getString(R.string.habit_track_notification_channel_name)
+        )
+
         return root
     }
 
@@ -283,7 +293,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 }
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+            notificationChannel.lightColor = Color.CYAN
             notificationChannel.enableVibration(true)
             notificationChannel.description = getString(R.string.habit_notification_channel_description)
 

@@ -40,7 +40,7 @@ object AlarmScheduler {
             val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_track_habit), 1)
 
             // Schedule the alarm
-            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 1)
+            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 2)
         }
     }
 
@@ -65,7 +65,7 @@ object AlarmScheduler {
             // Schedule for today
             alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                // Alarm is scheduled for 15 minutes before chosen time
+                // Alarm is scheduled with a given delay
                 datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
             return
         }
@@ -74,7 +74,7 @@ object AlarmScheduler {
         datetimeToAlarm.roll(Calendar.WEEK_OF_YEAR, 1)
         alarmMgr.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            // Alarm is scheduled for 15 minutes before chosen time
+            // Alarm is scheduled with a given delay
             datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
     }
 

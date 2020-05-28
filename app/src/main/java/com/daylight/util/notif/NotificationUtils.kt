@@ -8,21 +8,19 @@ import androidx.core.app.NotificationCompat
 import com.daylight.R
 import com.daylight.habits.HabitsActivity
 
-// Notification ID.
-private val NOTIFICATION_ID = 0
 
 /**
  * Builds and delivers the notification.
  *
  * @param context, activity context.
  */
-fun NotificationManager.sendNotification(title: String, messageBody: String, applicationContext: Context, actionIntents: List<Pair<String, PendingIntent>>) {
+fun NotificationManager.sendNotification(title: String, messageBody: String, applicationContext: Context, actionIntents: List<Pair<String, PendingIntent>>, channel: String, id: Int) {
     // Create the content intent for the notification, which launches
     // this activity
     val contentIntent = Intent(applicationContext, HabitsActivity::class.java)
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
-        NOTIFICATION_ID,
+        id,
         contentIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
@@ -30,7 +28,7 @@ fun NotificationManager.sendNotification(title: String, messageBody: String, app
     // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
-        applicationContext.getString(R.string.habit_notification_channel_id)
+        channel
     )
         .setSmallIcon(R.drawable.ic_habits_icon)
         .setContentTitle(title)
@@ -48,7 +46,7 @@ fun NotificationManager.sendNotification(title: String, messageBody: String, app
         )
     }
 
-    notify(NOTIFICATION_ID, builder.build())
+    notify(id, builder.build())
 }
 
 /**

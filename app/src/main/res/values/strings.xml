@@ -64,6 +64,10 @@
     <string name="habit_notification_channel_description">Habit reminder</string>
     <string name="habit_notification_channel_name">Habit</string>
     <string name="snooze">Snooze</string>
+    <string name="mood_notification_channel_id">1002</string>
+    <string name="mood_notification_channel_name">Mood</string>
+    <string name="habit_track_notification_channel_id">1003</string>
+    <string name="habit_track_notification_channel_name">HabitTrack</string>
     <!--Make sure the actions don't have the same length otherwise notifications will override each other-->
     <string name="action_notify_habit_reminder">com.daylight.action.HABIT_REMINDER</string>
     <string name="action_notify_remove_notification">com.daylight.action.REMOVE_NOTIFICATION</string>
@@ -79,8 +83,6 @@
     <string name="mood_notification_channel_description">Mood Reminder</string>
     <string name="loading_moods_error">Error while loading moods</string>
     <string name="successfully_saved_mood_message">Mood saved</string>
-    <string name="mood_notification_channel_id">1002</string>
-    <string name="mood_notification_channel_name">Mood</string>
     <string name="mood_tracking_history">Mood Tracking History</string>
     <string name="moodcompletiontime">What day do you want to track a mood for?</string>
     <string name="moodDate">Date for Mood</string>
