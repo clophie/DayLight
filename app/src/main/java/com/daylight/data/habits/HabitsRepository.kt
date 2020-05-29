@@ -1,6 +1,7 @@
 package com.daylight.data.habits
 
 import com.daylight.data.HabitAndTracking
+import com.daylight.data.MoodAndHabitTracking
 import java.util.*
 
 
@@ -124,6 +125,17 @@ class HabitsRepository(
         habitsLocalDataSource.getHabitTrackingByHabitId(habitId, object : HabitsDataSource.GetHabitTrackingCallback {
             override fun onHabitTrackingLoaded(habitTracking: List<HabitTracking>) {
                 callback.onHabitTrackingLoaded(habitTracking)
+            }
+
+            override fun onDataNotAvailable() {
+            }
+        })
+    }
+
+    override fun getDataForCorrelationProcessing(callback: HabitsDataSource.GetCorrelationDataCallback)  {
+        habitsLocalDataSource.getDataForCorrelationProcessing(object : HabitsDataSource.GetCorrelationDataCallback {
+            override fun onCorrelationDataLoaded(moodAndHabitTracking: List<MoodAndHabitTracking>) {
+                callback.onCorrelationDataLoaded(moodAndHabitTracking)
             }
 
             override fun onDataNotAvailable() {

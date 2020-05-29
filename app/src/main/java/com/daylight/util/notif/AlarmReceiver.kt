@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.daylight.R
+import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.MoodAndTracking
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitsDataSource
@@ -142,6 +143,26 @@ class AlarmReceiver: BroadcastReceiver() {
                             actions as List<Pair<String, PendingIntent>>,
                             context.resources.getString(R.string.mood_notification_channel_id),
                             3
+                        )
+                    }
+
+                    override fun onDataNotAvailable() { }
+                })
+            } else if (intent.action!!.equals(context.getString(R.string.action_correlation_alarm), ignoreCase = true)) {
+                habitsRepository.getDataForCorrelationProcessing( object : HabitsDataSource.GetCorrelationDataCallback {
+                    override fun onCorrelationDataLoaded(moodAndHabitTracking: List<MoodAndHabitTracking>) {
+                        val notificationManager = ContextCompat.getSystemService(
+                            context,
+                            NotificationManager::class.java
+                        ) as NotificationManager
+
+                        notificationManager.sendNotification(
+                            "New Correlation Found!",
+                            "Your mood tends to be more positive when you complete the habit - , keep it up!",
+                            context,
+                            emptyList(),
+                            context.resources.getString(R.string.correlation_notification_channel_id),
+                            8
                         )
                     }
 

@@ -67,6 +67,26 @@ object AlarmScheduler {
         )
     }
 
+    fun scheduleCorrelationAlarm(context: Context, alarmMgr: AlarmManager) {
+        val timeToAlarm = Calendar.getInstance()
+        timeToAlarm.set(Calendar.HOUR_OF_DAY, 3)
+        timeToAlarm.set(Calendar.MINUTE, 44)
+
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = context.getString(R.string.action_correlation_alarm)
+            type = timeToAlarm.timeInMillis.toString()
+        }
+
+        val alarmIntent = PendingIntent.getBroadcast(context, 7, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmMgr.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            timeToAlarm.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmIntent
+        )
+    }
+
     /**
      * Schedules a single alarm, with a delay in minutes. Negative delay = that many minutes behind chosen time
      */

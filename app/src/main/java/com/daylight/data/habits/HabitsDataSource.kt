@@ -1,6 +1,7 @@
 package com.daylight.data.habits
 
 import com.daylight.data.HabitAndTracking
+import com.daylight.data.MoodAndHabitTracking
 import java.util.*
 
 /**
@@ -43,6 +44,13 @@ interface HabitsDataSource {
         fun onDataNotAvailable()
     }
 
+    interface GetCorrelationDataCallback {
+
+        fun onCorrelationDataLoaded(moodAndHabitTracking: List<MoodAndHabitTracking>)
+
+        fun onDataNotAvailable()
+    }
+
     fun getHabits(callback: LoadHabitsCallback)
 
     fun getHabit(habitId: String, callback: GetHabitCallback)
@@ -68,4 +76,6 @@ interface HabitsDataSource {
     fun deleteHabitTrackingByTimestamp(timestamp: Calendar)
 
     fun deleteAllHabitTracking()
+
+    fun getDataForCorrelationProcessing(callback: GetCorrelationDataCallback)
 }
