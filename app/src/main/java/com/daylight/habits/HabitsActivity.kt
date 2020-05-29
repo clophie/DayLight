@@ -39,10 +39,6 @@ class HabitsActivity : AppCompatActivity() {
         val settings: SharedPreferences? = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        // Play app intro
-        val intent = Intent(this, DayLightAppIntro::class.java).apply {}
-        startActivity(intent)
-
         if (settings!!.getBoolean("first_launch", true)) {
             // Set up mood tracking and correlation alarms
             val alarmManager = applicationContext?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -53,8 +49,9 @@ class HabitsActivity : AppCompatActivity() {
             applicationContext?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, timeToAlarm)
                 AlarmScheduler.scheduleCorrelationAlarm(it, alarmManager) }
 
-
-
+            // Play app intro
+            val intent = Intent(this, DayLightAppIntro::class.java).apply {}
+            startActivity(intent)
 
             // record the fact that the app has been started at least once
             settings.edit().putBoolean("first_launch", false).apply()
