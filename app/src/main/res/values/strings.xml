@@ -99,4 +99,5 @@
     <string name="moodScore5">#4dd2ff</string>
     <string name="most_frequently_completed_habits">Most Frequently Completed Habits</string>
     <string name="preference_file_key">daylightPreferences</string>
+    <string name="habit_tip">Tip: Forming a new habit will be easier if you plan to do it during or after an existing trigger event in your routine, such as brushing your teeth or eating a meal!</string>
 </resources>

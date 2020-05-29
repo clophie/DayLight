@@ -66,7 +66,7 @@ class AnalysisPresenter(
         latestDate.set(Calendar.YEAR, 0)
 
         moodTracking.forEach {
-            if (it.date != null ) {
+            if (!it.name.isNullOrEmpty()) {
                 data.add(Entry(it.date?.get(Calendar.DAY_OF_YEAR)!!.toFloat(), it.score.toFloat()))
 
                 if (it.date!! > latestDate) {

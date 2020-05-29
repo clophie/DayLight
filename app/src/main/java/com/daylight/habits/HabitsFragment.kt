@@ -83,6 +83,8 @@ class HabitsFragment : Fragment(), HabitsContract.View {
             timeToAlarm.set(Calendar.MINUTE, 0)
             context?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, timeToAlarm) }
 
+            // TODO schedule correlation alarm here
+
             // record the fact that the app has been started at least once
            settings.edit().putBoolean("first_launch", false).apply()
         }

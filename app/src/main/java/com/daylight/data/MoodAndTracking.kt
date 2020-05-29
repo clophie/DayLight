@@ -10,6 +10,8 @@ class MoodAndTracking {
 
     var moodName : String = ""
 
+    var name : String? = ""
+
     var id : String = ""
 
     var date : Calendar? = null
