@@ -105,4 +105,5 @@
     <string name="correlation_notification_channel_name">Correlation</string>
     <string name="no_correlations_found">No correlations found.</string>
     <string name="mood_to_habit_correlations">Mood to Habit Correlations</string>
+    <string name="settings_title">Settings</string>
 </resources>

@@ -15,6 +15,7 @@ import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.moods.MoodsFragment
 import com.daylight.analysis.AnalysisFragment
 import com.daylight.appintro.DayLightAppIntro
+import com.daylight.settings.SettingsFragment
 import com.daylight.util.AppExecutors
 import com.daylight.util.notif.AlarmScheduler
 import com.daylight.util.replaceFragmentInActivity
@@ -100,10 +101,9 @@ class HabitsActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
 
-                //TODO Change this to the settings fragment
                 R.id.navigation_settings-> {
                     toolbar!!.title = resources.getString(R.string.settings)
-                    val fragment = HabitsFragment()
+                        val fragment = SettingsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     findViewById<FloatingActionMenu>(R.id.main_fab).visibility = View.INVISIBLE
@@ -125,14 +125,7 @@ class HabitsActivity : AppCompatActivity() {
             HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
         // Create the presenter
-        habitsPresenter = HabitsPresenter(repo,
-            habitsFragment).apply {
-            // Load previously saved state, if available.
-            if (savedInstanceState != null) {
-                currentFiltering = savedInstanceState.getSerializable(CURRENT_FILTERING_KEY)
-                        as HabitsFilterType
-            }
-        }
+        habitsPresenter = HabitsPresenter(repo, habitsFragment)
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {

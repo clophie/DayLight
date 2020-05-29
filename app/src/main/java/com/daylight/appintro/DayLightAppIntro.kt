@@ -6,6 +6,7 @@ import com.daylight.R
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroFragment
 
+@Suppress("DEPRECATION")
 class DayLightAppIntro : AppIntro() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +59,11 @@ class DayLightAppIntro : AppIntro() {
 
     override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
-        // Decide what to do when the user clicks on "Skip"
         finish()
     }
 
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
-        // Decide what to do when the user clicks on "Done"
         finish()
     }
 }
