@@ -15,7 +15,7 @@ interface MoodTrackingDao {
      *
      * @return all moods.
      */
-    @Query("SELECT Moods.score, MoodTracking.name, Moods.id, MoodTracking.date FROM MoodTracking INNER JOIN Moods ON MoodTracking.name = Moods.moodName") fun getMoodTracking(): List<MoodAndTracking>
+    @Query("SELECT Moods.score, Moods.moodName, Moods.id, MoodTracking.date FROM Moods LEFT JOIN moodTracking ON MoodTracking.name = Moods.moodName") fun getMoodTracking(): List<MoodAndTracking>
 
     /**
      * Select a mood by id.

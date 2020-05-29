@@ -73,6 +73,8 @@
     <string name="action_notify_remove_notification">com.daylight.action.REMOVE_NOTIFICATION</string>
     <string name="action_track_habit">com.daylight.action.TRACK_HABIT</string>
     <string name="action_choose_track_habit">com.daylight.action.CHOOSE_TRACK_HABIT</string>
+    <string name="action_track_mood">com.daylight.action.TRACK_MOOD</string>
+    <string name="action_mood_reminder">com.daylight.action.MOOD</string>
     <string name="no_moods_add">Add a new mood +</string>
     <string name="no_moods_all">You have no moods!</string>
     <string name="nomoodsicon">noMoodsIcon</string>
@@ -96,4 +98,5 @@
     <string name="moodScore4">#a6ff4d</string>
     <string name="moodScore5">#4dd2ff</string>
     <string name="most_frequently_completed_habits">Most Frequently Completed Habits</string>
+    <string name="preference_file_key">daylightPreferences</string>
 </resources>

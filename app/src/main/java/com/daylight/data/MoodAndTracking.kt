@@ -8,9 +8,9 @@ import java.util.*
 class MoodAndTracking {
     var score : Int = 0
 
-    var name : String = ""
+    var moodName : String = ""
 
     var id : String = ""
 
-    var date : Calendar = Calendar.getInstance()
+    var date : Calendar? = null
 }

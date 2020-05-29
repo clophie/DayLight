@@ -1,9 +1,12 @@
 package com.daylight.habits
 
+import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.AlarmManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
@@ -26,6 +30,7 @@ import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.trackmood.TrackMoodActivity
 import com.daylight.util.AppExecutors
 import com.daylight.util.ScrollChildSwipeRefreshLayout
+import com.daylight.util.notif.AlarmScheduler
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -66,6 +71,22 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
     override fun onResume() {
         super.onResume()
+
+        val settings: SharedPreferences? = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        //if (settings!!.getBoolean("first_launch", true)) {
+            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            val timeToAlarm = Calendar.getInstance()
+            timeToAlarm.set(Calendar.HOUR_OF_DAY, 1)
+            timeToAlarm.set(Calendar.MINUTE,55)
+            context?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, timeToAlarm) }
+
+            // record the fact that the app has been started at least once
+           // settings.edit().putBoolean("first_launch", false).apply()
+       // }
+
         if (!this::presenter.isInitialized) {
             //Get the database and repo
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())

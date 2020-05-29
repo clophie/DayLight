@@ -14,6 +14,9 @@ import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.moods.MoodTracking
+import com.daylight.data.moods.MoodsRepository
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
 import java.util.*
@@ -44,8 +47,34 @@ class TrackReceiver: BroadcastReceiver() {
                     it, triggerTime
                 )
             }
+
             if (habitTracking != null) {
                 habitsRepository.insertHabitTracking(habitTracking)
+            }
+        } else if (intent.action != null && intent.action!!.equals(context.getString(R.string.action_track_mood), ignoreCase = true) && intent.extras != null) {
+            val notificationManager = ContextCompat.getSystemService(
+                context,
+                NotificationManager::class.java
+            ) as NotificationManager
+
+            notificationManager.cancel(3)
+
+            val database = DaylightDatabase.getInstance(context)
+            val moodsRepository = MoodsRepository.getInstance(
+                MoodsLocalDataSource.getInstance(
+                    AppExecutors(), database.moodDao(), database.moodTrackingDao()
+                )
+            )
+
+            val moodTracking = intent.extras!!.getString("moodName")?.let {
+                MoodTracking(
+                    it,
+                    triggerTime
+                )
+            }
+
+            if (moodTracking != null) {
+                moodsRepository.insertMoodTracking(moodTracking)
             }
         }
     }

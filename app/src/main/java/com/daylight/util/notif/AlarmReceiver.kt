@@ -7,16 +7,20 @@ import android.app.TaskStackBuilder
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.daylight.R
+import com.daylight.data.MoodAndTracking
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitsDataSource
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.moods.MoodsDataSource
+import com.daylight.data.moods.MoodsRepository
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
+import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 
@@ -28,6 +32,7 @@ class AlarmReceiver: BroadcastReceiver() {
         if (intent.action != null) {
             val database = DaylightDatabase.getInstance(context)
             val habitsRepository = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
+            val moodsRepository = MoodsRepository.getInstance(MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
 
             // TODO Add more actions as ifs in line with this
             if (intent.action!!.equals(context.getString(R.string.action_notify_habit_reminder), ignoreCase = true)) {
@@ -104,8 +109,69 @@ class AlarmReceiver: BroadcastReceiver() {
                         })
                     }
                 }
+            } else if (intent.action!!.equals(context.getString(R.string.action_mood_reminder), ignoreCase = true)) {
+                moodsRepository.getMoodTracking(object : MoodsDataSource.GetMoodTrackingAndMoodCallback {
+                    override fun onMoodTrackingLoaded(moodTracking: List<MoodAndTracking>) {
+                        val actions = mutableListOf<Pair<String, PendingIntent>>()
+                        var score2NotSet = true
+                        var score3NotSet = true
+                        var score4NotSet = true
+                        var moodTracked = false
+                        val today = Calendar.getInstance()
+
+                        moodTracking.forEach {
+                            if (it.date != null && it.date!!.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && it.date!!.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+                                moodTracked = true
+                            }
+                        }
+
+                        if (!moodTracked) {
+                            moodTracking.forEach {
+                                if (score2NotSet && it.score == 2) {
+                                    createMoodPendingIntent(actions, context, it)
+                                    score2NotSet = false
+                                } else if (score3NotSet && it.score == 3) {
+                                    createMoodPendingIntent(actions, context, it)
+                                    score3NotSet = false
+                                } else if (score4NotSet && it.score == 4) {
+                                    createMoodPendingIntent(actions, context, it)
+                                    score4NotSet = false
+                                }
+                            }
+
+                            val notificationManager = ContextCompat.getSystemService(
+                                context,
+                                NotificationManager::class.java
+                            ) as NotificationManager
+
+                            notificationManager.sendNotification(
+                                "How was today?",
+                                "Do you want to track a mood for today?",
+                                context,
+                                actions as List<Pair<String, PendingIntent>>,
+                                context.resources.getString(R.string.mood_notification_channel_id),
+                                3
+                            )
+                        }
+                    }
+
+                    override fun onDataNotAvailable() { }
+                })
             }
         }
+    }
+
+    private fun createMoodPendingIntent(actions: MutableList<Pair<String, PendingIntent>>, context: Context, mood: MoodAndTracking) {
+        val trackFromNotificationIntent = Intent(context, TrackReceiver::class.java)
+        trackFromNotificationIntent.putExtra("moodName", mood.moodName)
+        trackFromNotificationIntent.action = context.getString(R.string.action_track_mood)
+        val trackFromNotificationPendingIntent: PendingIntent = PendingIntent.getBroadcast(
+            context,
+            mood.score * 10,
+            trackFromNotificationIntent,
+            FLAG_UPDATE_CURRENT)
+
+        actions.add(Pair(mood.moodName, trackFromNotificationPendingIntent))
     }
 
 }

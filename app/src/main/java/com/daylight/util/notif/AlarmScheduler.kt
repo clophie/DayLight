@@ -44,6 +44,29 @@ object AlarmScheduler {
         }
     }
 
+    fun scheduleMoodAlarm(context: Context, alarmMgr: AlarmManager, timeToAlarm: Calendar) {
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = context.getString(R.string.action_mood_reminder)
+            type = timeToAlarm.timeInMillis.toString()
+        }
+
+        val alarmIntent = PendingIntent.getBroadcast(context, 5, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // Set the alarm to start at the given time.
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, timeToAlarm.get(Calendar.HOUR_OF_DAY))
+            set(Calendar.MINUTE, timeToAlarm.get(Calendar.MINUTE))
+        }
+
+        alarmMgr.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmIntent
+        )
+    }
+
     /**
      * Schedules a single alarm, with a delay in minutes. Negative delay = that many minutes behind chosen time
      */
@@ -132,7 +155,7 @@ object AlarmScheduler {
      * @param context      current application context
      * @param reminderData ReminderData for the notification
      */
-    fun removeAlarmsForHabit(context: Context, habit: Habit) {
+    private fun removeAlarmsForHabit(context: Context, habit: Habit) {
         val intent = Intent(context.applicationContext, AlarmReceiver::class.java)
         intent.action = context.getString(R.string.action_notify_remove_notification)
 
@@ -142,16 +165,13 @@ object AlarmScheduler {
             for (i in habit.days.indices) {
                 val day = habit.days[i]
 
-                // TODO uhhh fix this
-                if (day != null) {
-                    val type = String.format(Locale.getDefault(), "%s-%s-%s-%s", day, habit.title, habit.description)
+                val type = String.format(Locale.getDefault(), "%s-%s-%s-%s", day, habit.title, habit.description)
 
-                    intent.type = type
-                    val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                intent.type = type
+                val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    alarmMgr.cancel(alarmIntent)
-                }
+                val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmMgr.cancel(alarmIntent)
             }
         }
     }
