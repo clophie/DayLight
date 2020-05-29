@@ -61,6 +61,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".habits.HabitsActivity" />
         </activity>
+        <activity android:name=".appintro.DayLightAppIntro"
+            android:label="DayLight Intro" />
     </application>
 
 </manifest>
