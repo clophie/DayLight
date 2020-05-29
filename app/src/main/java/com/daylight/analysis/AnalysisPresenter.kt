@@ -2,6 +2,7 @@ package com.daylight.analysis
 
 import com.daylight.R
 import com.daylight.data.HabitAndTracking
+import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.MoodAndTracking
 import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsDataSource
@@ -10,6 +11,7 @@ import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
+import com.daylight.util.CorrelationProcessing
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
@@ -98,6 +100,18 @@ class AnalysisPresenter(
         }
 
         analysisView.generateHabitChart(data, habitTracking)
+    }
+
+    override fun getCorrelations() {
+        habitsRepository.getDataForCorrelationProcessing( object : HabitsDataSource.GetCorrelationDataCallback {
+            override fun onCorrelationDataLoaded(moodAndHabitTracking: List<MoodAndHabitTracking>) {
+                val habitFound = CorrelationProcessing.findCorrelations(moodAndHabitTracking)
+
+                analysisView.loadCorrelation(habitFound)
+            }
+
+            override fun onDataNotAvailable() { }
+        })
     }
 
 }

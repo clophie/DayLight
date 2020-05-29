@@ -103,4 +103,6 @@
     <string name="habit_tip">Tip: Forming a new habit will be easier if you plan to do it during or after an existing trigger event in your routine, such as brushing your teeth or eating a meal!</string>
     <string name="correlation_notification_channel_id">1004</string>
     <string name="correlation_notification_channel_name">Correlation</string>
+    <string name="no_correlations_found">No correlations found.</string>
+    <string name="mood_to_habit_correlations">Mood to Habit Correlations</string>
 </resources>

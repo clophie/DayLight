@@ -1,11 +1,13 @@
 package com.daylight.analysis
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.daylight.R
 import com.daylight.data.HabitAndTracking
@@ -36,6 +38,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
 
     private lateinit var moodChart : LineChart
     private lateinit var habitChart : PieChart
+    private lateinit var correlationText : TextView
 
     override lateinit var presenter: AnalysisContract.Presenter
 
@@ -49,6 +52,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         with(root) {
             moodChart = findViewById(R.id.moodsChart)
             habitChart = findViewById(R.id.habitChart)
+            correlationText = findViewById(R.id.correlationText)
         }
 
         if (!this::presenter.isInitialized) {
@@ -65,6 +69,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         presenter.start()
         presenter.getDataForMoodChart()
         presenter.getDataForHabitChart()
+        presenter.getCorrelations()
 
         return root
     }
@@ -128,6 +133,13 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         habitChart.legend.isEnabled = false
         habitChart.animateY(1400, Easing.EaseInOutQuad)
         habitChart.invalidate()
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun loadCorrelation(habitName: String) {
+        if (habitName.isNotEmpty()) {
+            correlationText.text = "When you complete your habit - ${habitName}, your mood tends to be more positive!"
+        }
     }
 
     override fun getMoodScoreColor1(): String {
