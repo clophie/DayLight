@@ -23,6 +23,8 @@ interface AnalysisContract {
 
         fun generateHabitChart(data: ArrayList<PieEntry>, habitAndTracking: List<HabitAndTracking>)
 
+        fun loadCorrelation(habitName: String)
+
         fun getMoodScoreColor1() : String
 
         fun getMoodScoreColor2() : String
@@ -38,5 +40,7 @@ interface AnalysisContract {
         fun getDataForMoodChart()
 
         fun getDataForHabitChart()
+
+        fun getCorrelations()
     }
 }

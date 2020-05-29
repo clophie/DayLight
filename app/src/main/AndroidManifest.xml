@@ -40,15 +40,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".moods.MoodsActivity" />
-        <activity android:name=".habitdetail.HabitDetailActivity" />
-        <activity android:name=".mooddetail.MoodDetailActivity" />
-        <activity android:name=".addedithabit.AddEditHabitActivity" />
-        <activity android:name=".addeditmood.AddEditMoodActivity" />
-        <activity android:name=".trackhabit.TrackHabitActivity" />
-        <activity android:name=".trackmood.TrackMoodActivity" />
+        <activity android:name=".habitdetail.HabitDetailActivity"
+            android:parentActivityName=".habits.HabitsActivity"/>
+        <activity android:name=".mooddetail.MoodDetailActivity"
+            android:parentActivityName=".moods.MoodsActivity"/>
+        <activity android:name=".addedithabit.AddEditHabitActivity"
+            android:parentActivityName=".habits.HabitsActivity"/>
+        <activity android:name=".addeditmood.AddEditMoodActivity"
+        android:parentActivityName=".moods.MoodsActivity"/>
+        <activity android:name=".trackhabit.TrackHabitActivity"
+            android:parentActivityName=".habits.HabitsActivity"/>
+        <activity android:name=".trackmood.TrackMoodActivity"
+            android:parentActivityName=".moods.MoodsActivity"/>
         <activity
             android:name=".analysis.AnalysisActivity"
-            android:parentActivityName=".habits.HabitsActivity"
             tools:ignore="UnusedAttribute">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -56,6 +61,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".habits.HabitsActivity" />
         </activity>
+        <activity android:name=".appintro.DayLightAppIntro"
+            android:label="DayLight Intro" />
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@ interface MoodTrackingDao {
      *
      * @return all moods.
      */
-    @Query("SELECT Moods.score, MoodTracking.name, Moods.id, MoodTracking.date FROM MoodTracking INNER JOIN Moods ON MoodTracking.name = Moods.moodName") fun getMoodTracking(): List<MoodAndTracking>
+    @Query("SELECT Moods.score, Moods.moodName, MoodTracking.name, Moods.id, MoodTracking.date FROM Moods LEFT JOIN moodTracking ON MoodTracking.name = Moods.moodName") fun getMoodTracking(): List<MoodAndTracking>
 
     /**
      * Select a mood by id.
@@ -52,7 +52,7 @@ interface MoodTrackingDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM MoodTracking WHERE date = :date") fun deleteMoodTrackingByTimestamp(date: Calendar): Int
+    @Query("DELETE FROM MoodTracking WHERE date BETWEEN :date AND :date + 86400000") fun deleteMoodTrackingByTimestamp(date: Calendar): Int
 
     /**
      * Delete all moods.

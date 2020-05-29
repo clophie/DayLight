@@ -1,7 +1,9 @@
 package com.daylight.trackhabit
 
+import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.daylight.R
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
@@ -16,6 +18,13 @@ class TrackHabitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.trackhabit_act)
+
+        val notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.cancel(1)
 
         // Set up the toolbar.
         setupActionBar(R.id.toolbar) {

@@ -40,8 +40,52 @@ object AlarmScheduler {
             val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_track_habit), 1)
 
             // Schedule the alarm
-            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 1)
+            scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 30)
         }
+    }
+
+    fun scheduleMoodAlarm(context: Context, alarmMgr: AlarmManager, timeToAlarm: Calendar) {
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = context.getString(R.string.action_mood_reminder)
+            type = timeToAlarm.timeInMillis.toString()
+        }
+
+        val alarmIntent = PendingIntent.getBroadcast(context, 5, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // Set the alarm to start at the given time.
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, timeToAlarm.get(Calendar.HOUR_OF_DAY))
+            set(Calendar.MINUTE, timeToAlarm.get(Calendar.MINUTE))
+        }
+
+        alarmMgr.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmIntent
+        )
+    }
+
+    fun scheduleCorrelationAlarm(context: Context, alarmMgr: AlarmManager) {
+        val timeToAlarm = Calendar.getInstance()
+        timeToAlarm.add(Calendar.HOUR, 24)
+        timeToAlarm.set(Calendar.HOUR_OF_DAY, 4)
+        timeToAlarm.set(Calendar.MINUTE, 0)
+
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            action = context.getString(R.string.action_correlation_alarm)
+            type = timeToAlarm.timeInMillis.toString()
+        }
+
+        val alarmIntent = PendingIntent.getBroadcast(context, 7, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        alarmMgr.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            timeToAlarm.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmIntent
+        )
     }
 
     /**
@@ -65,7 +109,7 @@ object AlarmScheduler {
             // Schedule for today
             alarmMgr.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                // Alarm is scheduled for 15 minutes before chosen time
+                // Alarm is scheduled with a given delay
                 datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
             return
         }
@@ -74,7 +118,7 @@ object AlarmScheduler {
         datetimeToAlarm.roll(Calendar.WEEK_OF_YEAR, 1)
         alarmMgr.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            // Alarm is scheduled for 15 minutes before chosen time
+            // Alarm is scheduled with a given delay
             datetimeToAlarm.timeInMillis, (1000 * 60 * 60 * 24 * 7 + 1000 * 60 * delay).toLong(), alarmIntent)
     }
 
@@ -132,7 +176,7 @@ object AlarmScheduler {
      * @param context      current application context
      * @param reminderData ReminderData for the notification
      */
-    fun removeAlarmsForHabit(context: Context, habit: Habit) {
+    private fun removeAlarmsForHabit(context: Context, habit: Habit) {
         val intent = Intent(context.applicationContext, AlarmReceiver::class.java)
         intent.action = context.getString(R.string.action_notify_remove_notification)
 
@@ -142,16 +186,13 @@ object AlarmScheduler {
             for (i in habit.days.indices) {
                 val day = habit.days[i]
 
-                // TODO uhhh fix this
-                if (day != null) {
-                    val type = String.format(Locale.getDefault(), "%s-%s-%s-%s", day, habit.title, habit.description)
+                val type = String.format(Locale.getDefault(), "%s-%s-%s-%s", day, habit.title, habit.description)
 
-                    intent.type = type
-                    val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                intent.type = type
+                val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    alarmMgr.cancel(alarmIntent)
-                }
+                val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmMgr.cancel(alarmIntent)
             }
         }
     }

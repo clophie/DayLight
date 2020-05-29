@@ -1,6 +1,7 @@
 package com.daylight.data.local.habits
 
 import androidx.annotation.VisibleForTesting
+import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsDataSource
@@ -73,6 +74,15 @@ class HabitsLocalDataSource private constructor(
             val habitTracking = habitTrackingDao.getHabitTracking()
             appExecutors.mainThread.execute {
                 callback.onHabitTrackingLoaded(habitTracking)
+            }
+        }
+    }
+
+    override fun getDataForCorrelationProcessing(callback: HabitsDataSource.GetCorrelationDataCallback)  {
+        appExecutors.diskIO.execute {
+            val correlationData = habitTrackingDao.getDataForCorrelationProcessing()
+            appExecutors.mainThread.execute {
+                callback.onCorrelationDataLoaded(correlationData)
             }
         }
     }

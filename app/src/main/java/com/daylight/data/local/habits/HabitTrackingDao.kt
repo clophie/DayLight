@@ -2,6 +2,7 @@ package com.daylight.data.local.habits
 
 import androidx.room.*
 import com.daylight.data.HabitAndTracking
+import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.habits.HabitTracking
 import com.daylight.util.Converters
 import java.util.*
@@ -58,4 +59,9 @@ interface HabitTrackingDao {
      * Delete all habits.
      */
     @Query("DELETE FROM HabitTracking") fun deleteHabitTracking()
+
+    @Query("SELECT moodName, score, null as name, null as date, null as title, null as habitid, null as completionDateTime, null as habitidFromTracking FROM Moods UNION\n" +
+            "SELECT null as moodName, null as score, name, date, null as title, null as habitid, null as completionDateTime, null as habitidFromTracking FROM MoodTracking UNION\n" +
+            "SELECT null as moodName, null as score, null as name, null as date, title, habitid, null as completionDateTime, null as habitidFromTracking FROM Habits UNION \n" +
+            "SELECT null as moodName, null as score, null as name, null as date, null as title, null as habitid, completionDateTime, habitid as habitidFromTracking FROM habitTracking") fun getDataForCorrelationProcessing() : List<MoodAndHabitTracking>
 }

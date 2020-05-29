@@ -1,5 +1,9 @@
 package com.daylight.habits
 
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,13 +14,16 @@ import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.moods.MoodsFragment
 import com.daylight.analysis.AnalysisFragment
+import com.daylight.appintro.DayLightAppIntro
 import com.daylight.util.AppExecutors
+import com.daylight.util.notif.AlarmScheduler
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
 import com.github.clans.fab.FloatingActionMenu
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.habit_item.view.*
 import kotlinx.android.synthetic.main.habits_act.*
+import java.util.*
 
 
 class HabitsActivity : AppCompatActivity() {
@@ -28,6 +35,27 @@ class HabitsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.habits_act)
+
+        val settings: SharedPreferences? = this.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        if (settings!!.getBoolean("first_launch", true)) {
+            // Set up mood tracking and correlation alarms
+            val alarmManager = applicationContext?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            val timeToAlarm = Calendar.getInstance()
+            timeToAlarm.set(Calendar.HOUR_OF_DAY, 20)
+            timeToAlarm.set(Calendar.MINUTE, 0)
+            applicationContext?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, timeToAlarm)
+                AlarmScheduler.scheduleCorrelationAlarm(it, alarmManager) }
+
+            // Play app intro
+            val intent = Intent(this, DayLightAppIntro::class.java).apply {}
+            startActivity(intent)
+
+            // record the fact that the app has been started at least once
+            settings.edit().putBoolean("first_launch", false).apply()
+        }
 
         if (intent.extras !== null) {
             val rootView: View = window.decorView.rootView

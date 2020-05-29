@@ -29,9 +29,7 @@ class TrackHabitPresenter(
         habitsRepository.insertHabitTracking(habitTracking)
     }
 
-    override fun start() {
-        TODO("Not yet implemented")
-    }
+    override fun start() { }
 
     override fun loadHabits() {
         habitsRepository.getHabits(object : HabitsDataSource.LoadHabitsCallback {

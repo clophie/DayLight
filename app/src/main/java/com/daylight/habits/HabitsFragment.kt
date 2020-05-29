@@ -1,9 +1,12 @@
 package com.daylight.habits
 
+import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.AlarmManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
@@ -26,6 +30,7 @@ import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.trackmood.TrackMoodActivity
 import com.daylight.util.AppExecutors
 import com.daylight.util.ScrollChildSwipeRefreshLayout
+import com.daylight.util.notif.AlarmScheduler
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -66,6 +71,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
 
     override fun onResume() {
         super.onResume()
+
         if (!this::presenter.isInitialized) {
             //Get the database and repo
             val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
@@ -139,6 +145,21 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         createChannel(
             getString(R.string.habit_notification_channel_id),
             getString(R.string.habit_notification_channel_name)
+        )
+
+        createChannel(
+            getString(R.string.mood_notification_channel_id),
+            getString(R.string.mood_notification_channel_name)
+        )
+
+        createChannel(
+            getString(R.string.habit_track_notification_channel_id),
+            getString(R.string.habit_track_notification_channel_name)
+        )
+
+        createChannel(
+            getString(R.string.correlation_notification_channel_id),
+            getString(R.string.correlation_notification_channel_name)
         )
 
         return root
@@ -283,7 +304,7 @@ class HabitsFragment : Fragment(), HabitsContract.View {
                 }
 
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+            notificationChannel.lightColor = Color.CYAN
             notificationChannel.enableVibration(true)
             notificationChannel.description = getString(R.string.habit_notification_channel_description)
 

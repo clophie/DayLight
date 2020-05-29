@@ -74,6 +74,8 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
         activity!!.findViewById<FloatingActionButton>(R.id.fab_confirm_track_mood)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
+                c.set(Calendar.HOUR_OF_DAY, 0)
+                c.set(Calendar.MINUTE, 0)
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
                 c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1)

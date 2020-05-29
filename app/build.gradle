@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.maltaisn:iconpack-default:1.0.1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.AppIntro:AppIntro:6.0.0'
 
     kapt "androidx.room:room-compiler:$roomVersion"
 

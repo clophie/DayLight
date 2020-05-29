@@ -136,11 +136,6 @@ class MoodsFragment : Fragment(), MoodsContract.View {
 
         setHasOptionsMenu(true)
 
-        createChannel(
-            getString(R.string.mood_notification_channel_id),
-            getString(R.string.mood_notification_channel_name)
-        )
-
         return root
     }
 
@@ -278,30 +273,6 @@ class MoodsFragment : Fragment(), MoodsContract.View {
             rowView.setOnLongClickListener { itemListener.onMoodLongClick(mood) }
 
             return rowView
-        }
-    }
-
-    private fun createChannel(channelId: String, channelName: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-                .apply {
-                    setShowBadge(false)
-                }
-
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.CYAN
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = getString(R.string.mood_notification_channel_description)
-
-            val notificationManager = requireActivity().getSystemService(
-                NotificationManager::class.java
-            )
-
-            notificationManager?.createNotificationChannel(notificationChannel)
         }
     }
 

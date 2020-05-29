@@ -149,7 +149,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         it.completionDateTime.get(Calendar.DAY_OF_MONTH)}/${
         it.completionDateTime.get(Calendar.MONTH) + 1}/${
         it.completionDateTime.get(Calendar.YEAR)} ${
-        String.format("%02d:%02d", it.completionDateTime.get(Calendar.HOUR), it.completionDateTime.get(Calendar.MINUTE))}" }
+        String.format("%02d:%02d", it.completionDateTime.get(Calendar.HOUR_OF_DAY), it.completionDateTime.get(Calendar.MINUTE))}" }
 
         // Display a message if the habit hasn't been tracked
         if (habitTracking.isEmpty()) {
