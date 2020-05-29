@@ -29,8 +29,6 @@ import java.util.*
 
 class HabitsActivity : AppCompatActivity() {
 
-    private val CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY"
-
     private lateinit var habitsPresenter: HabitsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,19 +124,5 @@ class HabitsActivity : AppCompatActivity() {
 
         // Create the presenter
         habitsPresenter = HabitsPresenter(repo, habitsFragment)
-    }
-
-    public override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState.apply {
-            putSerializable(CURRENT_FILTERING_KEY, habitsPresenter.currentFiltering)
-        })
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        // load fragment
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }

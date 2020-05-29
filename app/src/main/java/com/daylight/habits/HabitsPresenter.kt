@@ -25,8 +25,6 @@ class HabitsPresenter(
     val habitsView: HabitsContract.View
 ) : HabitsContract.Presenter {
 
-    override var currentFiltering = HabitsFilterType.ALL_HABITS
-
     private var firstLoad = true
 
     init {

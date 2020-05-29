@@ -106,4 +106,6 @@
     <string name="no_correlations_found">No correlations found.</string>
     <string name="mood_to_habit_correlations">Mood to Habit Correlations</string>
     <string name="settings_title">Settings</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="replay_tutorial">Replay Tutorial</string>
 </resources>

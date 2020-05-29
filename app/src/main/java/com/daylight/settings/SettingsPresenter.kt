@@ -14,8 +14,6 @@ class SettingsPresenter(
         settingsView.presenter = this
     }
 
-    override fun start() {
-        TODO("Not yet implemented")
-    }
+    override fun start() { }
 
 }

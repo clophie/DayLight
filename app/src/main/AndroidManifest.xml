@@ -52,6 +52,7 @@
             android:parentActivityName=".habits.HabitsActivity"/>
         <activity android:name=".trackmood.TrackMoodActivity"
             android:parentActivityName=".moods.MoodsActivity"/>
+        <activity android:name=".settings.SettingsActivity"/>
         <activity
             android:name=".analysis.AnalysisActivity"
             tools:ignore="UnusedAttribute">

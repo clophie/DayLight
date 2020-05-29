@@ -108,4 +108,6 @@ class AnalysisPresenter(
         })
     }
 
+    override fun start() { }
+
 }
