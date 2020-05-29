@@ -75,6 +75,8 @@ class AnalysisPresenter(
             }
         }
 
+        data.sortBy { it.x }
+
         analysisView.generateMoodChart(data, latestDate)
     }
 

@@ -32,11 +32,19 @@ fun NotificationManager.sendNotification(title: String, messageBody: String, app
     )
         .setSmallIcon(R.drawable.ic_habits_icon)
         .setContentTitle(title)
-        .setContentText(messageBody)
 
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    if(id == 8) {
+        builder.setStyle(
+            NotificationCompat.BigTextStyle()
+                .bigText(messageBody))
+    } else {
+        builder
+            .setContentText(messageBody)
+    }
 
     actionIntents.forEach {
         builder.addAction(

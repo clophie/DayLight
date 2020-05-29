@@ -60,8 +60,8 @@ interface HabitTrackingDao {
      */
     @Query("DELETE FROM HabitTracking") fun deleteHabitTracking()
 
-    @Query("SELECT moodName, score, null as name, null as date, null as title, null as habitid, null as completionDateTime, null as habitid FROM Moods UNION\n" +
-            "SELECT null as moodName, null as score, name, date, null as title, null as habitid, null as completionDateTime, null as habitid FROM MoodTracking UNION\n" +
-            "SELECT null as moodName, null as score, null as name, null as date, title, habitid, null as completionDateTime, null as habitid FROM Habits UNION \n" +
-            "SELECT null as moodName, null as score, null as name, null as date, null as title, null as habitid, completionDateTime, habitid FROM habitTracking") fun getDataForCorrelationProcessing() : List<MoodAndHabitTracking>
+    @Query("SELECT moodName, score, null as name, null as date, null as title, null as habitid, null as completionDateTime, null as habitidFromTracking FROM Moods UNION\n" +
+            "SELECT null as moodName, null as score, name, date, null as title, null as habitid, null as completionDateTime, null as habitidFromTracking FROM MoodTracking UNION\n" +
+            "SELECT null as moodName, null as score, null as name, null as date, title, habitid, null as completionDateTime, null as habitidFromTracking FROM Habits UNION \n" +
+            "SELECT null as moodName, null as score, null as name, null as date, null as title, null as habitid, completionDateTime, habitid as habitidFromTracking FROM habitTracking") fun getDataForCorrelationProcessing() : List<MoodAndHabitTracking>
 }
