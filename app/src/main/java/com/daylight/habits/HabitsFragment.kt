@@ -75,17 +75,17 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         val settings: SharedPreferences? = activity?.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        //if (settings!!.getBoolean("first_launch", true)) {
+        if (settings!!.getBoolean("first_launch", true)) {
             val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
             val timeToAlarm = Calendar.getInstance()
-            timeToAlarm.set(Calendar.HOUR_OF_DAY, 1)
-            timeToAlarm.set(Calendar.MINUTE,55)
+            timeToAlarm.set(Calendar.HOUR_OF_DAY, 20)
+            timeToAlarm.set(Calendar.MINUTE, 0)
             context?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, timeToAlarm) }
 
             // record the fact that the app has been started at least once
-           // settings.edit().putBoolean("first_launch", false).apply()
-       // }
+           settings.edit().putBoolean("first_launch", false).apply()
+        }
 
         if (!this::presenter.isInitialized) {
             //Get the database and repo

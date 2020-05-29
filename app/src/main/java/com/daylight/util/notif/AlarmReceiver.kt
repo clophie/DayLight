@@ -116,43 +116,33 @@ class AlarmReceiver: BroadcastReceiver() {
                         var score2NotSet = true
                         var score3NotSet = true
                         var score4NotSet = true
-                        var moodTracked = false
-                        val today = Calendar.getInstance()
 
                         moodTracking.forEach {
-                            if (it.date != null && it.date!!.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) && it.date!!.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
-                                moodTracked = true
+                            if (score2NotSet && it.score == 2) {
+                                createMoodPendingIntent(actions, context, it)
+                                score2NotSet = false
+                            } else if (score3NotSet && it.score == 3) {
+                                createMoodPendingIntent(actions, context, it)
+                                score3NotSet = false
+                            } else if (score4NotSet && it.score == 4) {
+                                createMoodPendingIntent(actions, context, it)
+                                score4NotSet = false
                             }
                         }
 
-                        if (!moodTracked) {
-                            moodTracking.forEach {
-                                if (score2NotSet && it.score == 2) {
-                                    createMoodPendingIntent(actions, context, it)
-                                    score2NotSet = false
-                                } else if (score3NotSet && it.score == 3) {
-                                    createMoodPendingIntent(actions, context, it)
-                                    score3NotSet = false
-                                } else if (score4NotSet && it.score == 4) {
-                                    createMoodPendingIntent(actions, context, it)
-                                    score4NotSet = false
-                                }
-                            }
+                        val notificationManager = ContextCompat.getSystemService(
+                            context,
+                            NotificationManager::class.java
+                        ) as NotificationManager
 
-                            val notificationManager = ContextCompat.getSystemService(
-                                context,
-                                NotificationManager::class.java
-                            ) as NotificationManager
-
-                            notificationManager.sendNotification(
-                                "How was today?",
-                                "Do you want to track a mood for today?",
-                                context,
-                                actions as List<Pair<String, PendingIntent>>,
-                                context.resources.getString(R.string.mood_notification_channel_id),
-                                3
-                            )
-                        }
+                        notificationManager.sendNotification(
+                            "How was today?",
+                            "Do you want to track a mood for today?",
+                            context,
+                            actions as List<Pair<String, PendingIntent>>,
+                            context.resources.getString(R.string.mood_notification_channel_id),
+                            3
+                        )
                     }
 
                     override fun onDataNotAvailable() { }

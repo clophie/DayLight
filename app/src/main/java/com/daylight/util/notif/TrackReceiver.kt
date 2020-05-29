@@ -66,6 +66,8 @@ class TrackReceiver: BroadcastReceiver() {
                 )
             )
 
+            triggerTime.set(Calendar.MONTH, triggerTime.get(Calendar.MONTH) + 1)
+
             val moodTracking = intent.extras!!.getString("moodName")?.let {
                 MoodTracking(
                     it,
