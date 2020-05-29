@@ -69,6 +69,7 @@ object AlarmScheduler {
 
     fun scheduleCorrelationAlarm(context: Context, alarmMgr: AlarmManager) {
         val timeToAlarm = Calendar.getInstance()
+        timeToAlarm.add(Calendar.HOUR, 24)
         timeToAlarm.set(Calendar.HOUR_OF_DAY, 4)
         timeToAlarm.set(Calendar.MINUTE, 0)
 

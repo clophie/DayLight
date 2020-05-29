@@ -52,7 +52,7 @@ interface MoodTrackingDao {
      *
      * @return the number of moods deleted. This should always be 1.
      */
-    @Query("DELETE FROM MoodTracking WHERE date = :date") fun deleteMoodTrackingByTimestamp(date: Calendar): Int
+    @Query("DELETE FROM MoodTracking WHERE date BETWEEN :date AND :date + 86400000") fun deleteMoodTrackingByTimestamp(date: Calendar): Int
 
     /**
      * Delete all moods.

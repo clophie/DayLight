@@ -62,13 +62,11 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
 
                 val cal = Calendar.getInstance()
                 val sdf =
-                    SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+                    SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 cal.time = sdf.parse(trackingDate as String)
                 cal.set(Calendar.AM_PM, 1)
 
                 presenter.deleteMoodTracking(cal)
-
-                fragmentManager?.beginTransaction()?.detach(this@MoodDetailFragment)?.attach(this@MoodDetailFragment)?.commit()
 
                 presenter.loadMoodTracking()
 

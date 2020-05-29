@@ -26,9 +26,6 @@ import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 
-    private val REQUEST_CODE = 0
-    private val FLAGS = 0
-
     override fun onReceive(context: Context, intent: Intent) {
 
         if (intent.action != null) {
@@ -36,7 +33,6 @@ class AlarmReceiver: BroadcastReceiver() {
             val habitsRepository = HabitsRepository.getInstance(HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
             val moodsRepository = MoodsRepository.getInstance(MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
 
-            // TODO Add more actions as ifs in line with this
             if (intent.action!!.equals(context.getString(R.string.action_notify_habit_reminder), ignoreCase = true)) {
                 if (intent.extras != null) {
                     intent.getStringExtra("habitId")?.let {
