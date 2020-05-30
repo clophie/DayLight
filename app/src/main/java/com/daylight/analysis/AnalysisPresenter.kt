@@ -108,6 +108,10 @@ class AnalysisPresenter(
         })
     }
 
-    override fun start() { }
+    override fun start() {
+        getDataForMoodChart()
+        getDataForHabitChart()
+        getCorrelations()
+    }
 
 }

@@ -6,7 +6,7 @@ import com.daylight.BaseView
 interface SettingsContract {
 
     interface View : BaseView<Presenter> {
-
+        val isActive: Boolean
     }
 
     interface Presenter : BasePresenter {

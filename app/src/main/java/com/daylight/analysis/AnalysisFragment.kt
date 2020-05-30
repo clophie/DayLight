@@ -67,9 +67,6 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         }
 
         presenter.start()
-        presenter.getDataForMoodChart()
-        presenter.getDataForHabitChart()
-        presenter.getCorrelations()
 
         return root
     }

@@ -101,7 +101,7 @@ class HabitsActivity : AppCompatActivity() {
 
                 R.id.navigation_settings-> {
                     toolbar!!.title = resources.getString(R.string.settings)
-                        val fragment = SettingsFragment()
+                    val fragment = SettingsFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment)
                         .commit()
                     findViewById<FloatingActionMenu>(R.id.main_fab).visibility = View.INVISIBLE

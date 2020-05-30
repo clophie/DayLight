@@ -23,6 +23,9 @@ class SettingsFragment : Fragment(), SettingsContract.View {
     lateinit var replayTutorialButton : Button
 
     override lateinit var presenter: SettingsContract.Presenter
+
+    override val isActive: Boolean
+        get() = isAdded
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
