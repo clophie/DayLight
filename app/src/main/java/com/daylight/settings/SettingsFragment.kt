@@ -1,5 +1,9 @@
 package com.daylight.settings
 
+import android.app.AlarmManager
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +19,15 @@ import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
+import com.daylight.util.notif.AlarmScheduler
+import java.util.*
 
 
 class SettingsFragment : Fragment(), SettingsContract.View {
 
     lateinit var notificationSettingsButton : Button
     lateinit var replayTutorialButton : Button
+    lateinit var timeButton: Button
 
     override lateinit var presenter: SettingsContract.Presenter
 
@@ -34,6 +41,7 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         with(root) {
             notificationSettingsButton = findViewById(R.id.notificationSettingsButton)
             replayTutorialButton = findViewById(R.id.replayTutorialButton)
+            timeButton = findViewById(R.id.moodNotifTimeButton)
         }
 
         if (!this::presenter.isInitialized) {
@@ -61,6 +69,27 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         replayTutorialButton.setOnClickListener {
             val intent = Intent(context, DayLightAppIntro::class.java).apply {}
             startActivity(intent)
+        }
+
+        // Set up date and time pop ups
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+
+        timeButton.setOnClickListener {
+            val tpd = TimePickerDialog(activity!!,
+                TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                    c.set(Calendar.HOUR_OF_DAY, hour)
+                    c.set(Calendar.MINUTE, minute)
+
+                    val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+                    context?.let { AlarmScheduler.scheduleMoodAlarm(it, alarmManager, c) }
+
+                }, hour, minute, false
+            )
+
+            tpd.show()
         }
 
         return root

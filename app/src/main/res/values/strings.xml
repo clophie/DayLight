@@ -62,12 +62,12 @@
     <string name="notification_title">Notification Title</string>
     <string name="notification_text">Notification text</string>
     <string name="habit_notification_channel_description">Habit reminder</string>
-    <string name="habit_notification_channel_name">Habit</string>
+    <string name="habit_notification_channel_name">Habit Prompting Notifications</string>
     <string name="snooze">Snooze</string>
     <string name="mood_notification_channel_id">1002</string>
-    <string name="mood_notification_channel_name">Mood</string>
+    <string name="mood_notification_channel_name">Mood Tracking Notifications</string>
     <string name="habit_track_notification_channel_id">1003</string>
-    <string name="habit_track_notification_channel_name">HabitTrack</string>
+    <string name="habit_track_notification_channel_name">Habit Tracking Notifications</string>
     <!--Make sure the actions don't have the same length otherwise notifications will override each other-->
     <string name="action_notify_habit_reminder">com.daylight.action.HABIT_REMINDER</string>
     <string name="action_notify_remove_notification">com.daylight.action.REMOVE_NOTIFICATION</string>
@@ -102,10 +102,11 @@
     <string name="preference_file_key">daylightPreferences</string>
     <string name="habit_tip">Tip: Forming a new habit will be easier if you plan to do it during or after an existing trigger event in your routine, such as brushing your teeth or eating a meal!</string>
     <string name="correlation_notification_channel_id">1004</string>
-    <string name="correlation_notification_channel_name">Correlation</string>
+    <string name="correlation_notification_channel_name">Correlation Processing Notifications</string>
     <string name="no_correlations_found">No correlations found.</string>
     <string name="mood_to_habit_correlations">Mood to Habit Correlations</string>
     <string name="settings_title">Settings</string>
     <string name="notification_settings">Notification Settings</string>
     <string name="replay_tutorial">Replay Tutorial</string>
+    <string name="change_mood_notification_time">Change Mood Notification Time</string>
 </resources>

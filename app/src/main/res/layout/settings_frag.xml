@@ -20,6 +20,13 @@
         android:text="@string/notification_settings" />
 
     <Button
+        android:id="@+id/moodNotifTimeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/change_mood_notification_time" />
+
+    <Button
         android:id="@+id/replayTutorialButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
