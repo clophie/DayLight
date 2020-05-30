@@ -56,12 +56,6 @@ class AnalysisPresenter(
         })
     }
 
-    override fun start() {
-        loadAnalysis()
-    }
-
-    private fun loadAnalysis() { }
-
     private fun generateMoodChartData(moodTracking: List<MoodAndTracking>)  {
         val data = arrayListOf<Entry>()
         var latestDate = Calendar.getInstance()
@@ -112,6 +106,12 @@ class AnalysisPresenter(
 
             override fun onDataNotAvailable() { }
         })
+    }
+
+    override fun start() {
+        getDataForMoodChart()
+        getDataForHabitChart()
+        getCorrelations()
     }
 
 }

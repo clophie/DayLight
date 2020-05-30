@@ -38,8 +38,6 @@ interface  HabitsContract {
 
     interface Presenter : BasePresenter {
 
-        var currentFiltering: HabitsFilterType
-
         fun result(requestCode: Int, resultCode: Int)
 
         fun loadHabits(forceUpdate: Boolean)
