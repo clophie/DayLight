@@ -59,7 +59,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                     DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
 
                         // Display Selected date in textbox
-                        dateField.setText("$dayOfMonth/$monthOfYear/$year")
+                        dateField.setText("$dayOfMonth/${monthOfYear + 1}/$year")
 
                         c.set(Calendar.YEAR, year)
                         c.set(Calendar.MONTH, monthOfYear)
