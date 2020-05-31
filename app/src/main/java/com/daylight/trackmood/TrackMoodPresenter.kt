@@ -22,10 +22,10 @@ class TrackMoodPresenter(
         trackMoodView.presenter = this
     }
 
-    override fun submitTracking(moodId: String, completionDateTime: Calendar) {
+    override fun submitTracking(moodName: String, completionDateTime: Calendar) {
         val moodTracking =
             MoodTracking(
-                moodId,
+                moodName,
                 completionDateTime
             )
         moodsRepository.insertMoodTracking(moodTracking)

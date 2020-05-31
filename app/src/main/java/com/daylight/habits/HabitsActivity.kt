@@ -52,7 +52,7 @@ class HabitsActivity : AppCompatActivity() {
             val intent = Intent(this, DayLightAppIntro::class.java).apply {}
             startActivity(intent)
 
-            // record the fact that the app has been started at least once
+            // Record the fact that the app has been started at least once
             settings.edit().putBoolean("first_launch", false).apply()
         }
 

@@ -60,8 +60,8 @@ class SettingsFragment : Fragment(), SettingsContract.View {
         notificationSettingsButton.setOnClickListener {
             val intent = Intent()
             intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
-            intent.putExtra("app_package", context?.getPackageName())
-            intent.putExtra("android.provider.extra.APP_PACKAGE", context?.getPackageName())
+            intent.putExtra("app_package", context?.packageName)
+            intent.putExtra("android.provider.extra.APP_PACKAGE", context?.packageName)
 
             startActivity(intent)
         }

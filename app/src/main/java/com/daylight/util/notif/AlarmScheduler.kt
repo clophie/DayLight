@@ -30,14 +30,16 @@ object AlarmScheduler {
         habit.days.forEach {
             // Create reminder alarm
             // Get the PendingIntent for the alarm
-            val alarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_notify_habit_reminder), 0)
+            val alarmIntent = createPendingIntent(context, habit, it.toString(),
+                context.getString(R.string.action_notify_habit_reminder), 0)
 
             // Schedule the alarm
             scheduleAlarm(habit, getDayOfWeek(it), alarmIntent, alarmMgr, -15)
 
             // Create tracking alarm
             // Get the PendingIntent for the alarm
-            val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(), context.getString(R.string.action_track_habit), 1)
+            val trackingAlarmIntent = createPendingIntent(context, habit, it.toString(),
+                context.getString(R.string.action_track_habit), 1)
 
             // Schedule the alarm
             scheduleAlarm(habit, getDayOfWeek(it), trackingAlarmIntent, alarmMgr, 30)

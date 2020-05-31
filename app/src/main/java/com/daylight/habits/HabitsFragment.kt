@@ -99,7 +99,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         with(root) {
             val listView = findViewById<ListView>(R.id.habits_list).apply { adapter = listAdapter }
 
-            // Set up progress indicator
             findViewById<ScrollChildSwipeRefreshLayout>(R.id.refresh_layout).apply {
                 setColorSchemeColors(
                     androidx.core.content.ContextCompat.getColor(requireContext(), R.color.colorPrimary),

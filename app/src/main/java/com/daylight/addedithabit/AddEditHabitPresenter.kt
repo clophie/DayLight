@@ -68,7 +68,8 @@ class AddEditHabitPresenter(
         }
     }
 
-    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>, time: Calendar, context: Context) {
+    private fun createHabit(title: String, description: String, days: MutableList<MaterialDayPicker.Weekday>,
+                            time: Calendar, context: Context) {
         val newHabit = Habit(
             title,
             description,

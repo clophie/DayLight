@@ -25,7 +25,7 @@ class HabitDetailPresenter(
         openHabit()
     }
 
-    public fun openHabit() {
+    private fun openHabit() {
         if (habitId.isEmpty()) {
             habitDetailView.showMissingHabit()
             return
