@@ -171,7 +171,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
             val c = Calendar.getInstance()
             c.set(Calendar.DAY_OF_YEAR, dayOfYear.toInt())
 
-            return "${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH)}"
+            return "${c.get(Calendar.DAY_OF_MONTH)}/${c.get(Calendar.MONTH) + 1}"
         }
     }
 

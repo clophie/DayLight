@@ -53,8 +53,11 @@ class CorrelationProcessing {
             var habitMoodDifference: Int
 
             habitTracking.forEach {habitTrack ->
-
                 moodTracking.forEach { moodTrack ->
+                    val test1 = moodTrack.second.get(Calendar.DAY_OF_YEAR)
+                    val test2 =  habitTrack.first.get(Calendar.DAY_OF_YEAR)
+                    val test3 = moodTrack.second.get(Calendar.YEAR)
+                    val test4 =habitTrack.first.get(Calendar.YEAR)
                     if (moodTrack.second.get(Calendar.DAY_OF_YEAR) == habitTrack.first.get(Calendar.DAY_OF_YEAR) && moodTrack.second.get(
                             Calendar.YEAR) == habitTrack.first.get(Calendar.YEAR)) {
                         habitMoodOccurrenceCount++

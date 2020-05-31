@@ -48,7 +48,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
         // Set up date and time pop ups
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH) + 1
+        val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         dateField.setText("$day/$month/$year")
@@ -65,7 +65,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                         c.set(Calendar.MONTH, monthOfYear)
                         c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    }, year, month - 1, day)
+                    }, year, month, day)
 
             dpd.show()
         }
@@ -78,7 +78,6 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
                 c.set(Calendar.MINUTE, 0)
                 c.set(Calendar.SECOND, 0)
                 c.set(Calendar.MILLISECOND, 0)
-                c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1)
 
                 try {
                     presenter.submitTracking(selectedMoodName, c)
