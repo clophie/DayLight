@@ -51,7 +51,7 @@ class TrackMoodFragment : Fragment(), TrackMoodContract.View {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        dateField.setText("$day/$month/$year")
+        dateField.setText("$day/${month + 1}/$year")
 
         dateButton.setOnClickListener {
             val dpd =
