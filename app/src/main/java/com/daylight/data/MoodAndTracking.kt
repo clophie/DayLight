@@ -1,8 +1,5 @@
 package com.daylight.data
 
-import androidx.room.Embedded
-import com.daylight.data.moods.Mood
-import com.daylight.data.moods.MoodTracking
 import java.util.*
 
 class MoodAndTracking {

@@ -4,8 +4,6 @@ import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
-import com.daylight.mooddetail.MoodDetailContract
-import com.daylight.mooddetail.MoodDetailFragment
 import java.util.*
 
 
@@ -28,7 +26,7 @@ class MoodDetailPresenter(
         openMood()
     }
 
-    fun openMood() {
+    private fun openMood() {
         if (moodId.isEmpty()) {
             moodDetailView.showMissingMood()
             return

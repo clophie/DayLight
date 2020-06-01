@@ -1,7 +1,6 @@
 package com.daylight.data.local.habits
 
 import androidx.annotation.VisibleForTesting
-import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsDataSource
@@ -12,8 +11,8 @@ import java.util.*
  * Concrete implementation of a data source as a db.
  */
 class HabitsLocalDataSource private constructor(
-    val appExecutors: AppExecutors,
-    val habitsDao: HabitsDao,
+    private val appExecutors: AppExecutors,
+    private val habitsDao: HabitsDao,
     val habitTrackingDao: HabitTrackingDao
 ) : HabitsDataSource {
 
@@ -138,9 +137,5 @@ class HabitsLocalDataSource private constructor(
             return INSTANCE!!
         }
 
-        @VisibleForTesting
-        fun clearInstance() {
-            INSTANCE = null
-        }
     }
 }

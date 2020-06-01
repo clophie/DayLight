@@ -2,44 +2,16 @@
     <string name="app_name">DayLight</string>
     <string name="add_habit">New Habit</string>
     <string name="edit_habit">Edit Habit</string>
-    <string name="habit_marked_complete">Habit marked complete</string>
-    <string name="habit_marked_active">Habit marked active</string>
     <string name="loading_habits_error">Error while loading habits</string>
-    <string name="completed_habits_cleared">Completed habits cleared</string>
-    <string name="menu_filter">Filter</string>
-    <string name="menu_clear">Clear completed</string>
-    <string name="menu_delete_habit">Delete habit</string>
-    <string name="navigation_view_header_title">Habits</string>
     <string name="title_hint">Title</string>
     <string name="description_hint">Habit description.</string>
-    <string name="time_hint">Target completion time.</string>
-    <string name="empty_habit_message">TO DOs cannot be empty</string>
     <string name="successfully_saved_habit_message">Habit saved</string>
-    <string name="list_title">Habit List</string>
     <string name="analysis_title">Analysis</string>
-    <string name="analysis_no_habits">You have no habits.</string>
-    <string name="analysis_active_habits">Active habits:</string>
-    <string name="analysis_completed_habits">Completed habits:</string>
-    <string name="analysis_error">Error loading analysis.</string>
     <string name="no_data">No data</string>
     <string name="loading">Loading…</string>
 
-    <string-array name="list_habits_array">
-        <item>@string/nav_all</item>
-        <item>@string/nav_active</item>
-        <item>@string/nav_completed</item>
-    </string-array>
-    <string name="nav_all">All</string>
-    <string name="nav_active">Active</string>
-    <string name="nav_completed">Completed</string>
-    <string name="label_all">All Habits</string>
-    <string name="label_active">Active Habits</string>
-    <string name="label_completed">Completed Habits</string>
     <string name="no_habits_all">You have no Habits!</string>
-    <string name="no_habits_active">You have no active Habits!</string>
-    <string name="no_habits_completed">You have no completed Habits!</string>
     <string name="no_habits_add">Add a Habit item +</string>
-    <string name="refresh">Refresh</string>
     <string name="habits">Habits</string>
     <string name="moods">Moods</string>
     <string name="analysis">Analysis</string>
@@ -59,11 +31,8 @@
     <string name="target_completion_time">Target Completion Time</string>
     <string name="habit_tracking_history">Habit Tracking History</string>
     <string name="habit_notification_channel_id">1001</string>
-    <string name="notification_title">Notification Title</string>
-    <string name="notification_text">Notification text</string>
     <string name="habit_notification_channel_description">Habit reminder</string>
     <string name="habit_notification_channel_name">Habit Prompting Notifications</string>
-    <string name="snooze">Snooze</string>
     <string name="mood_notification_channel_id">1002</string>
     <string name="mood_notification_channel_name">Mood Tracking Notifications</string>
     <string name="habit_track_notification_channel_id">1003</string>
@@ -72,7 +41,6 @@
     <string name="action_notify_habit_reminder">com.daylight.action.HABIT_REMINDER</string>
     <string name="action_notify_remove_notification">com.daylight.action.REMOVE_NOTIFICATION</string>
     <string name="action_track_habit">com.daylight.action.TRACK_HABIT</string>
-    <string name="action_choose_track_habit">com.daylight.action.CHOOSE_TRACK_HABIT</string>
     <string name="action_track_mood">com.daylight.action.TRACK_MOOD</string>
     <string name="action_mood_reminder">com.daylight.action.MOOD</string>
     <string name="action_correlation_alarm">com.daylight.action.CA</string>
@@ -81,10 +49,8 @@
     <string name="nomoodsicon">noMoodsIcon</string>
     <string name="mood_hint">Mood name</string>
     <string name="score_text">Mood Score\n(1 - very negative, 5 - very positive)</string>
-    <string name="mood_icon">Mood Icon</string>
     <string name="add_mood">Add Mood</string>
     <string name="edit_mood">Edit Mood</string>
-    <string name="mood_notification_channel_description">Mood Reminder</string>
     <string name="loading_moods_error">Error while loading moods</string>
     <string name="successfully_saved_mood_message">Mood saved</string>
     <string name="mood_tracking_history">Mood Tracking History</string>

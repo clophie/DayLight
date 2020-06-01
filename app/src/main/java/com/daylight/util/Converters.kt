@@ -1,9 +1,7 @@
 package com.daylight.util
 
-import android.graphics.drawable.Drawable
 import androidx.room.TypeConverter
 import ca.antonious.materialdaypicker.MaterialDayPicker
-import com.google.common.reflect.Reflection.getPackageName
 import java.util.*
 
 class Converters {

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -32,7 +31,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     override lateinit var presenter: HabitDetailContract.Presenter
 
-    override var isActive: Boolean = false
+    override val isActive: Boolean
         get() = isAdded
 
     override fun onResume() {
@@ -59,7 +58,7 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
         }
 
         habitTrackingList.onItemLongClickListener =
-            AdapterView.OnItemLongClickListener { adapter, v, position, p3 ->
+            AdapterView.OnItemLongClickListener { adapter, _, position, _ ->
                 val trackingDate = adapter!!.getItemAtPosition(position)
 
                 val cal = Calendar.getInstance()
@@ -154,9 +153,9 @@ class HabitDetailFragment : Fragment(), HabitDetailContract.View {
 
     companion object {
 
-        private val ARGUMENT_HABIT_ID = "HABIT_ID"
+        private const val ARGUMENT_HABIT_ID = "HABIT_ID"
 
-        private val REQUEST_EDIT_HABIT = 1
+        private const val REQUEST_EDIT_HABIT = 1
 
         fun newInstance(habitId: String?) =
             HabitDetailFragment().apply {

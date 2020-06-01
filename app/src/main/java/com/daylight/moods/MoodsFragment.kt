@@ -1,14 +1,9 @@
 package com.daylight.moods
 
 import android.app.AlertDialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -17,11 +12,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
-import com.daylight.data.habits.Habit
-import com.daylight.data.moods.Mood
-import com.daylight.data.moods.MoodsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.moods.Mood
+import com.daylight.data.moods.MoodsRepository
 import com.daylight.mooddetail.MoodDetailActivity
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.trackmood.TrackMoodActivity
@@ -30,7 +24,7 @@ import com.daylight.util.ScrollChildSwipeRefreshLayout
 import com.daylight.util.showSnackBar
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Display a grid of [Mood]s. User can choose to view all, active or completed moods.
@@ -51,7 +45,7 @@ class MoodsFragment : Fragment(), MoodsContract.View {
     /**
      * Listener for clicks on moods in the ListView.
      */
-    internal var itemListener: MoodItemListener = object : MoodItemListener {
+    private var itemListener: MoodItemListener = object : MoodItemListener {
         override fun onMoodClick(clickedMood: Mood) {
             presenter.openMoodDetails(clickedMood)
         }
@@ -68,7 +62,7 @@ class MoodsFragment : Fragment(), MoodsContract.View {
         super.onResume()
         if (!this::presenter.isInitialized) {
             //Get the database and repo
-            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val database = DaylightDatabase.getInstance(activity!!.applicationContext)
             val repo = MoodsRepository.getInstance(MoodsLocalDataSource.getInstance(AppExecutors(), database.moodDao(), database.moodTrackingDao()))
 
             // Create the presenter

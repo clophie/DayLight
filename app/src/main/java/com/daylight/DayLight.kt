@@ -7,7 +7,7 @@ import com.maltaisn.iconpack.defaultpack.createDefaultIconPack
 
 class DayLight : Application() {
 
-    var iconPack: IconPack? = null
+    private var iconPack: IconPack? = null
 
     override fun onCreate() {
         super.onCreate()

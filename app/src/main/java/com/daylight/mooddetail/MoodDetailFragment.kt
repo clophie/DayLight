@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -31,7 +30,7 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
 
     override lateinit var presenter: MoodDetailContract.Presenter
 
-    override var isActive: Boolean = false
+    override val isActive: Boolean
         get() = isAdded
 
     override fun onResume() {
@@ -57,7 +56,7 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
         }
 
         moodTrackingList.onItemLongClickListener =
-            AdapterView.OnItemLongClickListener { adapter, v, position, p3 ->
+            AdapterView.OnItemLongClickListener { adapter, _, position, _ ->
                 val trackingDate = adapter!!.getItemAtPosition(position)
 
                 val cal = Calendar.getInstance()
@@ -136,9 +135,9 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
 
     companion object {
 
-        private val ARGUMENT_MOOD_ID = "MOOD_ID"
+        private const val ARGUMENT_MOOD_ID = "MOOD_ID"
 
-        private val REQUEST_EDIT_MOOD = 1
+        private const val REQUEST_EDIT_MOOD = 1
 
         fun newInstance(moodId: String?) =
             MoodDetailFragment().apply {

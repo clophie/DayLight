@@ -1,6 +1,5 @@
 package com.daylight
 
-import androidx.test.InstrumentationRegistry.getTargetContext
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import ca.antonious.materialdaypicker.MaterialDayPicker
@@ -9,11 +8,7 @@ import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsDataSource
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.habits.HabitTrackingDao
-import com.daylight.data.local.habits.HabitsDao
 import com.daylight.data.local.habits.HabitsLocalDataSource
-import com.daylight.data.local.moods.MoodTrackingDao
-import com.daylight.data.local.moods.MoodsDao
 import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking

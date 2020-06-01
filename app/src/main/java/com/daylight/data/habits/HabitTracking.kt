@@ -16,6 +16,6 @@ import java.util.*
 @TypeConverters(Converters::class)
 data class HabitTracking @JvmOverloads constructor(
     @ColumnInfo(name = "completionDateTime") var completionDateTime: Calendar = Calendar.getInstance(),
-    @ForeignKey(entity = Habit::class, parentColumns = arrayOf("habitid"), childColumns = arrayOf("habitid"), onDelete = CASCADE) @ColumnInfo(name = "habitid") var id: String = UUID.randomUUID().toString(),
+    @ForeignKey(entity = Habit::class, parentColumns = ["habitid"], childColumns = ["habitid"], onDelete = CASCADE) @ColumnInfo(name = "habitid") var id: String = UUID.randomUUID().toString(),
     @PrimaryKey @ColumnInfo(name = "timeStampOfEntry") var timestampOfEntry: Calendar = Calendar.getInstance()
 )

@@ -1,10 +1,7 @@
 package com.daylight.addeditmood
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import com.daylight.BasePresenter
 import com.daylight.BaseView
-import com.daylight.data.moods.Mood
 
 
 interface AddEditMoodContract {
@@ -24,7 +21,7 @@ interface AddEditMoodContract {
     interface Presenter : BasePresenter {
         var isDataMissing: Boolean
 
-        fun saveMood(name: String, score: Int, context: Context)
+        fun saveMood(name: String, score: Int)
 
         fun populateMood()
     }

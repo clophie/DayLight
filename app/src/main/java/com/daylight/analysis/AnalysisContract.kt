@@ -3,11 +3,9 @@ package com.daylight.analysis
 import com.daylight.BasePresenter
 import com.daylight.BaseView
 import com.daylight.data.HabitAndTracking
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * This specifies the contract between the view and the presenter.

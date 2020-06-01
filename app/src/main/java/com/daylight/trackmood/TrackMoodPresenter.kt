@@ -4,8 +4,6 @@ import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
-import com.daylight.trackmood.TrackMoodContract
-import com.daylight.trackmood.TrackMoodFragment
 import java.util.*
 
 

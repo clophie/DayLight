@@ -1,6 +1,5 @@
 package com.daylight.data.moods
 
-import android.graphics.drawable.Drawable
 import androidx.room.*
 import com.daylight.util.Converters
 import java.util.*

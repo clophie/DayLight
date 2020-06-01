@@ -2,7 +2,6 @@ package com.daylight.trackmood
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import com.daylight.R
 import com.daylight.data.moods.Mood
 import com.daylight.moods.MoodsActivity
-import com.daylight.trackmood.TrackMoodContract
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 

@@ -22,7 +22,6 @@ import com.daylight.data.moods.MoodsRepository
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.util.AppExecutors
 import com.daylight.util.CorrelationProcessing
-import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 

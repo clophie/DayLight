@@ -13,7 +13,7 @@ import java.util.*
  * exist or is empty.
  */
 class MoodsRepository(
-    val moodsLocalDataSource: MoodsDataSource
+    private val moodsLocalDataSource: MoodsDataSource
 ) : MoodsDataSource {
 
     /**
@@ -25,7 +25,7 @@ class MoodsRepository(
      * Marks the cache as invalid, to force an update the next time data is requested. This variable
      * has package local visibility so it can be accessed from tests.
      */
-    var cacheIsDirty = false
+    private var cacheIsDirty = false
 
     /**
      * Gets moods from cache, local data source (SQLite) or remote data source, whichever is
@@ -171,7 +171,7 @@ class MoodsRepository(
             mood.score,
             mood.name
         )
-        cachedMoods.put(cachedMood.id, cachedMood)
+        cachedMoods[cachedMood.id] = cachedMood
         perform(cachedMood)
     }
 
@@ -196,12 +196,5 @@ class MoodsRepository(
                     .apply { INSTANCE = this }
         }
 
-        /**
-         * Used to force [getInstance] to create a new instance
-         * next time it's called.
-         */
-        @JvmStatic fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }

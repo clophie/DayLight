@@ -57,10 +57,3 @@ fun NotificationManager.sendNotification(title: String, messageBody: String, app
     notify(id, builder.build())
 }
 
-/**
- * Cancels all notifications.
- *
- */
-fun NotificationManager.cancelNotifications() {
-    cancelAll()
-}

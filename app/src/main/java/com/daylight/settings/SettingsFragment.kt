@@ -1,7 +1,6 @@
 package com.daylight.settings
 
 import android.app.AlarmManager
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent

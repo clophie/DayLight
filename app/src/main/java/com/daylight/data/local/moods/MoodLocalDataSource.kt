@@ -11,8 +11,8 @@ import java.util.*
  * Concrete implementation of a data source as a db.
  */
 class MoodsLocalDataSource private constructor(
-    val appExecutors: AppExecutors,
-    val moodsDao: MoodsDao,
+    private val appExecutors: AppExecutors,
+    private val moodsDao: MoodsDao,
     val moodTrackingDao: MoodTrackingDao
 ) : MoodsDataSource {
 
@@ -128,9 +128,5 @@ class MoodsLocalDataSource private constructor(
             return INSTANCE!!
         }
 
-        @VisibleForTesting
-        fun clearInstance() {
-            INSTANCE = null
-        }
     }
 }

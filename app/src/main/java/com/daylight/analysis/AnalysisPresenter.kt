@@ -1,24 +1,16 @@
 package com.daylight.analysis
 
-import com.daylight.R
 import com.daylight.data.HabitAndTracking
 import com.daylight.data.MoodAndHabitTracking
 import com.daylight.data.MoodAndTracking
-import com.daylight.data.habits.HabitTracking
 import com.daylight.data.habits.HabitsDataSource
 import com.daylight.data.habits.HabitsRepository
-import com.daylight.data.moods.Mood
-import com.daylight.data.moods.MoodTracking
 import com.daylight.data.moods.MoodsDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.CorrelationProcessing
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -26,8 +18,8 @@ import kotlin.collections.ArrayList
  * the UI as required.
  */
 class AnalysisPresenter(
-    val habitsRepository: HabitsRepository,
-    val moodsRepository: MoodsRepository,
+    private val habitsRepository: HabitsRepository,
+    private val moodsRepository: MoodsRepository,
     val analysisView: AnalysisContract.View
 
 ) : AnalysisContract.Presenter {

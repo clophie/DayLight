@@ -20,8 +20,8 @@ import java.util.*
  */
 class AddEditHabitPresenter(
     private val habitId: String?,
-    val habitsRepository: HabitsDataSource,
-    val addHabitView: AddEditHabitContract.View,
+    private val habitsRepository: HabitsDataSource,
+    private val addHabitView: AddEditHabitContract.View,
     override var isDataMissing: Boolean
 ) : AddEditHabitContract.Presenter, HabitsDataSource.GetHabitCallback {
 

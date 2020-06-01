@@ -4,7 +4,6 @@ import android.app.Activity
 import com.daylight.addeditmood.AddEditMoodActivity
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsDataSource
-import java.util.ArrayList
 
 
 /**
@@ -20,7 +19,7 @@ import java.util.ArrayList
  */
 
 class MoodsPresenter(
-    val moodsRepository: MoodsDataSource,
+    private val moodsRepository: MoodsDataSource,
     val moodsView: MoodsContract.View
 ) : MoodsContract.Presenter {
 

@@ -1,24 +1,15 @@
 package com.daylight.addeditmood
 
 import android.app.Activity
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.daylight.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.maltaisn.icondialog.IconDialog
-import com.maltaisn.icondialog.IconDialogSettings
-import com.maltaisn.icondialog.pack.IconPack
-import com.maltaisn.icondialog.pack.IconPackLoader
 
 
 /**
@@ -44,7 +35,7 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
         activity?.findViewById<FloatingActionButton>(R.id.fab_edit_mood_done)?.apply {
             setImageResource(R.drawable.ic_done)
             setOnClickListener {
-                presenter.saveMood(name.text.toString(), score.value, context)
+                presenter.saveMood(name.text.toString(), score.value)
             }
         }
     }
@@ -84,7 +75,6 @@ class AddEditMoodFragment : Fragment(), AddEditMoodContract.View {
 
     companion object {
         const val ARGUMENT_EDIT_MOOD_ID = "EDIT_MOOD_ID"
-        private const val ICON_DIALOG_TAG = "icon-dialog"
 
         fun newInstance(moodId: String?) =
             AddEditMoodFragment().apply {

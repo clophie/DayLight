@@ -1,10 +1,8 @@
 package com.daylight.addeditmood
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsDataSource
-import com.google.common.reflect.Reflection.getPackageName
 
 
 /**
@@ -20,8 +18,8 @@ import com.google.common.reflect.Reflection.getPackageName
  */
 class AddEditMoodPresenter(
     private val moodId: String?,
-    val moodsRepository: MoodsDataSource,
-    val addMoodView: AddEditMoodContract.View,
+    private val moodsRepository: MoodsDataSource,
+    private val addMoodView: AddEditMoodContract.View,
     override var isDataMissing: Boolean
 ) : AddEditMoodContract.Presenter, MoodsDataSource.GetMoodCallback {
 
@@ -35,11 +33,11 @@ class AddEditMoodPresenter(
         }
     }
 
-    override fun saveMood(name: String, score: Int, context: Context) {
+    override fun saveMood(name: String, score: Int) {
         if (moodId == null) {
-            createMood(name, score, context)
+            createMood(name, score)
         } else {
-            updateMood(name, score, context)
+            updateMood(name, score)
         }
     }
 
@@ -66,7 +64,7 @@ class AddEditMoodPresenter(
         }
     }
 
-    private fun createMood(name: String, score: Int, context: Context) {
+    private fun createMood(name: String, score: Int) {
         val newMood = Mood(
             score,
             name
@@ -76,11 +74,10 @@ class AddEditMoodPresenter(
         } else {
             moodsRepository.saveMood(newMood)
             addMoodView.showMoodsList()
-            //AlarmScheduler.scheduleAlarmsForMood(context, newMood)
         }
     }
 
-    private fun updateMood(name: String, score: Int, context: Context) {
+    private fun updateMood(name: String, score: Int) {
         if (moodId == null) {
             throw RuntimeException("updateMood() was called but mood is new.")
         }
@@ -90,6 +87,5 @@ class AddEditMoodPresenter(
         )
         moodsRepository.saveMood(mood)
         addMoodView.showMoodsList() // After an edit, go back to the list.
-        //AlarmScheduler.updateAlarmsForMood(context, mood)
     }
 }

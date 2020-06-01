@@ -14,7 +14,7 @@ import java.util.*
  * exist or is empty.
  */
 class HabitsRepository(
-    val habitsLocalDataSource: HabitsDataSource
+    private val habitsLocalDataSource: HabitsDataSource
 ) : HabitsDataSource {
 
     /**
@@ -26,7 +26,7 @@ class HabitsRepository(
      * Marks the cache as invalid, to force an update the next time data is requested. This variable
      * has package local visibility so it can be accessed from tests.
      */
-    var cacheIsDirty = false
+    private var cacheIsDirty = false
 
     /**
      * Gets habits from cache, local data source (SQLite) or remote data source, whichever is
@@ -181,7 +181,7 @@ class HabitsRepository(
             habit.time,
             habit.id
         )
-        cachedHabits.put(cachedHabit.id, cachedHabit)
+        cachedHabits[cachedHabit.id] = cachedHabit
         perform(cachedHabit)
     }
 
@@ -206,12 +206,5 @@ class HabitsRepository(
                 .apply { INSTANCE = this }
         }
 
-        /**
-         * Used to force [getInstance] to create a new instance
-         * next time it's called.
-         */
-        @JvmStatic fun destroyInstance() {
-            INSTANCE = null
-        }
     }
 }

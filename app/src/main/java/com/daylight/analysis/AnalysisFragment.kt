@@ -1,8 +1,6 @@
 package com.daylight.analysis
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +16,6 @@ import com.daylight.data.local.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
@@ -26,9 +23,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import kotlinx.android.synthetic.main.trackhabit_frag.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -56,7 +51,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         }
 
         if (!this::presenter.isInitialized) {
-            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val database = DaylightDatabase.getInstance(activity!!.applicationContext)
             val repo = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
@@ -74,7 +69,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
     override fun onResume() {
         super.onResume()
         if (!this::presenter.isInitialized) {
-            val database = DaylightDatabase.getInstance(getActivity()!!.getApplicationContext())
+            val database = DaylightDatabase.getInstance(activity!!.applicationContext)
             val repo = HabitsRepository.getInstance(
                 HabitsLocalDataSource.getInstance(AppExecutors(), database.habitDao(), database.habitTrackingDao()))
 
@@ -175,7 +170,7 @@ class AnalysisFragment : Fragment(), AnalysisContract.View {
         }
     }
 
-    fun getColors() : ArrayList<Int> {
+    private fun getColors() : ArrayList<Int> {
         val colors : ArrayList<Int> = mutableListOf<Int>() as ArrayList<Int>
 
         ColorTemplate.COLORFUL_COLORS.forEach {

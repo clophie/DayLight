@@ -7,14 +7,13 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.daylight.R
+import com.daylight.analysis.AnalysisFragment
+import com.daylight.appintro.DayLightAppIntro
 import com.daylight.data.habits.HabitsRepository
 import com.daylight.data.local.DaylightDatabase
 import com.daylight.data.local.habits.HabitsLocalDataSource
 import com.daylight.moods.MoodsFragment
-import com.daylight.analysis.AnalysisFragment
-import com.daylight.appintro.DayLightAppIntro
 import com.daylight.settings.SettingsFragment
 import com.daylight.util.AppExecutors
 import com.daylight.util.notif.AlarmScheduler
@@ -22,7 +21,6 @@ import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar
 import com.github.clans.fab.FloatingActionMenu
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.habit_item.view.*
 import kotlinx.android.synthetic.main.habits_act.*
 import java.util.*
 
