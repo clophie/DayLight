@@ -164,17 +164,6 @@ class HabitsFragment : Fragment(), HabitsContract.View {
         return root
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_refresh -> presenter.loadHabits(true)
-        }
-        return true
-    }
-
-/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        inflater.inflate(R.menu.habits_fragment_menu, menu)
-    }*/
-
     override fun setLoadingIndicator(active: Boolean) {
         val root = view ?: return
         with(root.findViewById<SwipeRefreshLayout>(R.id.refresh_layout)) {

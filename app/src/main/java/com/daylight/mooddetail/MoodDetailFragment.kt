@@ -76,16 +76,6 @@ class MoodDetailFragment : Fragment(), MoodDetailContract.View {
         return root
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val deletePressed = item.itemId == R.id.menu_delete
-        if (deletePressed) presenter.deleteMood()
-        return deletePressed
-    }
-
-/*    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
-        inflater.inflate(R.menu.mooddetail_fragment_menu, menu)
-    }*/
-
     override fun setLoadingIndicator(active: Boolean) {
         if (active) {
             detailTitle.text = getString(R.string.loading)
