@@ -1,9 +1,5 @@
-package com.daylight.data.local.moods
+package com.daylight.data.moods
 
-import androidx.annotation.VisibleForTesting
-import com.daylight.data.moods.Mood
-import com.daylight.data.moods.MoodTracking
-import com.daylight.data.moods.MoodsDataSource
 import com.daylight.util.AppExecutors
 import java.util.*
 

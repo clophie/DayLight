@@ -11,8 +11,8 @@ import com.daylight.R
 import com.daylight.analysis.AnalysisFragment
 import com.daylight.appintro.DayLightAppIntro
 import com.daylight.data.habits.HabitsRepository
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.habits.HabitsLocalDataSource
 import com.daylight.moods.MoodsFragment
 import com.daylight.settings.SettingsFragment
 import com.daylight.util.AppExecutors

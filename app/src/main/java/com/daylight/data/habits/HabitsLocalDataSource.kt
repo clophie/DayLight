@@ -1,9 +1,5 @@
-package com.daylight.data.local.habits
+package com.daylight.data.habits
 
-import androidx.annotation.VisibleForTesting
-import com.daylight.data.habits.Habit
-import com.daylight.data.habits.HabitTracking
-import com.daylight.data.habits.HabitsDataSource
 import com.daylight.util.AppExecutors
 import java.util.*
 

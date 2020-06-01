@@ -1,2 +1,9 @@
-# DayLight
-My final year project. A mood and habit tracking Android app.
+# DayLight - A Mood and Habit Tracking Android Application
+
+The code for the application is within the app/src/main/java/com/daylight folder. Within this folder, there are sub-folders for each of the distinct UI screens of the application, as well as a folder for the model layed - titled 'data' - and a folder for miscellaneous utility classed - titled 'util'.
+
+Within each folder for each UI screen of the application, there are 4 files. An activity file, a contract file, a fragment file and a presenter file. The fragment file servers as the view in MVP, and the presenter file serves as the presenter. The fragment file contains code to set up and populate the user interface elements, as well as assigning which presenter functions should be called under certain conditions. The presenter handles the business logic of the application, communicating with the model when appropriate.
+
+With the 'data' folder, are two folders, 'habits' and 'moods'. Each of these folders contain the database and model layer files related to that particular feature. In the root 'data' folder, there is the main database file for the database, as well as objects that are used to consolidate data from certain queries.
+
+Under the folder app/src/main/res/layout are the layout files for the application. These are XML files that dictate what UI elements should be in each fragment and activity, as well as the styling and positioning of these elements. For each fragment and activity file in the code, there is a corresponding fragment and activity XML file in the layout folder that dictates the layout for that view. There are also a couple of XML files for smaller sections of the user interface that are reused, namely habit_item.xml and mood_item.xml, which are used to format how the habits and moods are displayed in their corresponding list views.

@@ -1,4 +1,4 @@
-package com.daylight.data.local.moods
+package com.daylight.data.moods
 
 import androidx.room.*
 import com.daylight.data.moods.Mood

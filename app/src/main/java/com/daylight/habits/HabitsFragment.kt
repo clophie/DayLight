@@ -18,8 +18,8 @@ import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitsRepository
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.habits.HabitsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.habits.HabitsLocalDataSource
 import com.daylight.habitdetail.HabitDetailActivity
 import com.daylight.trackhabit.TrackHabitActivity
 import com.daylight.trackmood.TrackMoodActivity

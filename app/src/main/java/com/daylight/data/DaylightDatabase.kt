@@ -1,4 +1,4 @@
-package com.daylight.data.local
+package com.daylight.data
 
 import android.content.Context
 import androidx.room.Database
@@ -8,10 +8,10 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.daylight.data.habits.Habit
 import com.daylight.data.habits.HabitTracking
-import com.daylight.data.local.habits.HabitTrackingDao
-import com.daylight.data.local.habits.HabitsDao
-import com.daylight.data.local.moods.MoodTrackingDao
-import com.daylight.data.local.moods.MoodsDao
+import com.daylight.data.habits.HabitTrackingDao
+import com.daylight.data.habits.HabitsDao
+import com.daylight.data.moods.MoodTrackingDao
+import com.daylight.data.moods.MoodsDao
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodTracking
 import com.daylight.util.Converters
@@ -46,19 +46,29 @@ abstract class DaylightDatabase : RoomDatabase() {
                             Executors.newSingleThreadScheduledExecutor()
                                 .execute {
                                     val miserable = Mood(1, "Miserable")
-                                    getInstance(context).moodDao().insertMood(miserable)
+                                    getInstance(
+                                        context
+                                    ).moodDao().insertMood(miserable)
 
                                     val sad = Mood(2, "Sad")
-                                    getInstance(context).moodDao().insertMood(sad)
+                                    getInstance(
+                                        context
+                                    ).moodDao().insertMood(sad)
 
                                     val neutral = Mood(3, "Neutral")
-                                    getInstance(context).moodDao().insertMood(neutral)
+                                    getInstance(
+                                        context
+                                    ).moodDao().insertMood(neutral)
 
                                     val happy = Mood(4, "Happy")
-                                    getInstance(context).moodDao().insertMood(happy)
+                                    getInstance(
+                                        context
+                                    ).moodDao().insertMood(happy)
 
                                     val fantastic = Mood(5, "Fantastic")
-                                    getInstance(context).moodDao().insertMood(fantastic)
+                                    getInstance(
+                                        context
+                                    ).moodDao().insertMood(fantastic)
                                 }
                         }
                     }

@@ -12,8 +12,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.daylight.R
 import com.daylight.addedithabit.AddEditHabitActivity
 import com.daylight.addeditmood.AddEditMoodActivity
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.moods.MoodsLocalDataSource
 import com.daylight.data.moods.Mood
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.mooddetail.MoodDetailActivity

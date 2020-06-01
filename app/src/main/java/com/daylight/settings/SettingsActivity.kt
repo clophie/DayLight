@@ -3,12 +3,10 @@ package com.daylight.settings
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.daylight.R
-import com.daylight.settings.SettingsFragment
-import com.daylight.settings.SettingsPresenter
 import com.daylight.data.habits.HabitsRepository
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.habits.HabitsLocalDataSource
-import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.habits.HabitsLocalDataSource
+import com.daylight.data.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity

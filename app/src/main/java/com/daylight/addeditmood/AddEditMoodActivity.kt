@@ -3,8 +3,8 @@ package com.daylight.addeditmood
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.daylight.R
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.moods.MoodsLocalDataSource
 import com.daylight.util.AppExecutors
 import com.daylight.util.replaceFragmentInActivity
 import com.daylight.util.setupActionBar

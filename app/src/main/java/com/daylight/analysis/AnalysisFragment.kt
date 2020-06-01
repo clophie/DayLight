@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import com.daylight.R
 import com.daylight.data.HabitAndTracking
 import com.daylight.data.habits.HabitsRepository
-import com.daylight.data.local.DaylightDatabase
-import com.daylight.data.local.habits.HabitsLocalDataSource
-import com.daylight.data.local.moods.MoodsLocalDataSource
+import com.daylight.data.DaylightDatabase
+import com.daylight.data.habits.HabitsLocalDataSource
+import com.daylight.data.moods.MoodsLocalDataSource
 import com.daylight.data.moods.MoodsRepository
 import com.daylight.util.AppExecutors
 import com.github.mikephil.charting.animation.Easing

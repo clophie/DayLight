@@ -1,4 +1,4 @@
-package com.daylight.data.local.habits
+package com.daylight.data.habits
 
 import androidx.room.*
 import com.daylight.data.habits.Habit
